@@ -4,6 +4,8 @@
 
 🏆 Placed **5th of 24 teams** at Macquarie University's *Pitch for the Planet 2026* (Faculty of Science and Engineering).
 
+![The RebootLoop team presenting at Pitch for the Planet 2026](./assets/pitch-for-the-planet-2026-team.jpg)
+
 ---
 
 ## The problem

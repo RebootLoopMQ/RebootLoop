@@ -32,10 +32,24 @@ RebootLoop does **not** erase data, certify sanitisation, or guarantee non-recov
 The prototype runs entirely offline in the browser — no accounts, no backend, no data collection.
 
 ```bash
-git clone https://github.com/<org-or-user>/RebootLoop.git
+git clone https://github.com/RebootLoopMQ/RebootLoop.git
 cd RebootLoop/prototype
 open index.html   # or double-click it
 ```
+
+## Walkthrough
+
+| Start | Assess |
+|---|---|
+| ![Start screen](./assets/screenshots/01-start.png) | ![Assess screen](./assets/screenshots/02-assess.png) |
+
+| Route | Prepare |
+|---|---|
+| ![Route screen](./assets/screenshots/03-route.png) | ![Prepare screen](./assets/screenshots/04-prepare.png) |
+
+### Passport
+
+![Passport screen](./assets/screenshots/05-passport.png)
 
 ## Routing logic
 

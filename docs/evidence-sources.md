@@ -15,6 +15,8 @@
 
 **Note on accuracy:** an earlier draft cited "60% worried someone might access personal data." That figure could not be independently verified alongside the 81% MobileMuster statistic — the closest supported figures are "two in three" (67%, 2018 press commentary) or 36% (2020 MobileMuster update, specifically "worried about the data stored on their phones"). Use the 81% figure alone, or "two in three," rather than the unverified 60%.
 
+A separate "40% of Australians don't trust that their data has been destroyed" figure was also considered and checked (September 2026) — no MobileMuster, OAIC, ACSC or TechCollect source matches it. The closest verified OAIC finding is "less than half trust organisations to delete data when no longer needed" (2023 Australian Community Attitudes to Privacy Survey), but that's about organisational data handling generally, not device disposal specifically, so it isn't a like-for-like substitute. Do not use the 40% figure; use the 36% / 67% MobileMuster figures above instead.
+
 ## SDG alignment
 
 - **SDG 12.5** (primary) — "By 2030, substantially reduce waste generation through prevention, reduction, recycling and reuse." Maps directly to RebootLoop's four routing pathways.

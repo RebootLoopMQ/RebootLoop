@@ -57,6 +57,18 @@ Priority order: **physical safety → authority/ownership → data sensitivity �
 
 Every recommendation is produced by explicit, inspectable rules — not an opaque AI score. See [`/docs`](./docs) for the full routing table and five mandatory edge-case tests.
 
+## Evidence & sources
+
+RebootLoop's problem framing and safety boundaries are grounded in published research and government guidance, not assumption:
+
+- **511,000 t** of e-waste generated in Australia in 2019, projected to reach **657,000 t by 2030** — [Australian Government DCCEEW](https://www.dcceew.gov.au/environment/protection/waste/e-waste)
+- Sydney university students know *what* e-waste is but have a real knowledge gap around collection points and recycling programs — Islam, Dias & Huda, [Macquarie University research](https://researchers.mq.edu.au/en/publications/young-consumers-e-waste-awareness-consumption-disposal-and-recycl/) (2021)
+- **81%** of people would be more inclined to hand down a phone if they knew how to remove their data properly, and **36%** worry about the data stored on their old phones — [MobileMuster](https://www.mobilemuster.com.au/?p=5020)
+- Correct disposal preparation reduces but does not guarantee data cannot be recovered — [Australian Cyber Security Centre (ACSC)](https://www.cyber.gov.au/protect-yourself/securing-your-devices/how-secure-your-device/how-dispose-your-device-securely)
+- Aligns with **UN SDG 12** Targets 12.5 (waste reduction/reuse/recycling) and 12.8 (awareness and information) — [UN SDG 12](https://sdgs.un.org/goals/goal12)
+
+Full citation table, links, and a note on stats we checked and deliberately excluded: [`docs/evidence-sources.md`](./docs/evidence-sources.md).
+
 ## Tech stack
 
 - Vanilla HTML / CSS / JavaScript (offline-first, zero dependencies)

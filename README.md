@@ -29,6 +29,8 @@ RebootLoop does **not** erase data, certify sanitisation, or guarantee non-recov
 
 ## Try it
 
+**Live demo: [rebootloopmq.github.io/RebootLoop](https://rebootloopmq.github.io/RebootLoop/)**
+
 The prototype runs entirely offline in the browser — no accounts, no backend, no data collection.
 
 ```bash

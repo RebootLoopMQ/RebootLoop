@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./assets/logo.jpg" alt="RebootLoop logo" width="200">
+</p>
+
 # RebootLoop ↻
 
 **A privacy-first decision-support platform helping university students securely repair, reuse, donate or recycle old technology.**

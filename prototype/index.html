@@ -1,0 +1,934 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#092e35">
+  <meta name="description" content="RebootLoop is a privacy-first decision platform for securely routing unused student technology toward repair, reuse, donation or responsible recycling.">
+  <title>RebootLoop - Securely unlock the next life of your technology</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --navy: #092e35;
+      --navy-2: #123e45;
+      --ink: #102a31;
+      --muted: #526a70;
+      --forest: #0b6b57;
+      --teal: #10a783;
+      --mint: #e8f6f1;
+      --pale: #f4f9f7;
+      --lime: #b7d84b;
+      --gold: #f3c65b;
+      --coral: #e86b5d;
+      --blue: #2f78b7;
+      --line: #ccddd8;
+      --white: #ffffff;
+      --shadow: 0 22px 55px rgba(9, 46, 53, .10);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 93% 0%, rgba(16, 167, 131, .12), transparent 28rem),
+        var(--pale);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    a { color: var(--forest); }
+    a:focus-visible, button:focus-visible, input:focus-visible + label {
+      outline: 4px solid rgba(47, 120, 183, .35);
+      outline-offset: 3px;
+    }
+
+    .site-header {
+      background: var(--navy);
+      color: var(--white);
+      border-bottom: 4px solid var(--teal);
+    }
+
+    .header-inner {
+      width: min(1180px, calc(100% - 32px));
+      min-height: 88px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 52px;
+      height: 52px;
+      flex: 0 0 52px;
+      border-radius: 50%;
+      background: var(--white);
+      display: grid;
+      place-items: center;
+    }
+
+    .brand-mark svg { width: 39px; height: 39px; }
+    .brand-name { font-size: 1.6rem; font-weight: 850; letter-spacing: -.04em; line-height: 1; }
+    .brand-sub { margin-top: 5px; color: #bfd9d0; font-size: .82rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+
+    .header-actions { display: flex; align-items: center; gap: 14px; }
+    .prototype-label {
+      color: #d8ebe5;
+      font-size: .84rem;
+      font-weight: 700;
+      text-align: right;
+    }
+
+    .reset-button {
+      border: 1px solid rgba(255,255,255,.28);
+      background: rgba(255,255,255,.08);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 10px 15px;
+      font-weight: 750;
+    }
+    .reset-button:hover { background: rgba(255,255,255,.15); }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 42px;
+    }
+
+    .progress-wrap {
+      background: rgba(255,255,255,.78);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 15px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 30px rgba(9, 46, 53, .05);
+    }
+
+    .progress-track {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      position: relative;
+    }
+
+    .progress-step {
+      color: #71858a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 0;
+      font-size: .84rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .progress-step span {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #e4eeeb;
+      color: #60757a;
+      flex: 0 0 28px;
+    }
+
+    .progress-step.is-active { color: var(--forest); }
+    .progress-step.is-active span { background: var(--forest); color: white; }
+    .progress-step.is-complete { color: var(--teal); }
+    .progress-step.is-complete span { background: var(--mint); color: var(--forest); }
+
+    .screen { display: none; animation: reveal .28s ease; }
+    .screen.is-active { display: block; }
+    @keyframes reveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+    .surface {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .start-grid { display: grid; grid-template-columns: 1.35fr .85fr; min-height: 560px; }
+    .start-main { padding: clamp(34px, 6vw, 72px); display: flex; flex-direction: column; justify-content: center; }
+    .eyebrow {
+      color: var(--forest);
+      font-size: .84rem;
+      font-weight: 850;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      margin: 0 0 14px;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font-size: clamp(2.6rem, 6vw, 5.15rem); line-height: .98; letter-spacing: -.06em; margin-bottom: 20px; max-width: 820px; }
+    h2 { font-size: clamp(2rem, 4vw, 3.15rem); line-height: 1.05; letter-spacing: -.045em; margin-bottom: 14px; }
+    h3 { font-size: 1.2rem; line-height: 1.2; margin-bottom: 9px; }
+    .lead { color: var(--muted); font-size: clamp(1.05rem, 2vw, 1.28rem); max-width: 720px; }
+
+    .primary-button, .secondary-button, .quiet-button {
+      min-height: 52px;
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-weight: 850;
+      border: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+    }
+    .primary-button { background: var(--forest); color: var(--white); box-shadow: 0 12px 24px rgba(11, 107, 87, .18); }
+    .primary-button:hover { background: #075846; transform: translateY(-1px); }
+    .primary-button:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+    .secondary-button { background: var(--mint); color: var(--forest); border: 1px solid #b8ddd1; }
+    .secondary-button:hover { background: #dcf1ea; }
+    .quiet-button { background: transparent; color: var(--forest); border: 1px solid var(--line); }
+    .quiet-button:hover { background: var(--pale); }
+    .button-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+
+    .start-aside {
+      background: var(--navy);
+      color: white;
+      padding: clamp(30px, 5vw, 54px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      isolation: isolate;
+    }
+    .start-aside::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: radial-gradient(circle at 100% 0%, rgba(16, 167, 131, .32), transparent 52%);
+    }
+    .promise-list { display: grid; gap: 18px; margin-top: 18px; }
+    .promise {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+    .promise-icon { width: 40px; height: 40px; border-radius: 12px; background: rgba(183, 216, 75, .15); color: var(--lime); display: grid; place-items: center; font-weight: 900; }
+    .promise p { color: #c6dbd5; margin: 3px 0 0; font-size: .95rem; }
+    .notice {
+      margin-top: 26px;
+      padding: 16px;
+      border: 1px solid rgba(255,255,255,.17);
+      background: rgba(255,255,255,.07);
+      border-radius: 14px;
+      color: #e1efea;
+      font-size: .92rem;
+    }
+
+    .content-head {
+      padding: 32px 34px 22px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 24px;
+    }
+    .content-head p { margin: 0; color: var(--muted); max-width: 680px; }
+    .timer-chip { white-space: nowrap; padding: 10px 14px; border-radius: 999px; background: var(--mint); color: var(--forest); font-weight: 850; }
+
+    .presentation-shortcuts {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      padding: 18px 34px;
+      background: #f0f7f5;
+      border-bottom: 1px solid var(--line);
+    }
+    .presentation-shortcuts strong { margin-right: 4px; }
+    .shortcut {
+      min-height: 40px;
+      border: 1px solid #b7d9ce;
+      border-radius: 999px;
+      background: white;
+      color: var(--forest);
+      padding: 8px 14px;
+      font-weight: 800;
+    }
+    .shortcut:hover { background: var(--mint); }
+
+    .assessment-form { padding: 28px 34px 34px; }
+    .question-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    fieldset {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 17px;
+      margin: 0;
+      background: #fbfdfc;
+    }
+    legend { padding: 0 8px; font-size: 1rem; font-weight: 850; }
+    .helper { color: var(--muted); font-size: .87rem; margin: -2px 0 12px; }
+    .choices { display: flex; flex-wrap: wrap; gap: 9px; }
+    .choices input { position: absolute; opacity: 0; pointer-events: none; }
+    .choices label {
+      display: inline-flex;
+      align-items: center;
+      min-height: 42px;
+      border: 1px solid #bed2cc;
+      border-radius: 12px;
+      background: white;
+      color: #304b51;
+      padding: 9px 12px;
+      font-size: .91rem;
+      font-weight: 720;
+      cursor: pointer;
+      transition: .15s ease;
+    }
+    .choices label:hover { border-color: var(--teal); background: var(--mint); }
+    .choices input:checked + label { background: var(--forest); border-color: var(--forest); color: white; box-shadow: 0 7px 16px rgba(11, 107, 87, .16); }
+    .form-footer { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-top: 25px; }
+    .error-message { color: #a43d32; font-weight: 750; min-height: 24px; margin: 0; }
+
+    .route-layout, .prepare-layout, .passport-layout { display: grid; grid-template-columns: 1.25fr .75fr; }
+    .main-panel { padding: 38px; }
+    .side-panel { padding: 34px; background: #f0f7f5; border-left: 1px solid var(--line); }
+    .route-badge { display: inline-flex; border-radius: 999px; padding: 8px 13px; margin-bottom: 18px; background: var(--mint); color: var(--forest); font-weight: 900; font-size: .84rem; letter-spacing: .06em; text-transform: uppercase; }
+    .route-badge.is-stop { background: #fff0ed; color: #a54034; }
+    .route-badge.is-specialist { background: #fff5de; color: #7f5a0a; }
+    .reason-list, .action-list, .summary-list { display: grid; gap: 12px; padding: 0; margin: 22px 0 0; list-style: none; }
+    .reason-list li, .action-list li { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start; }
+    .reason-list li::before, .action-list li::before { content: "✓"; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--mint); color: var(--forest); font-weight: 900; }
+    .summary-list li { border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+    .summary-list li:last-child { border-bottom: 0; }
+    .summary-list span { display: block; color: var(--muted); font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
+    .summary-list strong { display: block; margin-top: 2px; }
+    .safety-callout { margin-top: 24px; border-left: 5px solid var(--coral); border-radius: 13px; padding: 16px 18px; background: #fff5f2; color: #6b332c; }
+    .route-reason { font-size: 1.14rem; color: var(--muted); max-width: 760px; }
+
+    .checklist { display: grid; gap: 12px; margin: 24px 0; }
+    .check-item { position: relative; }
+    .check-item input { position: absolute; opacity: 0; }
+    .check-item label {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 12px;
+      align-items: start;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      padding: 15px 16px;
+      background: #fbfdfc;
+      cursor: pointer;
+    }
+    .check-item label::before { content: ""; width: 27px; height: 27px; border: 2px solid #9bb5ad; border-radius: 8px; background: white; }
+    .check-item input:checked + label { border-color: #8dcab8; background: var(--mint); }
+    .check-item input:checked + label::before { content: "✓"; background: var(--forest); border-color: var(--forest); color: white; display: grid; place-items: center; font-weight: 900; }
+    .check-item strong { display: block; margin-bottom: 2px; }
+    .check-item small { color: var(--muted); font-size: .85rem; }
+    .official-link { display: inline-flex; align-items: center; gap: 7px; margin-top: 8px; font-weight: 800; }
+    .assurance-card { background: var(--navy); color: white; border-radius: 18px; padding: 22px; }
+    .assurance-card p { color: #c6dbd5; }
+    .assurance-levels { display: grid; gap: 10px; margin-top: 16px; }
+    .assurance-level { border: 1px solid rgba(255,255,255,.16); border-radius: 12px; padding: 12px; }
+    .assurance-level.is-current { border-color: var(--lime); background: rgba(183,216,75,.10); }
+    .assurance-level strong { color: var(--lime); }
+
+    .passport-card { background: var(--navy); color: white; border-radius: 24px; padding: 28px; position: relative; overflow: hidden; }
+    .passport-card::after { content: ""; position: absolute; width: 260px; height: 260px; border-radius: 50%; background: rgba(16,167,131,.18); right: -105px; top: -115px; }
+    .passport-top { display: flex; justify-content: space-between; gap: 22px; align-items: start; position: relative; z-index: 1; }
+    .passport-label { color: var(--lime); font-weight: 900; letter-spacing: .08em; text-transform: uppercase; font-size: .82rem; }
+    .passport-id { font-size: 2rem; font-weight: 900; letter-spacing: -.03em; margin-top: 6px; }
+    .qr-frame { width: 158px; height: 158px; flex: 0 0 158px; background: white; border-radius: 16px; padding: 10px; display: grid; place-items: center; }
+    .qr-frame img { width: 100%; height: 100%; display: block; }
+    .passport-data { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 15px; margin-top: 28px; position: relative; z-index: 1; }
+    .passport-field { border-top: 1px solid rgba(255,255,255,.17); padding-top: 10px; }
+    .passport-field span { color: #a9c7be; display: block; font-size: .75rem; font-weight: 850; letter-spacing: .07em; text-transform: uppercase; }
+    .passport-field strong { display: block; margin-top: 4px; font-size: 1rem; }
+    .passport-disclaimer { position: relative; z-index: 1; margin: 22px 0 0; color: #c6dbd5; font-size: .84rem; }
+
+    .dashboard { margin-top: 22px; }
+    .metric-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+    .metric { background: white; border: 1px solid var(--line); border-radius: 15px; padding: 16px; }
+    .metric span { display: block; color: var(--muted); font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; }
+    .metric strong { display: block; margin-top: 4px; font-size: 1.65rem; letter-spacing: -.04em; }
+    .demo-label { margin-top: 12px; color: var(--muted); font-size: .82rem; }
+
+    .source-strip {
+      margin-top: 20px;
+      border-radius: 18px;
+      padding: 18px 22px;
+      background: #e8f0ed;
+      color: #405c62;
+      font-size: .84rem;
+    }
+    .source-strip strong { color: var(--ink); }
+    .source-strip a { white-space: nowrap; }
+
+    .site-footer { padding: 18px 16px 34px; text-align: center; color: var(--muted); font-size: .84rem; }
+
+    @media (max-width: 900px) {
+      .start-grid, .route-layout, .prepare-layout, .passport-layout { grid-template-columns: 1fr; }
+      .start-aside, .side-panel { border-left: 0; border-top: 1px solid var(--line); }
+      .question-grid { grid-template-columns: 1fr; }
+      .progress-step { font-size: 0; gap: 0; }
+      .progress-step span { font-size: .84rem; }
+      .prototype-label { display: none; }
+    }
+
+    @media (max-width: 620px) {
+      .header-inner { min-height: 76px; }
+      .brand-sub { display: none; }
+      .brand-mark { width: 44px; height: 44px; flex-basis: 44px; }
+      .brand-name { font-size: 1.35rem; }
+      .reset-button { padding: 9px 12px; font-size: .85rem; }
+      .shell { width: min(100% - 20px, 1180px); padding-top: 12px; }
+      .progress-wrap { padding: 12px; }
+      .start-main, .start-aside, .main-panel, .side-panel { padding: 26px 22px; }
+      .content-head, .assessment-form { padding-left: 22px; padding-right: 22px; }
+      .content-head { align-items: start; flex-direction: column; }
+      .presentation-shortcuts { padding: 16px 22px; }
+      .form-footer { flex-direction: column; align-items: stretch; }
+      .form-footer .button-row { width: 100%; margin: 0; }
+      .form-footer button { flex: 1; }
+      .passport-top { flex-direction: column; }
+      .passport-data, .metric-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand" aria-label="RebootLoop">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none">
+            <path d="M50 23A21 21 0 1 0 48 45" stroke="#b7d84b" stroke-width="7" stroke-linecap="round"/>
+            <path d="M47 10l8 15-17 1" fill="#b7d84b"/>
+            <path d="M32 20l11 4-2 15c-3 7-9 10-9 10s-7-3-10-10l-1-15 11-4Z" stroke="#10a783" stroke-width="3"/>
+            <circle cx="32" cy="32" r="3.5" fill="#10a783"/>
+            <path d="M32 35v7" stroke="#10a783" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-name">RebootLoop</div>
+          <div class="brand-sub">Privacy-first circular technology</div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="prototype-label">Pitch for the Planet<br>Interactive proof-of-concept</div>
+        <button class="reset-button" id="resetDemo" type="button">Reset demo</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <nav class="progress-wrap" aria-label="RebootLoop progress">
+      <div class="progress-track">
+        <div class="progress-step is-active" data-progress="1"><span>1</span>Start</div>
+        <div class="progress-step" data-progress="2"><span>2</span>Assess</div>
+        <div class="progress-step" data-progress="3"><span>3</span>Route</div>
+        <div class="progress-step" data-progress="4"><span>4</span>Prepare</div>
+        <div class="progress-step" data-progress="5"><span>5</span>Passport</div>
+      </div>
+    </nav>
+
+    <section class="screen is-active" id="screen-1" data-screen="1" aria-labelledby="start-title">
+      <div class="surface start-grid">
+        <div class="start-main">
+          <p class="eyebrow">Your device still has value</p>
+          <h1 id="start-title">Find its safest next life.</h1>
+          <p class="lead">Answer a few questions about the device - not about you. RebootLoop recommends a safe route toward repair, reuse, donation or responsible recycling.</p>
+          <div class="button-row">
+            <button class="primary-button" type="button" data-go="2">Assess a device <span aria-hidden="true">→</span></button>
+          </div>
+          <p class="demo-label">Takes under two minutes. No account, file upload, serial number or IMEI.</p>
+        </div>
+        <aside class="start-aside" aria-label="RebootLoop safety promise">
+          <p class="eyebrow" style="color: var(--lime)">Safety promise</p>
+          <h2 style="font-size:2rem">Guidance without false confidence.</h2>
+          <div class="promise-list">
+            <div class="promise"><div class="promise-icon">1</div><div><strong>Safety and ownership first</strong><p>Hazards and managed devices stop the normal flow.</p></div></div>
+            <div class="promise"><div class="promise-icon">2</div><div><strong>Official preparation guidance</strong><p>Platform links are shown without asking for credentials.</p></div></div>
+            <div class="promise"><div class="promise-icon">3</div><div><strong>Honest assurance</strong><p>Guided, self-declared and partner-verified are never blurred.</p></div></div>
+          </div>
+          <div class="notice"><strong>Important:</strong> RebootLoop does not erase data, certify destruction or guarantee that information is unrecoverable.</div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-2" data-screen="2" aria-labelledby="assess-title">
+      <div class="surface">
+        <header class="content-head">
+          <div><p class="eyebrow">Step 2 - assess</p><h2 id="assess-title">Tell us about the device.</h2><p>These answers drive a transparent safety and circularity decision. No information leaves this browser.</p></div>
+          <div class="timer-chip">About 60-90 seconds</div>
+        </header>
+        <div class="presentation-shortcuts" aria-label="Presentation shortcuts">
+          <strong>Live-demo shortcuts:</strong>
+          <button class="shortcut" type="button" data-demo="a">A - working phone for donation</button>
+          <button class="shortcut" type="button" data-demo="b">B - non-functioning sensitive laptop</button>
+        </div>
+        <form class="assessment-form" id="assessmentForm" novalidate>
+          <div class="question-grid">
+            <fieldset><legend>1. Authority</legend><p class="helper">Is this device yours to transfer?</p><div class="choices">
+              <input id="own-owned" name="ownership" type="radio" value="owned"><label for="own-owned">Yes, it is mine</label>
+              <input id="own-managed" name="ownership" type="radio" value="managed"><label for="own-managed">University / employer managed</label>
+              <input id="own-other" name="ownership" type="radio" value="other"><label for="own-other">No / borrowed / found</label>
+            </div></fieldset>
+
+            <fieldset><legend>2. Device</legend><p class="helper">Choose the closest category.</p><div class="choices">
+              <input id="dev-iphone" name="device" type="radio" value="iphone"><label for="dev-iphone">iPhone / iPad</label>
+              <input id="dev-android" name="device" type="radio" value="android"><label for="dev-android">Android</label>
+              <input id="dev-windows" name="device" type="radio" value="windows"><label for="dev-windows">Windows PC (laptop / desktop)</label>
+              <input id="dev-mac" name="device" type="radio" value="mac"><label for="dev-mac">Mac (laptop / desktop)</label>
+              <input id="dev-chromeos" name="device" type="radio" value="chromeos"><label for="dev-chromeos">Chromebook / ChromeOS</label>
+              <input id="dev-linux" name="device" type="radio" value="linux"><label for="dev-linux">Linux computer</label>
+              <input id="dev-console" name="device" type="radio" value="console"><label for="dev-console">Game console (PlayStation / Xbox)</label>
+              <input id="dev-storage" name="device" type="radio" value="storage"><label for="dev-storage">HDD / SSD / USB / SD</label>
+              <input id="dev-other" name="device" type="radio" value="other"><label for="dev-other">Other technology</label>
+            </div></fieldset>
+
+            <fieldset><legend>3. Power state</legend><p class="helper">Can the device turn on and operate? This means functionality, not battery percentage.</p><div class="choices">
+              <input id="power-works" name="power" type="radio" value="works"><label for="power-works">Works normally</label>
+              <input id="power-intermittent" name="power" type="radio" value="intermittent"><label for="power-intermittent">Intermittent</label>
+              <input id="power-off" name="power" type="radio" value="off"><label for="power-off">Does not power on</label>
+            </div></fieldset>
+
+            <fieldset><legend>4. Physical safety</legend><p class="helper">Stop if you notice a battery or heat hazard.</p><div class="choices">
+              <input id="safe-normal" name="safety" type="radio" value="normal"><label for="safe-normal">Normal</label>
+              <input id="safe-swollen" name="safety" type="radio" value="swollen"><label for="safe-swollen">Swollen / leaking battery</label>
+              <input id="safe-heat" name="safety" type="radio" value="heat"><label for="safe-heat">Heat / odour</label>
+              <input id="safe-damaged" name="safety" type="radio" value="damaged"><label for="safe-damaged">Seriously damaged</label>
+            </div></fieldset>
+
+            <fieldset><legend>5. Condition</legend><p class="helper">Think about usefulness, not only appearance.</p><div class="choices">
+              <input id="cond-good" name="condition" type="radio" value="good"><label for="cond-good">Good</label>
+              <input id="cond-repair" name="condition" type="radio" value="repairable"><label for="cond-repair">Repairable</label>
+              <input id="cond-eol" name="condition" type="radio" value="eol"><label for="cond-eol">End-of-life</label>
+              <input id="cond-unsure" name="condition" type="radio" value="unsure"><label for="cond-unsure">Unsure</label>
+            </div></fieldset>
+
+            <fieldset><legend>6. Preferred outcome</legend><p class="helper">What would you like to do?</p><div class="choices">
+              <input id="goal-repair" name="goal" type="radio" value="repair"><label for="goal-repair">Keep / repair</label>
+              <input id="goal-sell" name="goal" type="radio" value="sell"><label for="goal-sell">Sell</label>
+              <input id="goal-donate" name="goal" type="radio" value="donate"><label for="goal-donate">Donate</label>
+              <input id="goal-family" name="goal" type="radio" value="family"><label for="goal-family">Give to family</label>
+              <input id="goal-recycle" name="goal" type="radio" value="recycle"><label for="goal-recycle">Recycle</label>
+              <input id="goal-unsure" name="goal" type="radio" value="unsure"><label for="goal-unsure">Unsure</label>
+            </div></fieldset>
+
+            <fieldset style="grid-column: 1 / -1"><legend>7. Data sensitivity</legend><p class="helper">Choose the highest sensitivity that ever applied to information on the device.</p><div class="choices">
+              <input id="sens-everyday" name="sensitivity" type="radio" value="everyday"><label for="sens-everyday">Everyday - photos, messages, ordinary accounts</label>
+              <input id="sens-sensitive" name="sensitivity" type="radio" value="sensitive"><label for="sens-sensitive">Sensitive - health, financial or identity records</label>
+              <input id="sens-high" name="sensitivity" type="radio" value="high"><label for="sens-high">Highly sensitive - managed, research or regulated data</label>
+            </div></fieldset>
+          </div>
+          <div class="form-footer">
+            <p class="error-message" id="formError" role="alert" aria-live="polite"></p>
+            <div class="button-row"><button class="quiet-button" type="button" data-go="1">Back</button><button class="primary-button" type="submit">See my recommended route <span aria-hidden="true">→</span></button></div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-3" data-screen="3" aria-labelledby="route-title">
+      <div class="surface route-layout">
+        <div class="main-panel">
+          <span class="route-badge" id="routeBadge">Recommended route</span>
+          <p class="eyebrow">Step 3 - route</p>
+          <h2 id="route-title">Prepare, then donate.</h2>
+          <p class="route-reason" id="routeReason"></p>
+          <ul class="reason-list" id="routeReasons"></ul>
+          <div class="safety-callout" id="routeWarning"></div>
+          <div class="button-row"><button class="quiet-button" type="button" data-go="2">Change answers</button><button class="primary-button" type="button" id="routeNext">View preparation path <span aria-hidden="true">→</span></button></div>
+        </div>
+        <aside class="side-panel">
+          <p class="eyebrow">Why this route</p>
+          <h3>Your answers, not a hidden score.</h3>
+          <ul class="summary-list" id="answerSummary"></ul>
+        </aside>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-4" data-screen="4" aria-labelledby="prepare-title">
+      <div class="surface prepare-layout">
+        <div class="main-panel">
+          <p class="eyebrow">Step 4 - prepare</p>
+          <h2 id="prepare-title">Secure preparation checklist</h2>
+          <p class="route-reason" id="prepareIntro"></p>
+          <div class="safety-callout"><strong>Residual-risk warning:</strong> These steps reduce risk but do not guarantee that data is unrecoverable. Seek professional help when sensitivity is high, the device does not work or any step fails.</div>
+          <div class="checklist" id="checklist"></div>
+          <div id="specialistActions"></div>
+          <a class="official-link" id="officialLink" href="https://www.cyber.gov.au/protect-yourself/securing-your-devices/how-secure-your-device/how-dispose-your-device-securely" target="_blank" rel="noreferrer">Open official guidance <span aria-hidden="true">↗</span></a>
+          <div class="button-row"><button class="quiet-button" type="button" data-go="3">Back</button><button class="primary-button" type="button" id="generatePassport">Complete all checklist items</button></div>
+        </div>
+        <aside class="side-panel">
+          <div class="assurance-card">
+            <p class="eyebrow" style="color:var(--lime)">Assurance model</p>
+            <h3>Status must match evidence.</h3>
+            <p>A tick is a declaration, not a security certificate.</p>
+            <div class="assurance-levels">
+              <div class="assurance-level is-current" id="assuranceGuided"><strong>1. Guided</strong><br><small>A route and guidance were generated.</small></div>
+              <div class="assurance-level" id="assuranceDeclared"><strong>2. Self-declared</strong><br><small>The user says every applicable step is complete.</small></div>
+              <div class="assurance-level"><strong>3. Partner-verified</strong><br><small>Future pilot only - local service matching and verification require approved partners and evidence.</small></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-5" data-screen="5" aria-labelledby="passport-screen-title">
+      <div class="surface passport-layout">
+        <div class="main-panel">
+          <p class="eyebrow">Step 5 - passport</p>
+          <h2 id="passport-screen-title">A minimal record for the next step.</h2>
+          <div class="passport-card" aria-label="RebootLoop demonstration passport">
+            <div class="passport-top">
+              <div><div class="passport-label">RebootLoop device passport</div><div class="passport-id" id="passportId">RL-DEMO</div><p style="margin-top:8px;color:#c6dbd5">Synthetic competition record</p></div>
+              <div class="qr-frame"><img id="passportQr" src="qr-guided.svg" alt="QR code for the demonstration passport"></div>
+            </div>
+            <div class="passport-data">
+              <div class="passport-field"><span>Device category</span><strong id="passportDevice"></strong></div>
+              <div class="passport-field"><span>Recommended route</span><strong id="passportRoute"></strong></div>
+              <div class="passport-field"><span>Assurance</span><strong id="passportAssurance"></strong></div>
+              <div class="passport-field"><span>Recorded</span><strong id="passportDate"></strong></div>
+            </div>
+            <p class="passport-disclaimer">This prototype passport records a route and declared preparation status. It is not proof that data is unrecoverable, and it contains no owner or hardware identifier.</p>
+          </div>
+          <div class="button-row"><button class="secondary-button" type="button" id="assessAnother">Assess another device</button><button class="quiet-button" type="button" id="restartDemo">Return to start</button></div>
+        </div>
+        <aside class="side-panel">
+          <p class="eyebrow">Session impact</p>
+          <h3>Measured without inventing carbon savings.</h3>
+          <div class="dashboard">
+            <div class="metric-grid">
+              <div class="metric"><span>Passports created</span><strong id="metricDevices">0</strong></div>
+              <div class="metric"><span>Estimated device mass</span><strong id="metricMass">0.00 kg</strong></div>
+              <div class="metric"><span>Circular routes</span><strong id="metricCircular">0</strong></div>
+              <div class="metric"><span>Safety stops</span><strong id="metricStops">0</strong></div>
+            </div>
+            <p class="demo-label">Demo-session figures only. A real pilot would count completed outcomes separately from recommendations.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <div class="source-strip"><strong>Evidence behind the prototype:</strong> Australian Government DCCEEW e-stewardship data; Islam, Dias and Huda's peer-reviewed Sydney university-student study; ASD Australian Cyber Security Centre disposal guidance; UN SDG 12 Targets 12.5 and 12.8. <a href="https://www.dcceew.gov.au/environment/protection/waste/e-waste" target="_blank" rel="noreferrer">DCCEEW</a> · <a href="https://researchers.mq.edu.au/en/publications/young-consumers-e-waste-awareness-consumption-disposal-and-recycl/" target="_blank" rel="noreferrer">Macquarie research</a> · <a href="https://www.cyber.gov.au/protect-yourself/securing-your-devices/how-secure-your-device/how-dispose-your-device-securely" target="_blank" rel="noreferrer">ACSC</a> · <a href="https://sdgs.un.org/goals/goal12" target="_blank" rel="noreferrer">UN Goal 12</a></div>
+  </main>
+
+  <footer class="site-footer"><strong>RebootLoop Team:</strong> Shah Noor Mostafa Bhuiyan · Nafe Ibne Mamun · Alexander Kai Cryan<br>Competition proof-of-concept · No credentials or personal files are collected · Refreshing clears the in-memory demo session</footer>
+
+  <script>
+    (() => {
+      const deviceLabels = { iphone: "iPhone / iPad", android: "Android device", windows: "Windows PC", mac: "Mac", chromeos: "Chromebook / ChromeOS device", linux: "Linux computer", console: "Game console", storage: "HDD / SSD / USB / SD", other: "Other technology" };
+      const optionLabels = {
+        ownership: { owned: "Owned by user", managed: "University / employer managed", other: "Not owned / borrowed / found" },
+        power: { works: "Works normally", intermittent: "Intermittent", off: "Does not power on" },
+        safety: { normal: "No physical hazard reported", swollen: "Swollen / leaking battery", heat: "Heat / odour", damaged: "Seriously damaged" },
+        condition: { good: "Good", repairable: "Repairable", eol: "End-of-life", unsure: "Unsure" },
+        goal: { repair: "Keep / repair", sell: "Sell", donate: "Donate", family: "Give to family", recycle: "Recycle", unsure: "Unsure" },
+        sensitivity: { everyday: "Everyday", sensitive: "Sensitive", high: "Highly sensitive" }
+      };
+      const weights = { iphone: .09, android: .09, windows: 1.26, mac: 1.26, chromeos: 1.26, linux: 1.26, console: 3.00, storage: .40, other: .40 };
+      const sources = {
+        iphone: { url: "https://support.apple.com/en-au/109511", label: "Open Apple's current iPhone / iPad transfer and erase guidance" },
+        android: { url: "https://support.google.com/android/answer/9459346?hl=en", label: "Open Google's Android device-protection guidance" },
+        windows: { url: "https://support.microsoft.com/en-us/windows/windows-recovery-options-31ce2444-7de3-818c-d626-e3b5a3024da5", label: "Open Microsoft's current Windows recovery guidance" },
+        mac: { url: "https://support.apple.com/en-au/102773", label: "Open Apple's current Mac transfer and erase guidance" },
+        chromeos: { url: "https://support.google.com/chromebook/answer/183084?hl=en", label: "Open Google's current Chromebook reset guidance" },
+        linux: { url: "https://www.cyber.gov.au/protect-yourself/securing-your-devices/how-secure-your-device/how-dispose-your-device-securely", label: "Open ASD ACSC secure-disposal guidance" },
+        console: { url: "https://www.cyber.gov.au/protect-yourself/securing-your-devices/how-secure-your-device/how-dispose-your-device-securely", label: "Open ASD ACSC gaming-device disposal guidance" },
+        storage: { url: "https://www.cyber.gov.au/protect-yourself/securing-your-devices/how-secure-your-device/how-dispose-your-device-securely", label: "Open ASD ACSC secure-disposal guidance" },
+        other: { url: "https://www.cyber.gov.au/protect-yourself/securing-your-devices/how-secure-your-device/how-dispose-your-device-securely", label: "Open ASD ACSC secure-disposal guidance" }
+      };
+
+      const universalChecklist = [
+        ["Back up what you need", "Copy important files to another secure device before any erase or reset."],
+        ["Transfer access", "Move authenticator apps, passkeys and recovery methods needed for your accounts."],
+        ["Remove connections", "Sign out or unlink accounts, payment methods and trusted-device relationships where applicable."],
+        ["Remove physical media", "Take out SIM cards, SD cards, USB devices and any other removable media."],
+        ["Follow the official erase guide", "Use the current manufacturer guidance linked below for this device and software version."],
+        ["Verify the handover state", "Confirm the device starts at its initial setup screen and no account or activation lock remains."],
+      ];
+
+      const platformExtras = {
+        iphone: ["For Apple devices", "Unpair an Apple Watch if relevant, choose how to handle the eSIM, and confirm the device reaches the Hello screen."],
+        android: ["For Android devices", "Remove the Google Account before reset where required so device protection does not block the next owner."],
+        windows: ["For Windows PCs", "Use Reset this PC, Remove everything and the clean-data option when transferring the device. This is consumer preparation, not certified sanitisation."],
+        mac: ["For Mac computers", "Use Erase All Content and Settings when supported; otherwise follow Apple's model-specific process and remove Find My / Activation Lock."],
+        chromeos: ["For Chromebooks", "Remove accounts and follow Google's current Powerwash guidance. Confirm the device returns to its initial setup screen before transfer."],
+        linux: ["For Linux computers", "Back up required files, remove accounts and encryption recovery material, then follow current device, distribution and storage-media guidance. Seek specialist help when the correct erase process is uncertain."],
+        console: ["For game consoles", "Back up saved games, deactivate or unlink the console, remove discs and external storage, then follow the manufacturer's current factory-reset instructions."],
+        storage: ["For storage media", "Identify whether it is an HDD, SSD, USB or SD card. A quick format alone is not proof of secure erasure."],
+        other: ["For this device", "Use the manufacturer's current preparation instructions and seek professional help if the correct process is unclear."]
+      };
+
+      let currentData = null;
+      let currentRoute = null;
+      let passportCount = 0;
+      let massTotal = 0;
+      let circularCount = 0;
+      let stopCount = 0;
+
+      function goTo(number) {
+        document.querySelectorAll(".screen").forEach(el => el.classList.toggle("is-active", Number(el.dataset.screen) === number));
+        document.querySelectorAll(".progress-step").forEach(el => {
+          const step = Number(el.dataset.progress);
+          el.classList.toggle("is-active", step === number);
+          el.classList.toggle("is-complete", step < number);
+        });
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function setRadio(name, value) {
+        const input = document.querySelector(`input[name="${name}"][value="${value}"]`);
+        if (input) input.checked = true;
+      }
+
+      function loadDemo(kind) {
+        document.getElementById("assessmentForm").reset();
+        const demo = kind === "a"
+          ? { ownership: "owned", device: "iphone", power: "works", safety: "normal", condition: "good", goal: "donate", sensitivity: "everyday" }
+          : { ownership: "owned", device: "windows", power: "off", safety: "normal", condition: "unsure", goal: "recycle", sensitivity: "high" };
+        Object.entries(demo).forEach(([key, value]) => setRadio(key, value));
+        document.getElementById("formError").textContent = "";
+      }
+
+      function collectForm() {
+        const form = new FormData(document.getElementById("assessmentForm"));
+        const required = ["ownership", "device", "power", "safety", "condition", "goal", "sensitivity"];
+        const missing = required.filter(name => !form.get(name));
+        if (missing.length) {
+          const first = document.querySelector(`input[name="${missing[0]}"]`);
+          document.getElementById("formError").textContent = `Please answer ${missing.length === 1 ? "the remaining question" : `all ${missing.length} remaining questions`}.`;
+          first?.closest("fieldset")?.scrollIntoView({ behavior: "smooth", block: "center" });
+          first?.focus();
+          return null;
+        }
+        document.getElementById("formError").textContent = "";
+        return Object.fromEntries(required.map(name => [name, form.get(name)]));
+      }
+
+      function evaluate(d) {
+        const transferGoal = ["sell", "donate", "family"].includes(d.goal);
+        if (d.ownership !== "owned") return {
+          id: "return", type: "stop", title: "Return it to the owner or authorised IT.",
+          short: "Return to owner / IT", circular: false,
+          reason: "RebootLoop cannot authorise the transfer, preparation or destruction of a device you do not own.",
+          reasons: ["Authority overrides convenience and sustainability preferences.", "Managed devices may contain organisational data and must follow the owner's process.", "No erasure or transfer checklist is offered for this stop route."],
+          warning: "Do not reset, sell, donate or recycle this device. Contact the owner or the relevant university / employer IT team.",
+          actions: ["Stop the disposal flow.", "Keep the device secure.", "Contact the owner or authorised IT service."],
+          next: "View safe return actions"
+        };
+        if (d.safety !== "normal") return {
+          id: "hazard", type: "stop", title: "Use a qualified battery or e-waste service.",
+          short: "Hazard specialist", circular: false,
+          reason: "A swollen, leaking, hot or seriously damaged device needs specialist handling before any data or circularity decision.",
+          reasons: ["Physical safety is RebootLoop's highest-priority rule.", "Normal charging, posting and self-service preparation are suppressed.", "The correct local pathway depends on the battery and device type."],
+          warning: "Do not charge, puncture, crush or post the device. Keep it away from heat and seek current advice from a qualified service or local council.",
+          actions: ["Do not continue ordinary handling.", "Move away from heat or flammable materials only if it is safe to do so.", "Contact a qualified battery / e-waste service or local council for instructions."],
+          next: "View hazard actions"
+        };
+        if (d.power === "off" && d.sensitivity === "high") return {
+          id: "destroy", type: "specialist", title: "Professional destruction, then responsible recycling.",
+          short: "Professional destruction -> recycling", circular: true,
+          reason: "A self-service reset cannot be verified on a device that will not power on, and the reported data sensitivity is high.",
+          reasons: ["The prototype never pretends that an unavailable reset occurred.", "Data handling is escalated before materials recovery.", "Assurance remains Guided until a qualified partner supplies acceptable evidence."],
+          warning: "Do not create a 'securely erased' claim. Confirm the destruction provider's scope and downstream recycling pathway before handover.",
+          actions: ["Keep the non-functioning device secure.", "Use a qualified sanitisation / destruction provider appropriate to the media.", "Confirm the remaining material enters a responsible recycling pathway."],
+          next: "View specialist actions"
+        };
+        if (d.device === "storage" && d.sensitivity !== "everyday") return {
+          id: "sanitise", type: "specialist", title: "Specialist sanitisation or destruction.",
+          short: "Specialist sanitisation / destruction", circular: true,
+          reason: "Sensitive data on removable or internal storage needs a media-specific process; a quick format is not reliable evidence of erasure.",
+          reasons: ["The medium type changes the correct sanitisation method.", "Professional advice is safer when the required process cannot be verified.", "Reusable material should still enter an appropriate circular pathway afterward."],
+          warning: "Keep the media secure until the correct sanitisation or destruction process is confirmed.",
+          actions: ["Identify the exact media type and sensitivity.", "Follow manufacturer / ACSC guidance or use a qualified provider.", "Record only evidence that the provider actually supplies."],
+          next: "View specialist actions"
+        };
+        if (d.goal === "repair" && ["good", "repairable"].includes(d.condition)) return {
+          id: "repair", type: "normal", title: "Repair and extend its useful life.",
+          short: "Repair / extend life", circular: true,
+          reason: "The device is still useful or repairable, and keeping it in service avoids a premature end-of-life decision.",
+          reasons: ["Reuse and repair sit ahead of recycling in this decision flow.", "Back up first and give a repairer only the access they need.", "A repair outcome can be recorded without storing your identity."],
+          warning: "Ask the repairer how they handle access to devices and data. Back up important files before handover.",
+          next: "View repair preparation"
+        };
+        if (d.power === "works" && d.condition === "good" && transferGoal) {
+          const action = d.goal === "donate" ? "donate" : d.goal === "sell" ? "sell" : "give to family";
+          return {
+            id: "transfer", type: "normal", title: `Prepare, then ${action}.`,
+            short: `Prepare -> ${action}`, circular: true,
+            reason: "The device works, appears reusable and is intended for another person. Secure preparation must happen before it changes hands.",
+            reasons: ["Reuse keeps a functioning device in circulation.", "Official platform guidance reduces avoidable account and data risks.", "The passport records Self-declared preparation - never certified erasure."],
+            warning: "Follow the current manufacturer instructions for the exact device and software version. If any step fails, stop and seek professional help.",
+            next: "View secure checklist"
+          };
+        }
+        if (d.condition === "repairable") return {
+          id: "repair", type: "normal", title: "Seek a repair assessment first.",
+          short: "Repair assessment", circular: true,
+          reason: "The device may have useful life remaining, so a repair decision should come before recycling.",
+          reasons: ["A repair assessment avoids discarding recoverable value.", "Data precautions still apply before a third party receives the device.", "If repair is uneconomic, the flow can continue to responsible recycling."],
+          warning: "Back up what you can and ask the repair provider how it protects device data.",
+          next: "View repair preparation"
+        };
+        return {
+          id: "recycle", type: "normal", title: "Prepare, then recycle responsibly.",
+          short: "Prepare -> responsible recycling", circular: true,
+          reason: "The device is not currently a confident reuse candidate, so preparation comes before an accepted-item recycling pathway.",
+          reasons: ["The flow does not send electronics to general waste.", "Data preparation is addressed before handover.", "Existing accredited or otherwise verified services remain the recycling endpoint."],
+          warning: "Check the service's accepted items and current data-handling information before drop-off.",
+          next: "View secure checklist"
+        };
+      }
+
+      function showRoute() {
+        currentRoute = evaluate(currentData);
+        const badge = document.getElementById("routeBadge");
+        badge.textContent = currentRoute.type === "stop" ? "Safety / authority stop" : currentRoute.type === "specialist" ? "Specialist route" : "Recommended circular route";
+        badge.className = `route-badge${currentRoute.type === "stop" ? " is-stop" : currentRoute.type === "specialist" ? " is-specialist" : ""}`;
+        document.getElementById("route-title").textContent = currentRoute.title;
+        document.getElementById("routeReason").textContent = currentRoute.reason;
+        document.getElementById("routeReasons").innerHTML = currentRoute.reasons.map(r => `<li>${r}</li>`).join("");
+        document.getElementById("routeWarning").innerHTML = `<strong>Safety boundary:</strong> ${currentRoute.warning}`;
+        document.getElementById("routeNext").innerHTML = `${currentRoute.next} <span aria-hidden="true">→</span>`;
+        const summary = [
+          ["Authority", optionLabels.ownership[currentData.ownership]],
+          ["Device", deviceLabels[currentData.device]],
+          ["Power", optionLabels.power[currentData.power]],
+          ["Physical safety", optionLabels.safety[currentData.safety]],
+          ["Condition", optionLabels.condition[currentData.condition]],
+          ["Goal", optionLabels.goal[currentData.goal]],
+          ["Sensitivity", optionLabels.sensitivity[currentData.sensitivity]],
+        ];
+        document.getElementById("answerSummary").innerHTML = summary.map(([k,v]) => `<li><span>${k}</span><strong>${v}</strong></li>`).join("");
+        goTo(3);
+      }
+
+      function buildPrepare() {
+        const checklist = document.getElementById("checklist");
+        const actions = document.getElementById("specialistActions");
+        const source = currentRoute.type === "normal"
+          ? (sources[currentData.device] || sources.other)
+          : sources.storage;
+        document.getElementById("officialLink").href = source.url;
+        document.getElementById("officialLink").innerHTML = `${source.label} <span aria-hidden="true">↗</span>`;
+        document.getElementById("prepare-title").textContent = currentRoute.type === "normal" ? "Secure preparation checklist" : "Safe next actions";
+        document.getElementById("prepareIntro").textContent = currentRoute.type === "normal"
+          ? `Complete the applicable steps for this ${deviceLabels[currentData.device].toLowerCase()}. Your final status will be self-declared, not certified.`
+          : "This route deliberately withholds a self-erasure checklist. Follow only the safe escalation actions below.";
+        checklist.innerHTML = "";
+        actions.innerHTML = "";
+        const button = document.getElementById("generatePassport");
+        document.getElementById("assuranceDeclared").classList.remove("is-current");
+        document.getElementById("assuranceGuided").classList.add("is-current");
+
+        if (currentRoute.type === "normal") {
+          const items = [platformExtras[currentData.device] || platformExtras.other, ...universalChecklist];
+          checklist.innerHTML = items.map(([title, desc], i) => `<div class="check-item"><input type="checkbox" id="check-${i}"><label for="check-${i}"><span><strong>${title}</strong><small>${desc}</small></span></label></div>`).join("");
+          checklist.querySelectorAll("input").forEach(input => input.addEventListener("change", updateChecklistButton));
+          button.dataset.action = "passport";
+          button.textContent = "Complete all checklist items";
+          button.disabled = true;
+        } else {
+          actions.innerHTML = `<ul class="action-list">${currentRoute.actions.map(a => `<li>${a}</li>`).join("")}</ul>`;
+          button.dataset.action = currentRoute.type === "stop" ? "stop" : "passport";
+          button.textContent = currentRoute.type === "stop" ? "Finish stop route and assess another device" : "Generate Guided passport";
+          button.disabled = false;
+        }
+        goTo(4);
+      }
+
+      function updateChecklistButton() {
+        const all = [...document.querySelectorAll("#checklist input")];
+        const complete = all.length > 0 && all.every(input => input.checked);
+        const button = document.getElementById("generatePassport");
+        button.disabled = !complete;
+        button.textContent = complete ? "Generate Self-declared passport" : `${all.filter(i => !i.checked).length} checklist item${all.filter(i => !i.checked).length === 1 ? "" : "s"} remaining`;
+        document.getElementById("assuranceGuided").classList.toggle("is-current", !complete);
+        document.getElementById("assuranceDeclared").classList.toggle("is-current", complete);
+      }
+
+      function makeId() {
+        const code = { iphone: "PH", android: "PH", windows: "PC", mac: "PC", chromeos: "PC", linux: "PC", console: "GC", storage: "ST", other: "OT" }[currentData.device];
+        const suffix = Math.floor(4096 + Math.random() * 61439).toString(16).toUpperCase();
+        return `RL-${code}-${suffix}`;
+      }
+
+      function generatePassport() {
+        const declared = currentRoute.type === "normal";
+        const assurance = declared ? "Self-declared" : "Guided";
+        document.getElementById("passportId").textContent = makeId();
+        document.getElementById("passportDevice").textContent = deviceLabels[currentData.device];
+        document.getElementById("passportRoute").textContent = currentRoute.short;
+        document.getElementById("passportAssurance").textContent = assurance;
+        document.getElementById("passportDate").textContent = new Intl.DateTimeFormat("en-AU", { day: "numeric", month: "short", year: "numeric" }).format(new Date());
+        document.getElementById("passportQr").src = declared ? "qr-self-declared.svg" : "qr-guided.svg";
+        passportCount += 1;
+        massTotal += weights[currentData.device] || .4;
+        if (currentRoute.circular) circularCount += 1;
+        document.getElementById("metricDevices").textContent = passportCount;
+        document.getElementById("metricMass").textContent = `${massTotal.toFixed(2)} kg`;
+        document.getElementById("metricCircular").textContent = circularCount;
+        document.getElementById("metricStops").textContent = stopCount;
+        goTo(5);
+      }
+
+      function completePreparation() {
+        const button = document.getElementById("generatePassport");
+        if (button.dataset.action === "stop") {
+          stopCount += 1;
+          document.getElementById("metricStops").textContent = stopCount;
+          resetAll(false);
+          return;
+        }
+        generatePassport();
+      }
+
+      function resetAll(startScreen = true) {
+        document.getElementById("assessmentForm").reset();
+        document.getElementById("formError").textContent = "";
+        currentData = null;
+        currentRoute = null;
+        if (startScreen) {
+          passportCount = 0; massTotal = 0; circularCount = 0; stopCount = 0;
+          ["metricDevices", "metricCircular", "metricStops"].forEach(id => document.getElementById(id).textContent = "0");
+          document.getElementById("metricMass").textContent = "0.00 kg";
+          goTo(1);
+        } else goTo(2);
+      }
+
+      document.querySelectorAll("[data-go]").forEach(button => button.addEventListener("click", () => goTo(Number(button.dataset.go))));
+      document.querySelectorAll("[data-demo]").forEach(button => button.addEventListener("click", () => loadDemo(button.dataset.demo)));
+      document.getElementById("assessmentForm").addEventListener("submit", event => {
+        event.preventDefault();
+        currentData = collectForm();
+        if (currentData) showRoute();
+      });
+      document.getElementById("routeNext").addEventListener("click", buildPrepare);
+      document.getElementById("generatePassport").addEventListener("click", completePreparation);
+      document.getElementById("assessAnother").addEventListener("click", () => resetAll(false));
+      document.getElementById("restartDemo").addEventListener("click", () => resetAll(true));
+      document.getElementById("resetDemo").addEventListener("click", () => resetAll(true));
+    })();
+  </script>
+</body>
+</html>

@@ -10,6 +10,8 @@
 
 ![The RebootLoop team presenting at Pitch for the Planet 2026](./assets/pitch-for-the-planet-2026-team.jpg)
 
+**[View the competition poster (PDF)](./docs/poster.pdf)**
+
 ---
 
 ## The problem

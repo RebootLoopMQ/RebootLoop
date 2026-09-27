@@ -169,6 +169,7 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       overflow: hidden;
+      overflow: clip; /* clip, not hidden, so the assessment footer can stay sticky */
     }
 
     .start-grid { display: grid; grid-template-columns: 1.35fr .85fr; }
@@ -244,26 +245,26 @@
     }
 
     .content-head {
-      padding: 32px 34px 22px;
+      padding: 14px 34px 12px;
       border-bottom: 1px solid var(--line);
       display: flex;
       justify-content: space-between;
       align-items: end;
       gap: 24px;
     }
-    .content-head p { margin: 0; color: var(--muted); max-width: 680px; }
-    .timer-chip { white-space: nowrap; padding: 10px 14px; border-radius: 999px; background: var(--mint); color: var(--forest); font-weight: 850; }
+    .content-head h2 { font-size: clamp(1.7rem, 2.6vw, 2.1rem); margin-bottom: 0; }
+    .content-head .eyebrow { margin-bottom: 6px; }
+    .main-panel h2 { font-size: clamp(1.8rem, 2.8vw, 2.3rem); margin-bottom: 10px; }
+    .content-head p { margin: 0; color: var(--muted); font-size: .92rem; }
 
     .presentation-shortcuts {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       gap: 10px;
-      padding: 18px 34px;
-      background: #f0f7f5;
-      border-bottom: 1px solid var(--line);
     }
-    .presentation-shortcuts strong { margin-right: 4px; }
+    .head-side { display: grid; justify-items: end; gap: 8px; flex: 0 0 auto; }
+    .presentation-shortcuts strong { margin-right: 4px; font-size: .84rem; }
     .shortcut {
       min-height: 40px;
       border: 1px solid #b7d9ce;
@@ -275,38 +276,43 @@
     }
     .shortcut:hover { background: var(--mint); }
 
-    .assessment-form { padding: 28px 34px 34px; }
-    .question-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .assessment-form { padding: 12px 34px 0; }
+    .question-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .question-grid .span-2 { grid-column: span 2; }
     fieldset {
       min-width: 0;
       border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 17px;
+      border-radius: 14px;
+      padding: 6px 12px 11px;
       margin: 0;
       background: #fbfdfc;
     }
-    legend { padding: 0 8px; font-size: 1rem; font-weight: 850; }
-    .helper { color: var(--muted); font-size: .87rem; margin: -2px 0 12px; }
-    .choices { display: flex; flex-wrap: wrap; gap: 9px; }
+    legend { padding: 0 6px; font-size: .95rem; font-weight: 850; }
+    .helper { color: var(--muted); font-size: .8rem; line-height: 1.35; margin: 0 0 7px; }
+    .choices { display: flex; flex-wrap: wrap; gap: 6px; }
     .choices input { position: absolute; opacity: 0; pointer-events: none; }
     .choices label {
       display: inline-flex;
       align-items: center;
-      min-height: 42px;
+      min-height: 32px;
       border: 1px solid #bed2cc;
-      border-radius: 12px;
+      border-radius: 10px;
       background: white;
       color: #304b51;
-      padding: 9px 12px;
-      font-size: .91rem;
+      padding: 4px 10px;
+      font-size: .86rem;
       font-weight: 720;
       cursor: pointer;
       transition: .15s ease;
     }
     .choices label:hover { border-color: var(--teal); background: var(--mint); }
     .choices input:checked + label { background: var(--forest); border-color: var(--forest); color: white; box-shadow: 0 7px 16px rgba(11, 107, 87, .16); }
-    .form-footer { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-top: 25px; }
-    .error-message { color: #a43d32; font-weight: 750; min-height: 24px; margin: 0; }
+    .form-footer { position: sticky; bottom: 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: 18px; margin: 10px -34px 0; padding: 10px 34px 12px; background: rgba(255,255,255,.96); border-top: 1px solid var(--line); }
+    .form-footer .button-row { margin-top: 0; flex: 0 0 auto; }
+    .form-footer .button-row button { min-height: 46px; padding-top: 10px; padding-bottom: 10px; }
+    .error-message { color: #a43d32; font-weight: 750; margin: 0; }
+    .form-note { margin: 0; color: var(--muted); font-size: .85rem; max-width: 560px; }
+    .form-status:has(.error-message:not(:empty)) .form-note { display: none; }
 
     .route-layout, .prepare-layout, .plan-layout { display: grid; grid-template-columns: 1.25fr .75fr; }
     .main-panel { padding: 26px 34px; }
@@ -511,6 +517,12 @@
 
     .site-footer { padding: 18px 16px 34px; text-align: center; color: var(--muted); font-size: .84rem; }
 
+    @media (max-width: 1100px) {
+      .question-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .question-grid .span-2 { grid-column: auto; }
+      .question-grid .device-q { grid-column: 1 / -1; }
+    }
+
     @media (max-width: 900px) {
       .start-grid, .route-layout, .prepare-layout, .plan-layout, .next-layout { grid-template-columns: 1fr; }
       .difference-list { grid-template-columns: 1fr; }
@@ -518,6 +530,7 @@
       .fact-grid, .path-grid, .plan-grid { grid-template-columns: 1fr 1fr; }
       .start-aside, .side-panel { border-left: 0; border-top: 1px solid var(--line); }
       .question-grid { grid-template-columns: 1fr; }
+      .question-grid .span-2 { grid-column: auto; }
       .progress-step { font-size: 0; gap: 0; }
       .progress-step span { font-size: .84rem; }
       .prototype-label { display: none; }
@@ -535,8 +548,8 @@
       .start-main, .start-aside, .main-panel, .side-panel { padding: 26px 22px; }
       .content-head, .assessment-form { padding-left: 22px; padding-right: 22px; }
       .content-head { align-items: start; flex-direction: column; }
-      .presentation-shortcuts { padding: 16px 22px; }
-      .form-footer { flex-direction: column; align-items: stretch; }
+      .head-side { justify-items: start; }
+      .form-footer { position: static; flex-direction: column; align-items: stretch; margin-left: -22px; margin-right: -22px; padding: 12px 22px 18px; gap: 10px; }
       .form-footer .button-row { width: 100%; margin: 0; }
       .form-footer button { flex: 1; }
       .impact-stats, .difference-list, .save-row, .finale-top { grid-template-columns: 1fr; }
@@ -623,14 +636,15 @@
     <section class="screen" id="screen-2" data-screen="2" aria-labelledby="assess-title">
       <div class="surface">
         <header class="content-head">
-          <div><p class="eyebrow">Step 2 - assess</p><h2 id="assess-title">Tell us about the device.</h2><p>These answers drive a transparent decision. Assessment answers stay in this tab and are not sent to RebootLoop.</p></div>
-          <div class="timer-chip">About 60-90 seconds</div>
+          <div><p class="eyebrow">Step 2 - assess · about 60-90 seconds</p><h2 id="assess-title">Tell us about the device.</h2></div>
+          <div class="head-side">
+            <div class="presentation-shortcuts" aria-label="Presentation shortcuts">
+              <strong>Demo:</strong>
+              <button class="shortcut" type="button" data-demo="a">A - working phone for donation</button>
+              <button class="shortcut" type="button" data-demo="b">B - non-functioning sensitive laptop</button>
+            </div>
+          </div>
         </header>
-        <div class="presentation-shortcuts" aria-label="Presentation shortcuts">
-          <strong>Live-demo shortcuts:</strong>
-          <button class="shortcut" type="button" data-demo="a">A - working phone for donation</button>
-          <button class="shortcut" type="button" data-demo="b">B - non-functioning sensitive laptop</button>
-        </div>
         <form class="assessment-form" id="assessmentForm" novalidate>
           <div class="question-grid">
             <fieldset><legend>1. Authority</legend><p class="helper">Is this device yours to transfer?</p><div class="choices">
@@ -639,7 +653,7 @@
               <input id="own-other" name="ownership" type="radio" value="other"><label for="own-other">No / borrowed / found</label>
             </div></fieldset>
 
-            <fieldset><legend>2. Device</legend><p class="helper">Choose the closest category.</p><div class="choices">
+            <fieldset class="span-2 device-q"><legend>2. Device</legend><p class="helper">Choose the closest category.</p><div class="choices">
               <input id="dev-iphone" name="device" type="radio" value="iphone"><label for="dev-iphone">iPhone</label>
               <input id="dev-ipad" name="device" type="radio" value="ipad"><label for="dev-ipad">iPad</label>
               <input id="dev-android" name="device" type="radio" value="android"><label for="dev-android">Android</label>
@@ -681,14 +695,14 @@
               <input id="goal-unsure" name="goal" type="radio" value="unsure"><label for="goal-unsure">Unsure</label>
             </div></fieldset>
 
-            <fieldset style="grid-column: 1 / -1"><legend>7. Data sensitivity</legend><p class="helper">Choose the highest sensitivity that ever applied to information on the device.</p><div class="choices">
+            <fieldset class="span-2"><legend>7. Data sensitivity</legend><p class="helper">Choose the highest sensitivity that ever applied to information on the device.</p><div class="choices">
               <input id="sens-everyday" name="sensitivity" type="radio" value="everyday"><label for="sens-everyday">Everyday - photos, messages, ordinary accounts</label>
               <input id="sens-sensitive" name="sensitivity" type="radio" value="sensitive"><label for="sens-sensitive">Sensitive - health, financial or identity records</label>
               <input id="sens-high" name="sensitivity" type="radio" value="high"><label for="sens-high">Highly sensitive - managed, research or regulated data</label>
             </div></fieldset>
           </div>
           <div class="form-footer">
-            <p class="error-message" id="formError" role="alert" aria-live="polite"></p>
+            <div class="form-status"><p class="form-note">These answers drive a transparent decision. They stay in this tab and are not sent to RebootLoop.</p><p class="error-message" id="formError" role="alert" aria-live="polite"></p></div>
             <div class="button-row"><button class="quiet-button" type="button" data-go="1">Back</button><button class="primary-button" type="submit">See my recommended route <span aria-hidden="true">→</span></button></div>
           </div>
         </form>

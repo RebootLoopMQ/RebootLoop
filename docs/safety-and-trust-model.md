@@ -8,23 +8,21 @@ RebootLoop's core defensible claim: **it guides, records and routes. It does not
 |---|---|---|
 | **False assurance** | A user may transfer a device believing a checklist guarantees erasure | Persistent disclaimer; Guided and Self-declared states only; high-sensitivity escalation; no certificate language |
 | **Unsafe battery handling** | Damaged lithium batteries can create fire/injury risk | Safety screen comes first; normal flow stops; no charging, puncturing, or ordinary post instructions |
-| **Local-file sharing** | A user may mistake a downloadable passport for a certified record or share it inadvertently | JSON/print only on request; explicit local/self-report labels; no owner or hardware fields |
-| **Identifier leakage** | Serial/IMEI/location could link a passport to a person or valuable device | Random local ID only; field allowlist; no free text or contact data |
+| **Shared plans and notes** | A user may mistake a saved plan or the printed next-owner note for a certified record, or share it inadvertently | Saved only when the user chooses email, text, share or copy; the note says RebootLoop did not check the device; no owner or hardware fields |
+| **Identifier leakage** | Serial/IMEI/location could link a saved plan or note to a person or valuable device | Device category only; fixed text from the app; no free text or contact data |
 | **Outdated instructions** | Menus and account-lock processes change over time | Official source links only; guidance version + review date; retirement of stale flows |
 | **Unverified partner** | A poor operator could mishandle data or materials | Due diligence, accepted-item checks, service scope, evidence requirements — no implied endorsement |
-| **Impact inflation** | Clicks could be mistaken for completed circular outcomes | In-tab assessment/declaration counts only; verified outcomes shown as zero; carbon scenario kept separate |
+| **Impact inflation** | Clicks could be mistaken for completed circular outcomes | In-tab counts only; impact figures labelled as estimates for a typical device that apply once the job is done; stop routes get no impact screen. **Open issue:** the impact screen and session line show estimated CO₂e "avoided" and e-waste "diverted" for a route, not a verified outcome. See [Open issues](#open-issues) |
 | **Accessibility/exclusion** | A visual or technical flow may exclude some users | Plain language, keyboard navigation, visible focus, screen-reader labels, print alternative; real user review still needed |
 
-## Device passport trust model
+## Saved plan and next-owner note
 
-The passport is a **minimal journey record** — explicitly not an ownership document, appraisal, warranty, or data-destruction certificate.
+The app no longer generates a device passport or any stored record. Two things can leave the browser, and only when the user acts:
 
-**Safe public fields:**
-- Random passport ID (e.g. `RL-7F3A-92C1`)
-- Device category (e.g. "Laptop — Windows")
-- Recommended route
-- Assurance label (Guided / Self-declared)
-- Record date and explanatory note
+- **Saved plan** (email, text, share sheet or copy): the recommended route, the estimated impact range where one applies, the two next steps with their official links, and a link back to the app.
+- **Next-owner note** (print, transfer routes only): which setup screen a properly reset device should show, which account lock means stop, and a statement that RebootLoop did not check the device.
+
+Neither is an ownership document, appraisal, warranty or data-destruction certificate.
 
 **Never included:**
 - Serial number, IMEI, MAC address, or student ID
@@ -34,7 +32,7 @@ The passport is a **minimal journey record** — explicitly not an ownership doc
 - A claim that RebootLoop performed the erase
 - "Certified" language unless a named, authorised partner supplied evidence
 
-There is no public record registry, verification endpoint or QR code. The local ID is not a proof of authenticity. A future partner-verified state would require an approved partner and evidence process before any claim appears.
+There is no record registry, verification endpoint or QR code. A future partner-verified state would require an approved partner and evidence process before any claim appears.
 
 ## Language guardrails
 
@@ -47,6 +45,13 @@ RebootLoop never displays absolute or certification-implying language. Examples:
 | "Securely erased" (after a checkbox) | "Preparation complete — self-declared." |
 | "Certified recycler" (without due diligence) | "Potential pathway — verify eligibility, accepted items and current provider status." |
 | "Carbon saved" (from an unvalidated estimate) | "Illustrative production footprint of one reference model, conditional on a genuinely displaced purchase; no verified RebootLoop savings." |
+
+## Open issues
+
+The next-steps and impact redesign introduced wording the guardrails above do not yet cover. The team should decide before the showcase whether to change the app or the guardrails:
+
+- The impact screen says CO₂e from making a new device is "avoided" when this one is reused or repaired, and the session line shows "CO₂e avoided (est.)" and "e-waste diverted (est.)". The guardrail above says to avoid "carbon saved" language from an unvalidated estimate, and the [evidence ledger](./evidence-sources.md) had removed "estimated mass diverted".
+- The tablet and computer CO₂e ranges, the device weights and the car-km comparison are placeholders in the code and are not yet sourced.
 
 ## Why this matters for a pilot or partner conversation
 

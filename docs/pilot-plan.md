@@ -5,7 +5,7 @@ As of 27 September 2026, the 8 October showcase is **11 days away**. A staffed c
 ## Before 8 October: no device custody
 
 - Invite a small group of actual students, ideally **6–9 as a recruitment target**, to try the live app with a device they own or a realistic hypothetical. Do not write a result before a session occurs.
-- Observe whether they can complete an assessment, understand the route and caution, identify the correct public endpoint, and explain what a Self-declared record means. Ask what they would do next and whether anything was confusing.
+- Observe whether they can complete an assessment, understand the route and caution, identify the correct public endpoint, and explain what marking a step done does and does not prove. Ask what they would do next and whether anything was confusing.
 - Record anonymous session outcomes in the [showcase test log](./showcase-test-plan.md); do not capture names, student IDs, serials, IMEIs, screenshots of personal devices or sensitive contents.
 - Correct any misleading paths or wording, then present the actual participant count and observed findings. If no sessions occur, say so.
 - Follow up on the MobileMuster feedback email. A response is feedback, not a signed partnership unless it explicitly authorises a defined arrangement.

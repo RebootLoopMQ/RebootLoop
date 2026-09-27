@@ -58,7 +58,7 @@
 
     .header-inner {
       width: min(1180px, calc(100% - 32px));
-      min-height: 88px;
+      min-height: 64px;
       margin: 0 auto;
       display: flex;
       align-items: center;
@@ -74,17 +74,17 @@
     }
 
     .brand-mark {
-      width: 52px;
-      height: 52px;
-      flex: 0 0 52px;
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
       border-radius: 50%;
       background: var(--white);
       display: grid;
       place-items: center;
     }
 
-    .brand-mark svg { width: 39px; height: 39px; }
-    .brand-name { font-size: 1.6rem; font-weight: 850; letter-spacing: -.04em; line-height: 1; }
+    .brand-mark svg { width: 32px; height: 32px; }
+    .brand-name { font-size: 1.4rem; font-weight: 850; letter-spacing: -.04em; line-height: 1; }
     .brand-sub { margin-top: 5px; color: #bfd9d0; font-size: .82rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
 
     .header-actions { display: flex; align-items: center; gap: 14px; }
@@ -109,24 +109,26 @@
     .shell {
       width: min(1180px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 24px 0 42px;
+      padding: 10px 0 42px;
     }
 
     .progress-wrap {
       background: rgba(255,255,255,.78);
       border: 1px solid var(--line);
       border-radius: 20px;
-      padding: 15px 20px;
-      margin-bottom: 20px;
+      padding: 7px 16px;
+      margin-bottom: 10px;
       box-shadow: 0 8px 30px rgba(9, 46, 53, .05);
     }
 
     .progress-track {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
       gap: 8px;
       position: relative;
     }
+    .progress-step[hidden] { display: none; }
 
     .progress-step {
       color: #526a70;
@@ -167,10 +169,11 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       overflow: hidden;
+      overflow: clip; /* clip, not hidden, so the assessment footer can stay sticky */
     }
 
-    .start-grid { display: grid; grid-template-columns: 1.35fr .85fr; min-height: 560px; }
-    .start-main { padding: clamp(34px, 6vw, 72px); display: flex; flex-direction: column; justify-content: center; }
+    .start-grid { display: grid; grid-template-columns: 1.35fr .85fr; }
+    .start-main { padding: clamp(28px, 4vw, 52px); display: flex; flex-direction: column; justify-content: center; }
     .eyebrow {
       color: var(--forest);
       font-size: .84rem;
@@ -180,7 +183,7 @@
       margin: 0 0 14px;
     }
     h1, h2, h3, p { margin-top: 0; }
-    h1 { font-size: clamp(2.6rem, 6vw, 5.15rem); line-height: .98; letter-spacing: -.06em; margin-bottom: 20px; max-width: 820px; }
+    h1 { font-size: clamp(2.4rem, 5vw, 4.4rem); line-height: .98; letter-spacing: -.06em; margin-bottom: 20px; max-width: 820px; }
     h2 { font-size: clamp(2rem, 4vw, 3.15rem); line-height: 1.05; letter-spacing: -.045em; margin-bottom: 14px; }
     h3 { font-size: 1.2rem; line-height: 1.2; margin-bottom: 9px; }
     .lead { color: var(--muted); font-size: clamp(1.05rem, 2vw, 1.28rem); max-width: 720px; }
@@ -203,12 +206,12 @@
     .secondary-button:hover { background: #dcf1ea; }
     .quiet-button { background: transparent; color: var(--forest); border: 1px solid var(--line); }
     .quiet-button:hover { background: var(--pale); }
-    .button-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+    .button-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
 
     .start-aside {
       background: var(--navy);
       color: white;
-      padding: clamp(30px, 5vw, 54px);
+      padding: clamp(26px, 3.5vw, 40px);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -222,7 +225,7 @@
       z-index: -1;
       background: radial-gradient(circle at 100% 0%, rgba(16, 167, 131, .32), transparent 52%);
     }
-    .promise-list { display: grid; gap: 18px; margin-top: 18px; }
+    .promise-list { display: grid; gap: 14px; margin-top: 10px; }
     .promise {
       display: grid;
       grid-template-columns: 40px 1fr;
@@ -232,7 +235,7 @@
     .promise-icon { width: 40px; height: 40px; border-radius: 12px; background: rgba(183, 216, 75, .15); color: var(--lime); display: grid; place-items: center; font-weight: 900; }
     .promise p { color: #c6dbd5; margin: 3px 0 0; font-size: .95rem; }
     .notice {
-      margin-top: 26px;
+      margin-top: 20px;
       padding: 16px;
       border: 1px solid rgba(255,255,255,.17);
       background: rgba(255,255,255,.07);
@@ -242,26 +245,26 @@
     }
 
     .content-head {
-      padding: 32px 34px 22px;
+      padding: 14px 34px 12px;
       border-bottom: 1px solid var(--line);
       display: flex;
       justify-content: space-between;
       align-items: end;
       gap: 24px;
     }
-    .content-head p { margin: 0; color: var(--muted); max-width: 680px; }
-    .timer-chip { white-space: nowrap; padding: 10px 14px; border-radius: 999px; background: var(--mint); color: var(--forest); font-weight: 850; }
+    .content-head h2 { font-size: clamp(1.7rem, 2.6vw, 2.1rem); margin-bottom: 0; }
+    .content-head .eyebrow { margin-bottom: 6px; }
+    .main-panel h2 { font-size: clamp(1.8rem, 2.8vw, 2.3rem); margin-bottom: 10px; }
+    .content-head p { margin: 0; color: var(--muted); font-size: .92rem; }
 
     .presentation-shortcuts {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       gap: 10px;
-      padding: 18px 34px;
-      background: #f0f7f5;
-      border-bottom: 1px solid var(--line);
     }
-    .presentation-shortcuts strong { margin-right: 4px; }
+    .head-side { display: grid; justify-items: end; gap: 8px; flex: 0 0 auto; }
+    .presentation-shortcuts strong { margin-right: 4px; font-size: .84rem; }
     .shortcut {
       min-height: 40px;
       border: 1px solid #b7d9ce;
@@ -273,56 +276,65 @@
     }
     .shortcut:hover { background: var(--mint); }
 
-    .assessment-form { padding: 28px 34px 34px; }
-    .question-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .assessment-form { padding: 12px 34px 0; }
+    .question-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .question-grid .span-2 { grid-column: span 2; }
     fieldset {
       min-width: 0;
       border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 17px;
+      border-radius: 14px;
+      padding: 6px 12px 11px;
       margin: 0;
       background: #fbfdfc;
     }
-    legend { padding: 0 8px; font-size: 1rem; font-weight: 850; }
-    .helper { color: var(--muted); font-size: .87rem; margin: -2px 0 12px; }
-    .choices { display: flex; flex-wrap: wrap; gap: 9px; }
+    legend { padding: 0 6px; font-size: .95rem; font-weight: 850; }
+    .helper { color: var(--muted); font-size: .8rem; line-height: 1.35; margin: 0 0 7px; }
+    .choices { display: flex; flex-wrap: wrap; gap: 6px; }
     .choices input { position: absolute; opacity: 0; pointer-events: none; }
     .choices label {
       display: inline-flex;
       align-items: center;
-      min-height: 42px;
+      min-height: 32px;
       border: 1px solid #bed2cc;
-      border-radius: 12px;
+      border-radius: 10px;
       background: white;
       color: #304b51;
-      padding: 9px 12px;
-      font-size: .91rem;
+      padding: 4px 10px;
+      font-size: .86rem;
       font-weight: 720;
       cursor: pointer;
       transition: .15s ease;
     }
     .choices label:hover { border-color: var(--teal); background: var(--mint); }
     .choices input:checked + label { background: var(--forest); border-color: var(--forest); color: white; box-shadow: 0 7px 16px rgba(11, 107, 87, .16); }
-    .form-footer { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-top: 25px; }
-    .error-message { color: #a43d32; font-weight: 750; min-height: 24px; margin: 0; }
+    .form-footer { position: sticky; bottom: 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: 18px; margin: 10px -34px 0; padding: 10px 34px 12px; background: rgba(255,255,255,.96); border-top: 1px solid var(--line); }
+    .form-footer .button-row { margin-top: 0; flex: 0 0 auto; }
+    .form-footer .button-row button { min-height: 46px; padding-top: 10px; padding-bottom: 10px; }
+    .error-message { color: #a43d32; font-weight: 750; margin: 0; }
+    .form-note { margin: 0; color: var(--muted); font-size: .85rem; max-width: 560px; }
+    .form-status:has(.error-message:not(:empty)) .form-note { display: none; }
 
-    .route-layout, .prepare-layout, .passport-layout { display: grid; grid-template-columns: 1.25fr .75fr; }
-    .main-panel { padding: 38px; }
-    .side-panel { padding: 34px; background: #f0f7f5; border-left: 1px solid var(--line); }
-    .route-badge { display: inline-flex; border-radius: 999px; padding: 8px 13px; margin-bottom: 18px; background: var(--mint); color: var(--forest); font-weight: 900; font-size: .84rem; letter-spacing: .06em; text-transform: uppercase; }
+    .route-layout, .prepare-layout { display: grid; grid-template-columns: 1.25fr .75fr; }
+    .main-panel { padding: 26px 34px; }
+    .side-panel { padding: 26px 30px; background: #f0f7f5; border-left: 1px solid var(--line); }
+    .route-kicker { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-bottom: 10px; }
+    .route-kicker .eyebrow { margin: 0; }
+    .route-badge { display: inline-flex; border-radius: 999px; padding: 6px 12px; background: var(--mint); color: var(--forest); font-weight: 900; font-size: .84rem; letter-spacing: .06em; text-transform: uppercase; }
     .route-badge.is-stop { background: #fff0ed; color: #a54034; }
     .route-badge.is-specialist { background: #fff5de; color: #7f5a0a; }
-    .reason-list, .action-list, .summary-list { display: grid; gap: 12px; padding: 0; margin: 22px 0 0; list-style: none; }
+    .reason-list, .action-list, .summary-list { display: grid; gap: 8px; padding: 0; margin: 14px 0 0; list-style: none; }
     .reason-list li, .action-list li { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start; }
     .reason-list li::before, .action-list li::before { content: "✓"; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--mint); color: var(--forest); font-weight: 900; }
-    .summary-list li { border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+    .summary-list li { border-bottom: 1px solid var(--line); padding-bottom: 7px; }
     .summary-list li:last-child { border-bottom: 0; }
     .summary-list span { display: block; color: var(--muted); font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
     .summary-list strong { display: block; margin-top: 2px; }
-    .safety-callout { margin-top: 24px; border-left: 5px solid var(--coral); border-radius: 13px; padding: 16px 18px; background: #fff5f2; color: #6b332c; }
-    .route-reason { font-size: 1.14rem; color: var(--muted); max-width: 760px; }
+    .safety-callout { margin-top: 16px; border-left: 5px solid var(--coral); border-radius: 13px; padding: 12px 16px; background: #fff5f2; color: #6b332c; }
+    .route-layout .reason-list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; font-size: .95rem; }
+    .route-layout .safety-callout { font-size: .95rem; }
+    .route-reason { font-size: 1.02rem; margin-bottom: 0; color: var(--muted); max-width: 760px; }
 
-    .checklist { display: grid; gap: 12px; margin: 24px 0; }
+    .checklist { display: grid; gap: 8px; margin: 16px 0; }
     .check-item { position: relative; }
     .check-item input { position: absolute; opacity: 0; }
     .check-item label {
@@ -332,7 +344,7 @@
       align-items: start;
       border: 1px solid var(--line);
       border-radius: 15px;
-      padding: 15px 16px;
+      padding: 10px 14px;
       background: #fbfdfc;
       cursor: pointer;
     }
@@ -349,37 +361,95 @@
     .assurance-level.is-current { border-color: var(--lime); background: rgba(183,216,75,.10); }
     .assurance-level strong { color: var(--lime); }
 
-    .passport-card { background: var(--navy); color: white; border-radius: 24px; padding: 28px; position: relative; overflow: hidden; }
-    .passport-card::after { content: ""; position: absolute; width: 260px; height: 260px; border-radius: 50%; background: rgba(16,167,131,.18); right: -105px; top: -115px; }
-    .passport-top { display: flex; justify-content: space-between; gap: 22px; align-items: start; position: relative; z-index: 1; }
-    .passport-label { color: var(--lime); font-weight: 900; letter-spacing: .08em; text-transform: uppercase; font-size: .82rem; }
-    .passport-id { font-size: 2rem; font-weight: 900; letter-spacing: -.03em; margin-top: 6px; }
-    .qr-block { flex: 0 0 210px; text-align: center; }
-    .qr-frame { width: 210px; height: 210px; background: white; border-radius: 16px; padding: 8px; display: grid; place-items: center; }
-    .qr-frame svg { width: 100%; height: 100%; display: block; }
-    .qr-caption { display: block; margin-top: 8px; color: #c6dbd5; font-size: .78rem; line-height: 1.35; }
-    .passport-data { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 15px; margin-top: 28px; position: relative; z-index: 1; }
-    .passport-field { border-top: 1px solid rgba(255,255,255,.17); padding-top: 10px; }
-    .passport-field span { color: #a9c7be; display: block; font-size: .75rem; font-weight: 850; letter-spacing: .07em; text-transform: uppercase; }
-    .passport-field strong { display: block; margin-top: 4px; font-size: 1rem; }
-    .passport-disclaimer { position: relative; z-index: 1; margin: 22px 0 0; color: #c6dbd5; font-size: .84rem; }
+    .impact-hero { position: relative; overflow: hidden; background: var(--navy); color: white; border-radius: var(--radius) var(--radius) 0 0; padding: clamp(28px, 5vw, 48px); }
+    .impact-hero::before, .impact-hero::after { content: ""; position: absolute; border-radius: 50%; pointer-events: none; }
+    .impact-hero::before { width: 340px; height: 340px; right: -120px; top: -150px; background: rgba(16,167,131,.22); }
+    .impact-hero::after { width: 180px; height: 180px; left: -70px; bottom: -90px; background: rgba(183,216,75,.12); }
+    .impact-hero > * { position: relative; z-index: 1; }
+    .impact-hero .eyebrow { color: var(--lime); }
+    .impact-hero h2 { color: white; font-size: clamp(2rem, 4.4vw, 3.2rem); line-height: 1.04; max-width: 760px; }
+    .impact-lede { color: #cde1dc; font-size: 1.1rem; max-width: 640px; margin: 14px 0 0; }
+    .finale { overflow: hidden; }
+    .finale-hero { border-radius: 0; padding: 28px 32px 18px; }
+    .finale-hero .eyebrow { margin-bottom: 4px; }
+    .finale-top { display: grid; grid-template-columns: 1.15fr .85fr; gap: 28px; align-items: center; }
+    .finale-hero h2 { font-size: clamp(1.8rem, 3.2vw, 2.6rem); margin: 0; }
+    .finale-hero .impact-lede { margin: 10px 0 0; font-size: 1rem; }
+    .finale-stat { border: 1px solid rgba(255,255,255,.18); border-radius: 20px; padding: 18px 20px; background: rgba(255,255,255,.06); }
+    .finale-stat strong { display: block; color: var(--lime); font-size: clamp(2.6rem, 5vw, 3.8rem); line-height: 1; letter-spacing: -.04em; }
+    .finale-stat span { display: block; margin-top: 6px; color: #e3efeb; font-weight: 700; font-size: .95rem; }
+    .finale-stat small { display: block; margin-top: 4px; color: #a9c7be; font-size: .8rem; }
+    .finale-stat small a { color: #cbe987; }
+    .finale-session { margin: 16px 0 0; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.12); color: #a9c7be; font-size: .8rem; }
+    .finale-session strong { color: white; }
+    .finale-next { padding: 20px 32px 18px; }
+    .finale-next .eyebrow { margin-bottom: 2px; }
+    .finale-next h3 { margin: 0 0 12px; }
+    .next-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+    .next-link { display: grid; grid-template-columns: 48px 1fr auto; gap: 14px; align-items: center; padding: 13px 16px; border: 1px solid #b7d9ce; border-radius: 18px; background: var(--mint); color: var(--ink); text-decoration: none; transition: .15s ease; }
+    .next-link:hover { border-color: var(--forest); transform: translateY(-1px); box-shadow: 0 8px 18px rgba(11,107,87,.12); }
+    .next-link:first-child { background: var(--forest); border-color: var(--forest); color: white; }
+    .next-link:first-child small { color: #d5eee6; }
+    .next-icon { width: 48px; height: 48px; border-radius: 14px; background: white; display: grid; place-items: center; font-size: 1.4rem; }
+    .next-link strong { display: block; font-size: 1.02rem; }
+    .next-link small { display: block; margin-top: 2px; color: var(--muted); }
+    .next-arrow { font-size: 1.3rem; font-weight: 900; }
+    .finale-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+    .save-inline { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 8px; }
+    .save-inline > span:first-child { font-weight: 850; font-size: .88rem; margin-right: 2px; }
+    .save-inline a, .save-inline button { display: inline-flex; align-items: center; gap: 5px; min-height: 34px; padding: 5px 11px; border: 1px solid var(--line); border-radius: 999px; background: white; color: var(--ink); font: inherit; font-size: .84rem; font-weight: 800; text-decoration: none; cursor: pointer; }
+    .save-inline .save-confirm { flex-basis: 100%; color: var(--forest); font-size: .84rem; font-weight: 800; }
+    .save-inline .save-confirm:empty { display: none; }
+    .finale-buttons { margin: 0; }
+    .finale-buttons button { min-height: 40px; padding: 8px 13px; font-size: .9rem; }
+    .finale-note { margin: 10px 0 0; color: var(--muted); font-size: .72rem; }
+    .save-confirm { margin: 10px 0 0; min-height: 1.2em; font-weight: 800; color: var(--forest); font-size: .9rem; }
+    .help-links { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+    .help-strip { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 24px; margin-top: 18px; padding: 12px 16px; border-radius: 14px; background: #f0f7f5; }
+    .help-strip .micro-note { font-size: .84rem; }
+    .steps-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px 24px; margin-top: 14px; }
+    .steps-foot .micro-note { margin: 0; max-width: 560px; }
+    .steps-foot .button-row { margin-top: 0; }
+    .help-links a { font-weight: 850; }
+    .steps-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; }
+    .steps-progress { flex: 1 1 220px; max-width: 320px; }
+    .steps-progress span { display: block; font-size: .85rem; font-weight: 800; color: var(--muted); margin-bottom: 6px; text-align: right; }
+    .steps-bar { height: 10px; border-radius: 99px; background: var(--mint); overflow: hidden; }
+    .steps-bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--teal), var(--lime)); transition: width .4s ease; }
+    .action-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); align-items: start; gap: 12px; margin-top: 14px; }
+    .action-card { border: 1px solid var(--line); border-radius: 20px; padding: 16px 18px; background: white; transition: .2s ease; }
+    .action-card.is-done { border-color: #8dcab8; background: var(--mint); }
+    .action-top { display: grid; grid-template-columns: 48px 1fr auto; gap: 16px; align-items: start; }
+    .action-num { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; background: var(--navy); color: var(--lime); font-weight: 900; font-size: 1.2rem; }
+    .action-card.is-done .action-num { background: var(--forest); color: white; }
+    .action-card h3 { margin: 2px 0 4px; }
+    .action-card p { margin: 0; color: var(--muted); }
+    .action-time { font-size: .8rem; font-weight: 850; color: var(--forest); text-transform: uppercase; letter-spacing: .06em; }
+    .action-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .action-links .primary-button, .action-links .secondary-button { min-height: 44px; padding: 9px 16px; }
+    .action-links a { text-decoration: none; }
+    .done-toggle { border: 2px solid var(--forest); background: white; color: var(--forest); border-radius: 999px; padding: 8px 14px; font-weight: 850; cursor: pointer; white-space: nowrap; }
+    .action-card.is-done .done-toggle { background: var(--forest); color: white; }
+    .action-card details { margin-top: 10px; }
+    .action-card summary { cursor: pointer; font-weight: 800; color: var(--forest); }
+    .action-card .checklist { margin: 12px 0 0; }
+    .action-card ul.plain { margin: 12px 0 0; padding-left: 20px; display: grid; gap: 6px; color: var(--ink); }
+    .handover-slip { position: relative; margin-top: 16px; border: 2px dashed #9bb5ad; border-radius: 16px; padding: 24px 22px 20px; background: #fffdf6; }
+    .slip-cut { position: absolute; top: -12px; left: 18px; padding: 0 8px; background: white; color: var(--muted); font-size: .74rem; font-weight: 850; letter-spacing: .06em; text-transform: uppercase; }
+    .action-card.is-done .slip-cut { background: var(--mint); }
+    .handover-slip h4 { margin: 0; font-size: 1.1rem; }
+    .handover-slip ol { margin: 12px 0 0; padding-left: 20px; display: grid; gap: 7px; }
+    .slip-contact { margin-top: 16px; padding-bottom: 4px; border-bottom: 1px solid #9bb5ad; color: var(--muted); font-size: .85rem; }
 
-    .dashboard { margin-top: 22px; }
-    .metric-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
-    .metric { background: white; border: 1px solid var(--line); border-radius: 15px; padding: 16px; }
-    .metric span { display: block; color: var(--muted); font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; }
-    .metric strong { display: block; margin-top: 4px; font-size: 1.65rem; letter-spacing: -.04em; }
     .demo-label { margin-top: 12px; color: var(--muted); font-size: .82rem; }
 
-    .route-destination { margin-top: 24px; border: 1px solid #b7d9ce; background: var(--mint); border-radius: 17px; padding: 19px; }
-    .route-destination h3 { margin-bottom: 7px; }
-    .route-destination p { margin: 0 0 10px; color: #315750; }
+    .route-destination { margin-top: 16px; border: 1px solid #b7d9ce; background: var(--mint); border-radius: 17px; padding: 14px 18px; }
+    .route-destination h3 { font-size: 1.08rem; margin-bottom: 4px; }
+    .route-destination p { margin: 0 0 6px; color: #315750; font-size: .94rem; }
     .route-destination a { font-weight: 850; }
-    .route-destination small { display: block; margin-top: 9px; color: #43645c; }
-    .passport-tools { margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap; }
-    .passport-tools button { min-height: 44px; }
+    .route-destination small { display: block; margin-top: 5px; color: #43645c; }
     .micro-note { color: var(--muted); font-size: .88rem; }
-    .below { margin-top: 26px; display: grid; gap: 22px; }
+    .below { margin-top: 26px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; }
     .section-card { background: white; border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(24px,4vw,40px); box-shadow: 0 10px 28px rgba(9,46,53,.04); scroll-margin-top: 18px; }
     .section-intro { max-width: 800px; color: var(--muted); font-size: 1.06rem; }
     .fact-grid, .path-grid, .plan-grid { display: grid; gap: 15px; grid-template-columns: repeat(3,minmax(0,1fr)); margin-top: 20px; }
@@ -395,6 +465,7 @@
     .carbon-card h3 { font-size: clamp(1.5rem,3vw,2.25rem); }
     .carbon-card p { color: #cde1dc; }
     .carbon-card a { color: #cbe987; }
+    .carbon-card > * { min-width: 0; }
     .carbon-control { display: grid; gap: 10px; align-content: center; }
     .carbon-control label { font-weight: 800; }
     .carbon-control select { width: 100%; border: 2px solid #9bcab8; border-radius: 12px; padding: 12px; background: white; color: var(--ink); }
@@ -427,12 +498,19 @@
 
     .site-footer { padding: 18px 16px 34px; text-align: center; color: var(--muted); font-size: .84rem; }
 
+    @media (max-width: 1100px) {
+      .question-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .question-grid .span-2 { grid-column: auto; }
+      .question-grid .device-q { grid-column: 1 / -1; }
+    }
+
     @media (max-width: 900px) {
-      .start-grid, .route-layout, .prepare-layout, .passport-layout { grid-template-columns: 1fr; }
+      .start-grid, .route-layout, .prepare-layout { grid-template-columns: 1fr; }
       .carbon-card { grid-template-columns: 1fr; }
       .fact-grid, .path-grid, .plan-grid { grid-template-columns: 1fr 1fr; }
       .start-aside, .side-panel { border-left: 0; border-top: 1px solid var(--line); }
       .question-grid { grid-template-columns: 1fr; }
+      .question-grid .span-2 { grid-column: auto; }
       .progress-step { font-size: 0; gap: 0; }
       .progress-step span { font-size: .84rem; }
       .prototype-label { display: none; }
@@ -450,25 +528,24 @@
       .start-main, .start-aside, .main-panel, .side-panel { padding: 26px 22px; }
       .content-head, .assessment-form { padding-left: 22px; padding-right: 22px; }
       .content-head { align-items: start; flex-direction: column; }
-      .presentation-shortcuts { padding: 16px 22px; }
-      .form-footer { flex-direction: column; align-items: stretch; }
+      .head-side { justify-items: start; }
+      .form-footer { position: static; flex-direction: column; align-items: stretch; margin-left: -22px; margin-right: -22px; padding: 12px 22px 18px; gap: 10px; }
       .form-footer .button-row { width: 100%; margin: 0; }
       .form-footer button { flex: 1; }
-      .passport-top { flex-direction: column; }
-      .qr-block { flex-basis: auto; }
-      .passport-data, .metric-grid { grid-template-columns: 1fr; }
+      .finale-top { grid-template-columns: 1fr; }
+      .action-top { grid-template-columns: 40px 1fr; }
+      .action-num { width: 40px; height: 40px; }
+      .done-toggle { grid-column: 1 / -1; justify-self: start; }
       .fact-grid, .path-grid, .plan-grid { grid-template-columns: 1fr; }
+      .route-layout .reason-list { grid-template-columns: 1fr; }
+      .source-strip a { white-space: normal; }
     }
 
     @media print {
-      body { background: white; }
-      .site-header, .progress-wrap, #screen-1, #screen-2, #screen-3, #screen-4, .below, .source-strip, .site-footer, .button-row, .passport-tools, .passport-tools + .micro-note, .side-panel { display: none !important; }
-      .shell { width: 100%; padding: 0; }
-      #screen-5 { display: block; }
-      .surface { border: 0; box-shadow: none; }
-      .passport-layout { display: block; }
-      .main-panel { padding: 0; }
-      .passport-card { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      /* Printing is only offered for the next-owner note. */
+      body * { visibility: hidden !important; }
+      #handoverSlip, #handoverSlip * { visibility: visible !important; }
+      #handoverSlip { position: absolute; left: 0; top: 0; width: 100%; margin: 0; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -508,8 +585,8 @@
         <div class="progress-step is-active" data-progress="1"><span>1</span>Start</div>
         <div class="progress-step" data-progress="2"><span>2</span>Assess</div>
         <div class="progress-step" data-progress="3"><span>3</span>Route</div>
-        <div class="progress-step" data-progress="4"><span>4</span>Prepare</div>
-        <div class="progress-step" data-progress="5"><span>5</span>Passport</div>
+        <div class="progress-step" data-progress="4"><span>4</span><em id="step4Label" style="font-style:normal">Next steps</em></div>
+        <div class="progress-step" data-progress="5" id="step5"><span>5</span>Your impact</div>
       </div>
     </nav>
 
@@ -526,11 +603,11 @@
         </div>
         <aside class="start-aside" aria-label="RebootLoop safety promise">
           <p class="eyebrow" style="color: var(--lime)">Safety promise</p>
-          <h2 style="font-size:2rem">A useful answer, with clear limits.</h2>
+          <h2 style="font-size:1.8rem">A useful answer, with clear limits.</h2>
           <div class="promise-list">
             <div class="promise"><div class="promise-icon">1</div><div><strong>Safety and ownership first</strong><p>Hazards and managed devices stop the normal flow.</p></div></div>
             <div class="promise"><div class="promise-icon">2</div><div><strong>Official preparation guidance</strong><p>Platform links are shown without asking for credentials.</p></div></div>
-            <div class="promise"><div class="promise-icon">3</div><div><strong>Your next action</strong><p>Get relevant public services when eligible, then save a minimal local record.</p></div></div>
+            <div class="promise"><div class="promise-icon">3</div><div><strong>Your next action</strong><p>Get relevant public services when eligible, and see the difference finishing the job makes.</p></div></div>
           </div>
           <div class="notice"><strong>Important:</strong> RebootLoop does not erase data, certify destruction, collect devices or guarantee that information is unrecoverable. We have no confirmed delivery partnership.</div>
         </aside>
@@ -540,14 +617,15 @@
     <section class="screen" id="screen-2" data-screen="2" aria-labelledby="assess-title">
       <div class="surface">
         <header class="content-head">
-          <div><p class="eyebrow">Step 2 - assess</p><h2 id="assess-title">Tell us about the device.</h2><p>These answers drive a transparent decision. Assessment answers stay in this tab and are not sent to RebootLoop.</p></div>
-          <div class="timer-chip">About 60-90 seconds</div>
+          <div><p class="eyebrow">Step 2 - assess · about 60-90 seconds</p><h2 id="assess-title">Tell us about the device.</h2></div>
+          <div class="head-side">
+            <div class="presentation-shortcuts" aria-label="Presentation shortcuts">
+              <strong>Demo:</strong>
+              <button class="shortcut" type="button" data-demo="a">A - working phone for donation</button>
+              <button class="shortcut" type="button" data-demo="b">B - non-functioning sensitive laptop</button>
+            </div>
+          </div>
         </header>
-        <div class="presentation-shortcuts" aria-label="Presentation shortcuts">
-          <strong>Live-demo shortcuts:</strong>
-          <button class="shortcut" type="button" data-demo="a">A - working phone for donation</button>
-          <button class="shortcut" type="button" data-demo="b">B - non-functioning sensitive laptop</button>
-        </div>
         <form class="assessment-form" id="assessmentForm" novalidate>
           <div class="question-grid">
             <fieldset><legend>1. Authority</legend><p class="helper">Is this device yours to transfer?</p><div class="choices">
@@ -556,7 +634,7 @@
               <input id="own-other" name="ownership" type="radio" value="other"><label for="own-other">No / borrowed / found</label>
             </div></fieldset>
 
-            <fieldset><legend>2. Device</legend><p class="helper">Choose the closest category.</p><div class="choices">
+            <fieldset class="span-2 device-q"><legend>2. Device</legend><p class="helper">Choose the closest category.</p><div class="choices">
               <input id="dev-iphone" name="device" type="radio" value="iphone"><label for="dev-iphone">iPhone</label>
               <input id="dev-ipad" name="device" type="radio" value="ipad"><label for="dev-ipad">iPad</label>
               <input id="dev-android" name="device" type="radio" value="android"><label for="dev-android">Android</label>
@@ -598,14 +676,14 @@
               <input id="goal-unsure" name="goal" type="radio" value="unsure"><label for="goal-unsure">Unsure</label>
             </div></fieldset>
 
-            <fieldset style="grid-column: 1 / -1"><legend>7. Data sensitivity</legend><p class="helper">Choose the highest sensitivity that ever applied to information on the device.</p><div class="choices">
+            <fieldset class="span-2"><legend>7. Data sensitivity</legend><p class="helper">Choose the highest sensitivity that ever applied to information on the device.</p><div class="choices">
               <input id="sens-everyday" name="sensitivity" type="radio" value="everyday"><label for="sens-everyday">Everyday - photos, messages, ordinary accounts</label>
               <input id="sens-sensitive" name="sensitivity" type="radio" value="sensitive"><label for="sens-sensitive">Sensitive - health, financial or identity records</label>
               <input id="sens-high" name="sensitivity" type="radio" value="high"><label for="sens-high">Highly sensitive - managed, research or regulated data</label>
             </div></fieldset>
           </div>
           <div class="form-footer">
-            <p class="error-message" id="formError" role="alert" aria-live="polite"></p>
+            <div class="form-status"><p class="form-note">These answers drive a transparent decision. They stay in this tab and are not sent to RebootLoop.</p><p class="error-message" id="formError" role="alert" aria-live="polite"></p></div>
             <div class="button-row"><button class="quiet-button" type="button" data-go="1">Back</button><button class="primary-button" type="submit">See my recommended route <span aria-hidden="true">→</span></button></div>
           </div>
         </form>
@@ -615,8 +693,7 @@
     <section class="screen" id="screen-3" data-screen="3" aria-labelledby="route-title">
       <div class="surface route-layout">
         <div class="main-panel">
-          <span class="route-badge" id="routeBadge">Recommended route</span>
-          <p class="eyebrow">Step 3 - route</p>
+          <div class="route-kicker"><span class="route-badge" id="routeBadge">Recommended route</span><p class="eyebrow">Step 3 - route</p></div>
           <h2 id="route-title">Prepare, then donate.</h2>
           <p class="route-reason" id="routeReason"></p>
           <ul class="reason-list" id="routeReasons"></ul>
@@ -635,15 +712,14 @@
     <section class="screen" id="screen-4" data-screen="4" aria-labelledby="prepare-title">
       <div class="surface prepare-layout">
         <div class="main-panel">
-          <p class="eyebrow">Step 4 - prepare</p>
+          <p class="eyebrow">Step 4 - next steps</p>
           <h2 id="prepare-title">Secure preparation checklist</h2>
           <p class="route-reason" id="prepareIntro"></p>
           <div class="safety-callout"><strong>Residual-risk warning:</strong> These steps reduce risk but do not guarantee that data is unrecoverable. If you cannot complete a step, stop and seek appropriate professional help.</div>
           <div class="checklist" id="checklist"></div>
           <div id="specialistActions"></div>
           <a class="official-link" id="officialLink" href="https://www.cyber.gov.au/protect-yourself/securing-your-devices/how-secure-your-device/how-dispose-your-device-securely" target="_blank" rel="noreferrer">Open official guidance <span aria-hidden="true">↗</span></a>
-          <div class="button-row"><button class="quiet-button" type="button" data-go="3">Back</button><button class="primary-button" type="button" id="generatePassport">Complete all checklist items</button></div>
-          <p class="micro-note">A checkbox records your statement only. RebootLoop cannot inspect the device or check that erasure succeeded.</p>
+          <div class="button-row"><button class="quiet-button" type="button" data-go="3">Back</button><button class="primary-button" type="button" id="finishStop">Finish and assess another device</button></div>
         </div>
         <aside class="side-panel">
           <div class="assurance-card">
@@ -660,42 +736,57 @@
       </div>
     </section>
 
-    <section class="screen" id="screen-5" data-screen="5" aria-labelledby="passport-screen-title">
-      <div class="surface passport-layout">
+    <section class="screen" id="screen-5" data-screen="5" aria-labelledby="steps-title">
+      <div class="surface">
         <div class="main-panel">
-          <p class="eyebrow">Step 5 - passport</p>
-          <h2 id="passport-screen-title">Save your next step.</h2>
-          <p class="section-intro">This passport stays in this tab until you leave. Save it as a PDF or print it if useful. It records your statements, not a verified outcome.</p>
-          <div class="passport-card" aria-label="RebootLoop self-declared device passport">
-            <div class="passport-top">
-              <div><div class="passport-label">RebootLoop device passport</div><div class="passport-id" id="passportId">RL-LOCAL</div><p style="margin-top:8px;color:#c6dbd5">Local record · no registry or external verification</p></div>
-              <div class="qr-block"><div class="qr-frame" id="passportQr"></div><span class="qr-caption">Scan to read this local record.<br>No online verification.</span></div>
-            </div>
-            <div class="passport-data">
-              <div class="passport-field"><span>Device category</span><strong id="passportDevice"></strong></div>
-              <div class="passport-field"><span>Recommended route</span><strong id="passportRoute"></strong></div>
-              <div class="passport-field"><span>Assurance</span><strong id="passportAssurance"></strong></div>
-              <div class="passport-field"><span>Recorded</span><strong id="passportDate"></strong></div>
-            </div>
-            <p class="passport-disclaimer">This record shows a recommendation and the level of preparation you declared. It does not prove erasure, handover, recycling or carbon savings. No owner or hardware identifier is included.</p>
+          <div class="steps-head">
+            <div><p class="eyebrow">Step 4 - next steps</p><h2 id="steps-title" style="margin:0">Finish the job.</h2></div>
+            <div class="steps-progress"><span id="stepsCount">0 of 2 done</span><div class="steps-bar"><i id="stepsBar"></i></div></div>
           </div>
-          <div class="passport-tools"><button class="secondary-button" type="button" id="printPassport">Save as PDF / print</button></div>
-          <p class="micro-note">In the print window, choose “Save as PDF” to keep a copy. The QR contains only the details shown on the card and its unverified status.</p>
-          <div class="button-row"><button class="secondary-button" type="button" id="assessAnother">Assess another device</button><button class="quiet-button" type="button" id="restartDemo">Return to start</button></div>
+          <div class="safety-callout"><strong>Residual-risk warning:</strong> These steps reduce risk but do not guarantee that data is unrecoverable. If you cannot complete a step, stop and seek appropriate professional help.</div>
+          <div class="action-cards" id="actionCards"></div>
+          <div class="steps-foot">
+            <p class="micro-note">You don't have to finish now. RebootLoop can't check the device or confirm erasure; if any step fails, stop and get help.</p>
+            <div class="button-row"><button class="quiet-button" type="button" data-go="3">Back</button><button class="primary-button" type="button" id="showImpact">See your impact <span aria-hidden="true">→</span></button></div>
+          </div>
+          <aside class="help-strip" aria-label="Need help?">
+            <div><strong>Stuck on a step?</strong> <span class="micro-note">Official guidance and public services for your route. RebootLoop has no partnership with them.</span></div>
+            <div class="help-links" id="helpLinks"></div>
+          </aside>
         </div>
-        <aside class="side-panel">
-          <p class="eyebrow">This tab only</p>
-          <h3>Activity, not completed impact.</h3>
-          <div class="dashboard">
-            <div class="metric-grid">
-              <div class="metric"><span>Assessments submitted</span><strong id="metricDevices">0</strong></div>
-              <div class="metric"><span>Self-declared records</span><strong id="metricDeclared">0</strong></div>
-              <div class="metric"><span>Guided records</span><strong id="metricGuided">0</strong></div>
-              <div class="metric"><span>Verified outcomes</span><strong>0</strong></div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-6" data-screen="6" aria-labelledby="impact-title">
+      <div class="surface finale">
+        <div class="impact-hero finale-hero">
+          <div class="finale-top">
+            <div>
+              <p class="eyebrow">Step 5 - your impact <span aria-hidden="true">🎉</span></p>
+              <h2 id="impact-title"></h2>
+              <p class="impact-lede" id="impactLede"></p>
             </div>
-            <p class="demo-label">Counts reset when this tab reloads. No handover or carbon outcome is collected or verified here.</p>
+            <div class="finale-stat" id="impactStats"></div>
           </div>
-        </aside>
+          <p class="finale-session">This session: circular routes <strong id="metricCircular">0</strong> · safety stops <strong id="metricStops">0</strong> · CO₂e avoided (est.) <strong id="metricCarbon">0 kg</strong> · e-waste diverted (est.) <strong id="metricMass">0 kg</strong></p>
+        </div>
+        <div class="finale-next">
+          <p class="eyebrow">Where to go next</p>
+          <h3 id="nextTitle">Where to go next</h3>
+          <div class="next-links" id="nextLinks"></div>
+          <div class="finale-foot">
+            <div class="save-inline">
+              <span>Save your results</span>
+              <a id="saveEmail" href="#">✉️ Email</a>
+              <a id="saveText" href="#">💬 Text</a>
+              <button type="button" id="saveShare" hidden>📤 Share</button>
+              <button type="button" id="saveCopy">📋 Copy</button>
+              <span class="save-confirm" id="saveConfirm" aria-live="polite"></span>
+            </div>
+            <div class="button-row finale-buttons"><button class="quiet-button" type="button" data-go="5">Back to my steps</button><button class="secondary-button" type="button" id="assessAnother">Assess another device</button><button class="quiet-button" type="button" id="restartDemo">Start over</button></div>
+          </div>
+          <p class="finale-note">Impact is an estimate for a typical device, based on manufacturers' published footprints, and applies once the job is done. RebootLoop has no partnership with the services linked here. <a href="#why">How we estimate</a></p>
+        </div>
       </div>
     </section>
 
@@ -712,7 +803,7 @@
         <div class="path-grid" aria-label="How the decision flow works">
           <div class="path"><span class="path-number">1</span><h3>Check the boundary</h3><p>Hazards, lack of authority, unavailable erasure and high sensitivity trigger escalation.</p></div>
           <div class="path"><span class="path-number">2</span><h3>Choose the next life</h3><p>Repair or reuse where viable; use an accepted recycling pathway when appropriate.</p></div>
-          <div class="path"><span class="path-number">3</span><h3>Prepare and save</h3><p>Read official guidance and save or print a local record of what you declared.</p></div>
+          <div class="path"><span class="path-number">3</span><h3>See your impact</h3><p>Get the official guide, the right drop-off point and a copy of your results, plus what finishing the job does for the planet.</p></div>
         </div>
         <div class="carbon-card" id="carbon">
           <div>
@@ -735,7 +826,7 @@
         <h2 id="industry-title">A decision layer before handover.</h2>
         <p class="section-intro">RebootLoop gives a person an informed route and secure-preparation guidance, then points them to established services where the category fits. We are a three-person Macquarie University student team. We placed fifth of 24 at Pitch for the Planet with an A1 poster and interactive proof-of-concept; this public version is the next test, not a running collection service.</p>
         <div class="plan-grid">
-          <div class="plan-step"><span class="path-number">Now</span><h3>Public self-service</h3><p>Run the route, read linked official guidance, and save a local self-declared or Guided record. No device intake or booking.</p></div>
+          <div class="plan-step"><span class="path-number">Now</span><h3>Public self-service</h3><p>Run the route, see an estimated impact range and clear next steps with official guidance. No device intake or booking.</p></div>
           <div class="plan-step"><span class="path-number">Next</span><h3>Test with real people</h3><p>Observe whether students choose the right route, understand the warning, find the destination and can explain the limits. Report actual counts and failures.</p></div>
           <div class="plan-step"><span class="path-number">Later</span><h3>Small campus pilot</h3><p>Only after campus permission, privacy review and an agreed handover process. Track completed outcomes separately from recommendations.</p></div>
         </div>
@@ -765,7 +856,6 @@
 
   <footer class="site-footer"><strong>RebootLoop Team:</strong> Shah Noor Mostafa Bhuiyan · Nafe Ibne Mamun · Alexander Kai Cryan<br>Independent student project · Phase 2 public prototype · Your in-tab assessment resets on reload</footer>
 
-  <script src="vendor/qrcode.js"></script>
   <script>
     (() => {
       const deviceLabels = { iphone: "iPhone", ipad: "iPad", android: "Android device", windows: "Windows PC", mac: "Mac", chromeos: "Chromebook / ChromeOS device", linux: "Linux computer", console: "Game console", storage: "HDD / SSD / USB / SD", other: "Other technology" };
@@ -827,18 +917,26 @@
 
       let currentData = null;
       let currentRoute = null;
-      let currentPassport = null;
       let assessmentCount = 0;
       let assessmentCounted = false;
-      let declaredCount = 0;
-      let guidedCount = 0;
+      let planCount = 0;
+      // Session impact, one entry per assessment so changed answers replace rather than add.
+      const sessionImpact = new Map();
+      let assessmentId = 0;
+      // Typical device weights in kg, for the e-waste estimate. VERIFY before showcase.
+      const typicalMass = { iphone: 0.2, android: 0.2, ipad: 0.5, windows: 1.8, mac: 1.4, chromeos: 1.3, linux: 1.8, console: 4, storage: 0.1, other: 0.5 };
 
       function goTo(number) {
         document.querySelectorAll(".screen").forEach(el => el.classList.toggle("is-active", Number(el.dataset.screen) === number));
+        // Screen 4 (stop / specialist actions) and screen 5 (impact) are alternative step 4s.
+        const progress = { 5: 4, 6: 5 }[number] || number;
+        const stopPath = number === 4 || (currentRoute && currentRoute.type !== "normal");
+        document.getElementById("step4Label").textContent = stopPath ? "Safe next steps" : "Next steps";
+        document.getElementById("step5").hidden = stopPath;
         document.querySelectorAll(".progress-step").forEach(el => {
           const step = Number(el.dataset.progress);
-          el.classList.toggle("is-active", step === number);
-          el.classList.toggle("is-complete", step < number);
+          el.classList.toggle("is-active", step === progress);
+          el.classList.toggle("is-complete", step < progress);
         });
         window.scrollTo({ top: 0, behavior: "smooth" });
         const heading = document.querySelector(`#screen-${number} h1, #screen-${number} h2`);
@@ -927,7 +1025,7 @@
           reason: "The device is still useful or repairable, and keeping it in service avoids a premature end-of-life decision.",
           reasons: ["Reuse and repair sit ahead of recycling in this decision flow.", "Back up first and give a repairer only the access they need.", "A repair outcome can be recorded without storing your identity."],
           warning: "Ask the repairer how they handle access to devices and data. Back up important files before handover.",
-          next: "View repair preparation"
+          next: "Show my next steps"
         };
         if (d.power === "works" && d.condition === "good" && transferGoal) {
           const action = d.goal === "donate" ? "donate" : d.goal === "sell" ? "sell" : "give to family";
@@ -935,9 +1033,9 @@
             id: "transfer", type: "normal", title: `Prepare, then ${action}.`,
             short: `Prepare -> ${action}`, circular: true,
             reason: "The device works, appears reusable and is intended for another person. Secure preparation must happen before it changes hands.",
-            reasons: ["Reuse keeps a functioning device in circulation.", "Official platform guidance reduces avoidable account and data risks.", "The passport records Self-declared preparation - never certified erasure."],
+            reasons: ["Reuse keeps a functioning device in circulation.", "Official platform guidance reduces avoidable account and data risks.", "Official manufacturer steps come first; RebootLoop never certifies erasure."],
             warning: "Follow the current manufacturer instructions for the exact device and software version. If any step fails, stop and seek professional help.",
-            next: "View secure checklist"
+            next: "Show my next steps"
           };
         }
         if (d.condition === "repairable") return {
@@ -946,7 +1044,7 @@
           reason: "The device may have useful life remaining, so a repair decision should come before recycling.",
           reasons: ["A repair assessment avoids discarding recoverable value.", "Data precautions still apply before a third party receives the device.", "If repair is uneconomic, the flow can continue to responsible recycling."],
           warning: "Back up what you can and ask the repair provider how it protects device data.",
-          next: "View repair preparation"
+          next: "Show my next steps"
         };
         return {
           id: "recycle", type: "normal", title: "Prepare, then recycle responsibly.",
@@ -954,13 +1052,20 @@
           reason: "The device is not currently a confident reuse candidate, so preparation comes before an accepted-item recycling pathway.",
           reasons: ["The flow does not send electronics to general waste.", "Data preparation is addressed before handover.", "Existing accredited or otherwise verified services remain the recycling endpoint."],
           warning: "Check the service's accepted items and current data-handling information before drop-off.",
-          next: "View secure checklist"
+          next: "Show my next steps"
         };
       }
 
       function showRoute() {
         currentRoute = evaluate(currentData);
-        if (!assessmentCounted) { assessmentCount += 1; assessmentCounted = true; }
+        if (!assessmentCounted) { assessmentCount += 1; assessmentCounted = true; assessmentId += 1; }
+        const range = impactRanges[impactCategory[currentData.device]];
+        sessionImpact.set(assessmentId, {
+          circular: Boolean(currentRoute.circular),
+          carbon: currentRoute.circular && currentRoute.id !== "recycle" && range ? range : [0, 0],
+          mass: currentRoute.circular ? typicalMass[currentData.device] || 0 : 0
+        });
+        updateMetrics();
         const badge = document.getElementById("routeBadge");
         badge.textContent = currentRoute.type === "stop" ? "Safety / authority stop" : currentRoute.type === "specialist" ? "Specialist route" : "Recommended circular route";
         badge.className = `route-badge${currentRoute.type === "stop" ? " is-stop" : currentRoute.type === "specialist" ? " is-specialist" : ""}`;
@@ -1005,118 +1110,235 @@
       }
 
       function buildPrepare() {
-        const checklist = document.getElementById("checklist");
-        const actions = document.getElementById("specialistActions");
-        const source = currentRoute.type === "normal"
-          ? (sources[currentData.device] || sources.other)
-          : sources.storage;
         const official = document.getElementById("officialLink");
-        official.href = source.url;
-        official.innerHTML = `${source.label} <span aria-hidden="true">↗</span>`;
-        official.hidden = currentRoute.id === "repair";
-        document.getElementById("prepare-title").textContent = currentRoute.type === "normal" ? "Secure preparation checklist" : "Safe next actions";
-        document.getElementById("prepareIntro").textContent = currentRoute.type === "normal"
-          ? `Complete the applicable steps for this ${deviceLabels[currentData.device].toLowerCase()}. Your final status will be self-declared, not certified.`
-          : "This route deliberately withholds a self-erasure checklist. Follow only the safe escalation actions below.";
-        checklist.innerHTML = "";
-        actions.innerHTML = "";
-        const button = document.getElementById("generatePassport");
-        document.getElementById("assuranceDeclared").classList.remove("is-current");
-        document.getElementById("assuranceGuided").classList.add("is-current");
-
-        if (currentRoute.type === "normal") {
-          const items = currentRoute.id === "repair" ? repairChecklist : [platformExtras[currentData.device] || platformExtras.other, ...(currentRoute.id === "transfer" ? transferChecklist : recycleChecklist)];
-          checklist.innerHTML = items.map(([title, desc], i) => `<div class="check-item"><input type="checkbox" id="check-${i}"><label for="check-${i}"><span><strong>${title}</strong><small>${desc}</small></span></label></div>`).join("");
-          checklist.querySelectorAll("input").forEach(input => input.addEventListener("change", updateChecklistButton));
-          button.dataset.action = "passport";
-          button.textContent = "Complete all checklist items";
-          button.disabled = true;
-        } else {
-          actions.innerHTML = `<ul class="action-list">${currentRoute.actions.map(a => `<li>${a}</li>`).join("")}</ul>`;
-          button.dataset.action = currentRoute.type === "stop" ? "stop" : "passport";
-          button.textContent = currentRoute.type === "stop" ? "Finish stop route and assess another device" : "Generate Guided passport";
-          button.disabled = false;
-        }
+        official.href = sources.storage.url;
+        official.innerHTML = `${sources.storage.label} <span aria-hidden="true">↗</span>`;
+        document.getElementById("prepare-title").textContent = "Safe next actions";
+        document.getElementById("prepareIntro").textContent = "This route deliberately withholds a self-erasure checklist. Follow only the safe escalation actions below.";
+        document.getElementById("checklist").innerHTML = "";
+        document.getElementById("specialistActions").innerHTML = `<ul class="action-list">${currentRoute.actions.map(a => `<li>${a}</li>`).join("")}</ul>`;
         goTo(4);
       }
 
-      function updateChecklistButton() {
-        const all = [...document.querySelectorAll("#checklist input")];
-        const complete = all.length > 0 && all.every(input => input.checked);
-        const button = document.getElementById("generatePassport");
-        button.disabled = !complete;
-        button.textContent = complete ? "Generate Self-declared passport" : `${all.filter(i => !i.checked).length} checklist item${all.filter(i => !i.checked).length === 1 ? "" : "s"} remaining`;
-        document.getElementById("assuranceGuided").classList.toggle("is-current", !complete);
-        document.getElementById("assuranceDeclared").classList.toggle("is-current", complete);
+      const planNoun = { iphone: "iPhone", ipad: "iPad", android: "Android phone", windows: "Windows PC", mac: "Mac", chromeos: "Chromebook", linux: "Linux computer", console: "game console", storage: "storage device", other: "device" };
+
+      // Estimated manufacturing (production-phase) emissions of a typical new device, kg CO2e.
+      // Phones: Apple iPhone 16 (56 kg x 80% = 44.8) to iPhone 16 Pro Max (74 kg, similar share ~ 59).
+      // Tablets and computers are placeholder ranges - VERIFY against current manufacturer
+      // product environmental reports before the showcase and record them in docs/evidence-sources.md.
+      const impactRanges = { phone: [45, 60], tablet: [50, 90], computer: [100, 250] };
+      const impactCategory = { iphone: "phone", android: "phone", ipad: "tablet", windows: "computer", mac: "computer", chromeos: "computer", linux: "computer" };
+      const KG_CO2E_PER_CAR_KM = 0.17; // rough average passenger car; VERIFY before showcase
+
+      // What a correctly reset device shows first, and the lock that means it isn't ready.
+      const handoverCheck = {
+        iphone: ["the Hello screen", "an Apple Account or passcode from the previous owner (Activation Lock)"],
+        ipad: ["the Hello screen", "an Apple Account or passcode from the previous owner (Activation Lock)"],
+        android: ["the first-time setup screen", "the previous owner's Google Account (Factory Reset Protection)"],
+        windows: ["Windows setup, asking for your country or region", "the previous owner's account or password"],
+        mac: ["Setup Assistant, asking for your country or region", "the previous owner's Apple Account (Activation Lock)"],
+        chromeos: ["the Chromebook welcome screen", "a previous owner's account or a school / work enrolment"],
+        linux: ["an installer or first-time setup with no previous user accounts", "a previous user's password or disk-encryption passphrase"],
+        console: ["the console's first-time setup screen", "the previous owner's account, still signed in"],
+        other: ["a first-time setup or factory screen", "the previous owner's account, PIN or passcode"]
+      };
+
+      function recycleDestination() {
+        if (["iphone", "android"].includes(currentData.device)) return { url: "https://www.mobilemuster.com.au/recycle-a-mobile/", label: "Find a MobileMuster drop-off point", note: "Free drop-off points and post-back satchels. Check the battery instructions first." };
+        if (["windows", "mac", "chromeos", "linux"].includes(currentData.device)) return { url: "https://www.dcceew.gov.au/environment/protection/waste/product-stewardship/television-computer-recycling-scheme", label: "Find an NTCRS collection site", note: "Free for households. Check the site's accepted items and opening hours." };
+        return { url: "https://www.dcceew.gov.au/environment/protection/waste/consumers/recycling-drop-off", label: "Find an e-waste drop-off", note: "Confirm the site accepts this exact item before you go." };
       }
 
-      function makeId() {
-        const code = { iphone: "PH", ipad: "TB", android: "PH", windows: "PC", mac: "PC", chromeos: "PC", linux: "PC", console: "GC", storage: "ST", other: "OT" }[currentData.device];
-        const suffix = Array.from(crypto.getRandomValues(new Uint8Array(3)), n => n.toString(16).padStart(2, "0")).join("").toUpperCase();
-        return `RL-${code}-${suffix}`;
-      }
-
-      function renderPassportQr(passport) {
-        const holder = document.getElementById("passportQr");
-        if (typeof qrcode !== "function") {
-          holder.textContent = "QR unavailable";
-          return;
-        }
-        const payload = [
-          "RebootLoop local record (unverified)",
-          `ID: ${passport.id}`,
-          `Device: ${passport.deviceCategory}`,
-          `Route: ${passport.recommendedRoute}`,
-          `Status: ${passport.assurance}`,
-          `Recorded: ${passport.recordedDate}`,
-          "No proof of erasure, handover, recycling or carbon savings."
-        ].join("\n");
-        const qr = qrcode(0, "M");
-        qr.addData(payload);
-        qr.make();
-        holder.innerHTML = qr.createSvgTag({
-          cellSize: 4, margin: 16, scalable: true,
-          title: "RebootLoop local record QR",
-          alt: "Scan to read the device category, recommended route, self-reported status and date. No online verification."
-        });
-      }
-
-      function generatePassport() {
-        const declared = currentRoute.type === "normal";
-        const assurance = declared ? "Self-declared" : "Guided";
-        const id = makeId();
-        const recordedAt = new Date();
-        const recordedDate = new Intl.DateTimeFormat("en-AU", { day: "numeric", month: "short", year: "numeric" }).format(recordedAt);
-        currentPassport = {
-          schema: "rebootloop.local.v1",
-          id,
-          recordedAt: recordedAt.toISOString(),
-          recordedDate,
-          deviceCategory: deviceLabels[currentData.device],
-          recommendedRoute: currentRoute.short,
-          assurance,
-          note: "Local self-report; not proof of erasure, handover, recycling or carbon savings. No registry or external verification."
+      function impactContent(noun) {
+        const range = impactRanges[impactCategory[currentData.device]];
+        const km = range && range.map(kg => Math.round(kg / KG_CO2E_PER_CAR_KM / 10) * 10);
+        const isPhone = impactCategory[currentData.device] === "phone";
+        const carbonStat = range && {
+          big: `${range[0]}–${range[1]} kg`,
+          label: currentRoute.id === "repair"
+            ? `of CO₂e from making a new ${noun}, avoided by keeping this one going`
+            : `of CO₂e from making a new ${noun}, avoided when yours is used instead`,
+          small: `About ${km[0]}–${km[1]} km of driving in an average car. <a href="#why">How we estimate</a>`
         };
-        document.getElementById("passportId").textContent = id;
-        document.getElementById("passportDevice").textContent = deviceLabels[currentData.device];
-        document.getElementById("passportRoute").textContent = currentRoute.short;
-        document.getElementById("passportAssurance").textContent = assurance;
-        document.getElementById("passportDate").textContent = recordedDate;
-        renderPassportQr(currentPassport);
-        if (declared) declaredCount += 1; else guidedCount += 1;
-        document.getElementById("metricDevices").textContent = assessmentCount;
-        document.getElementById("metricDeclared").textContent = declaredCount;
-        document.getElementById("metricGuided").textContent = guidedCount;
+
+        if (currentRoute.id === "transfer") {
+          const who = { donate: "someone who needs it", sell: "its next owner", family: "someone in your family" }[currentData.goal] || "its next owner";
+          return {
+            title: `Nice work. Your ${noun} is getting a second life.`,
+            lede: `Most old tech sits forgotten in a drawer. You chose to give yours to ${who} instead. Thank you.`,
+            stat: carbonStat || { big: "1 less", label: `new ${noun} that needs to be made when yours is used instead.`, small: "" }
+          };
+        }
+        if (currentRoute.id === "repair") return {
+          title: `Nice work. You're keeping your ${noun} going.`,
+          lede: "Repair is the greenest choice there is: nothing new made, nothing thrown away. Thank you.",
+          stat: carbonStat || { big: "0", label: "new devices made when you repair instead of replacing.", small: "" }
+        };
+        return {
+          title: `Nice work. Your ${noun} is becoming something new.`,
+          lede: "Instead of a drawer or landfill, its metals and battery go back into new products. Thank you.",
+          stat: isPhone
+            ? { big: "96%", label: "of materials from phones MobileMuster collects are kept out of landfill.", small: '<a href="https://www.mobilemuster.com.au/about-us/" target="_blank" rel="noopener noreferrer">MobileMuster</a>' }
+            : { big: "511,000 t", label: "of e-waste in Australia in 2019. Recycling yours helps bring it down.", small: '<a href="https://www.dcceew.gov.au/environment/protection/waste/e-waste" target="_blank" rel="noopener noreferrer">DCCEEW</a>' }
+        };
+      }
+
+      function buildImpact() {
+        const noun = planNoun[currentData.device];
+        const content = impactContent(noun);
+        document.getElementById("impact-title").textContent = content.title;
+        document.getElementById("impactLede").textContent = content.lede;
+        const { stat } = content;
+        document.getElementById("impactStats").innerHTML = `<strong>${stat.big}</strong><span>${stat.label}</span>${stat.small ? `<small>${stat.small}</small>` : ""}`;
+        renderNextLinks(noun);
+
+        // Next steps
+        const source = sources[currentData.device] || sources.other;
+        const items = currentRoute.id === "repair" ? repairChecklist : [platformExtras[currentData.device] || platformExtras.other, ...(currentRoute.id === "transfer" ? transferChecklist : recycleChecklist)];
+        const checklistHtml = items.map(([title, desc], i) => `<div class="check-item"><input type="checkbox" id="check-${i}"><label for="check-${i}"><span><strong>${title}</strong><small>${desc}</small></span></label></div>`).join("");
+        const card = (n, title, time, desc, body) => `<div class="action-card" data-step="${n}"><div class="action-top"><div class="action-num">${n}</div><div><span class="action-time">${time}</span><h3>${title}</h3><p>${desc}</p></div><button class="done-toggle" type="button" aria-pressed="false">Mark done</button></div>${body}</div>`;
+        const cards = [];
+        if (currentRoute.id === "repair") {
+          cards.push(card(1, "Back it up", "About 15 minutes", "Save what matters before anyone else touches your device.",
+            `<details><summary>Show the prep checklist</summary><div class="checklist">${checklistHtml}</div></details>`));
+          cards.push(card(2, "Get a repair quote", "About 10 minutes", "Ask a repairer these questions before you leave the device with them.",
+            `<ul class="plain"><li>What's wrong, and what will it cost?</li><li>Do you need my passcode, or can you work without it?</li><li>Who can access my data while it's here?</li><li>When will it be ready, and is the repair guaranteed?</li></ul>`));
+        } else {
+          cards.push(card(1, "Wipe it", "About 20 minutes", `Follow the official steps so none of your data goes with your ${noun}.`,
+            `<div class="action-links"><a class="primary-button" href="${source.url}" target="_blank" rel="noopener noreferrer">${source.label} ↗</a></div><details><summary>Show the step-by-step checklist</summary><div class="checklist">${checklistHtml}</div></details>`));
+          if (currentRoute.id === "transfer") {
+            const [screen, lock] = handoverCheck[currentData.device] || handoverCheck.other;
+            cards.push(card(2, "Hand it over", "5 minutes", "Give it to its next owner with this note, so they can check it's properly reset.",
+              `<div class="action-links"><button class="secondary-button" type="button" id="printSlip">Print the note for the next owner</button></div>
+              <details class="slip-details"><summary>Preview the note</summary><div class="handover-slip" id="handoverSlip"><span class="slip-cut">✂ Note for the next owner</span>
+                <h4>Before you set up this ${noun}</h4>
+                <ol>
+                  <li>Turn it on. It should open at <strong>${screen}</strong>, not someone else's home screen or files.</li>
+                  <li>If it asks for <strong>${lock}</strong>, stop. Ask the person who gave it to you to remove it. Don't try to get around it.</li>
+                  <li>Only then add your own accounts.</li>
+                </ol>
+                <p class="micro-note">RebootLoop didn't check this device. These steps are how you check it yourself.</p>
+                <div class="slip-contact">If something's wrong, contact:</div>
+              </div></details>`));
+          } else {
+            const dest = recycleDestination();
+            cards.push(card(2, "Drop it off", "On your next trip out", dest.note,
+              `<div class="action-links"><a class="primary-button" href="${dest.url}" target="_blank" rel="noopener noreferrer">${dest.label} ↗</a></div><ul class="plain"><li>Tape over the battery terminals if it's loose or removable.</li><li>Don't put it in household recycling or general waste.</li></ul>`));
+          }
+        }
+        const holder = document.getElementById("actionCards");
+        holder.innerHTML = cards.join("");
+        holder.querySelectorAll(".done-toggle").forEach(btn => btn.addEventListener("click", () => setStepDone(btn.closest(".action-card"), btn.getAttribute("aria-pressed") !== "true")));
+        holder.querySelectorAll(".checklist input").forEach(input => input.addEventListener("change", () => {
+          const all = [...holder.querySelectorAll(".checklist input")];
+          setStepDone(holder.querySelector('[data-step="1"]'), all.every(i => i.checked));
+        }));
+        document.getElementById("printSlip")?.addEventListener("click", () => {
+          document.getElementById("handoverSlip").closest("details").open = true;
+          window.print();
+        });
+        document.getElementById("steps-title").textContent = { transfer: `Get your ${noun} ready for its next owner.`, recycle: `Get your ${noun} recycled.`, repair: `Get your ${noun} fixed.` }[currentRoute.id];
+
+        renderSaveAndHelp();
+        updateSteps();
+
+        planCount += 1;
+        updateMetrics();
         goTo(5);
       }
 
-      function completePreparation() {
-        const button = document.getElementById("generatePassport");
-        if (button.dataset.action === "stop") {
-          resetAll(false);
-          return;
+      function setStepDone(card, done) {
+        if (!card || card.classList.contains("is-done") === done) return;
+        card.classList.toggle("is-done", done);
+        const btn = card.querySelector(".done-toggle");
+        btn.setAttribute("aria-pressed", String(done));
+        btn.textContent = done ? "✓ Done" : "Mark done";
+        updateSteps();
+      }
+
+      function updateSteps() {
+        const cards = [...document.querySelectorAll("#actionCards .action-card")];
+        const done = cards.filter(c => c.classList.contains("is-done")).length;
+        document.getElementById("stepsCount").textContent = `${done} of ${cards.length} done`;
+        document.getElementById("stepsBar").style.width = `${cards.length ? done / cards.length * 100 : 0}%`;
+        const allDone = cards.length > 0 && done === cards.length;
+        document.getElementById("showImpact").innerHTML = allDone
+          ? 'All done! See your impact <span aria-hidden="true">🎉</span>'
+          : 'See your impact <span aria-hidden="true">→</span>';
+      }
+
+      function resultsText() {
+        const noun = planNoun[currentData.device];
+        const range = impactRanges[impactCategory[currentData.device]];
+        const source = sources[currentData.device] || sources.other;
+        const lines = [`My RebootLoop result: ${currentRoute.title}`, ""];
+        if (range && currentRoute.id !== "recycle") lines.push(`Impact: finishing this helps avoid roughly ${range[0]}-${range[1]} kg CO2e from making a new ${noun}.`, "");
+        lines.push("Next steps:");
+        if (currentRoute.id === "repair") lines.push("1. Back up my files", "2. Get a repair quote and ask how they handle my data");
+        else {
+          lines.push(`1. Wipe it: ${source.url}`);
+          lines.push(currentRoute.id === "transfer" ? "2. Hand it over and give the next owner the setup-screen check" : `2. Drop it off: ${recycleDestination().url}`);
         }
-        generatePassport();
+        lines.push("", "Assess another device: https://rebootloopmq.github.io/RebootLoop/");
+        return lines.join("\n");
+      }
+
+      function renderNextLinks(noun) {
+        const phone = ["iphone", "android"].includes(currentData.device);
+        const computer = ["windows", "mac", "chromeos", "linux"].includes(currentData.device);
+        const links = phone ? [
+          ["📍", "Find your nearest MobileMuster drop-off", "Free drop-off points and post-back across Australia", "https://www.mobilemuster.com.au/recycle-a-mobile/#find-drop-off"],
+          ["📞", "Contact MobileMuster", "Ask what they accept or how collection works", "https://www.mobilemuster.com.au/contact/"]
+        ] : computer ? [
+          ["📍", "Find your nearest NTCRS collection site", "Free computer recycling for households", "https://www.dcceew.gov.au/environment/protection/waste/product-stewardship/television-computer-recycling-scheme"],
+          ["🔎", "Search Recycling Near You", "Local drop-off options by postcode", "https://recyclingnearyou.com.au/"]
+        ] : [
+          ["🔎", "Search Recycling Near You", "Local drop-off options by postcode", "https://recyclingnearyou.com.au/"],
+          ["📍", "Government e-waste drop-off guidance", "Check an accepted-item list before you go", "https://www.dcceew.gov.au/environment/protection/waste/consumers/recycling-drop-off"]
+        ];
+        document.getElementById("nextTitle").textContent = currentRoute.id === "recycle"
+          ? `Drop off your ${noun}`
+          : currentRoute.id === "repair" ? `When it's finally done, recycle it right` : `If it can't be reused, recycle it right`;
+        document.getElementById("nextLinks").innerHTML = links.map(([icon, title, desc, url]) =>
+          `<a class="next-link" href="${url}" target="_blank" rel="noopener noreferrer"><span class="next-icon" aria-hidden="true">${icon}</span><span><strong>${title}</strong><small>${desc}</small></span><span class="next-arrow" aria-hidden="true">↗</span></a>`).join("");
+      }
+
+      function renderSaveAndHelp() {
+        const text = resultsText();
+        const subject = `My plan for my old ${planNoun[currentData.device]}`;
+        document.getElementById("saveEmail").href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
+        document.getElementById("saveText").href = `sms:?&body=${encodeURIComponent(text)}`;
+        document.getElementById("saveShare").hidden = !navigator.share;
+        document.getElementById("saveConfirm").textContent = "";
+        const links = [];
+        if (currentRoute.id === "recycle") {
+          if (["iphone", "android"].includes(currentData.device)) {
+            links.push(["Find your nearest MobileMuster drop-off", "https://www.mobilemuster.com.au/recycle-a-mobile/#find-drop-off"]);
+            links.push(["Contact MobileMuster with a question", "https://www.mobilemuster.com.au/contact/"]);
+          } else links.push([recycleDestination().label, recycleDestination().url]);
+          links.push(["Search Recycling Near You", "https://recyclingnearyou.com.au/"]);
+        } else if (currentRoute.id === "transfer") {
+          links.push(["Official help for this device", (sources[currentData.device] || sources.other).url]);
+          links.push(["Want to recycle instead? Search Recycling Near You", "https://recyclingnearyou.com.au/"]);
+        }
+        if (!links.length) links.push(["ACSC advice on protecting your device data", sources.storage.url]);
+        document.getElementById("helpLinks").innerHTML = links.map(([label, url]) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${label} ↗</a>`).join("");
+      }
+
+      function updateMetrics() {
+        const entries = [...sessionImpact.values()];
+        const circular = entries.filter(e => e.circular).length;
+        const low = entries.reduce((sum, e) => sum + e.carbon[0], 0);
+        const high = entries.reduce((sum, e) => sum + e.carbon[1], 0);
+        const mass = entries.reduce((sum, e) => sum + e.mass, 0);
+        document.getElementById("metricCircular").textContent = circular;
+        document.getElementById("metricStops").textContent = entries.length - circular;
+        document.getElementById("metricCarbon").textContent = high ? `${low}–${high} kg` : "0 kg";
+        document.getElementById("metricMass").textContent = `${Math.round(mass * 10) / 10} kg`;
+      }
+
+      function finishStop() {
+        resetAll(false);
       }
 
       function resetAll(startScreen = true) {
@@ -1124,11 +1346,10 @@
         document.getElementById("formError").textContent = "";
         currentData = null;
         currentRoute = null;
-        currentPassport = null;
         assessmentCounted = false;
         if (startScreen) {
-          assessmentCount = 0; declaredCount = 0; guidedCount = 0;
-          ["metricDevices", "metricDeclared", "metricGuided"].forEach(id => document.getElementById(id).textContent = "0");
+          assessmentCount = 0; planCount = 0; sessionImpact.clear();
+          updateMetrics();
           goTo(1);
         } else goTo(2);
       }
@@ -1140,12 +1361,20 @@
         currentData = collectForm();
         if (currentData) showRoute();
       });
-      document.getElementById("routeNext").addEventListener("click", buildPrepare);
-      document.getElementById("generatePassport").addEventListener("click", completePreparation);
+      document.getElementById("routeNext").addEventListener("click", () => currentRoute.type === "normal" ? buildImpact() : buildPrepare());
+      document.getElementById("finishStop").addEventListener("click", finishStop);
+      document.getElementById("showImpact").addEventListener("click", () => goTo(6));
+document.getElementById("saveShare").addEventListener("click", () => {
+        navigator.share({ title: "My RebootLoop result", text: resultsText() }).catch(() => {});
+      });
+      document.getElementById("saveCopy").addEventListener("click", async () => {
+        const confirm = document.getElementById("saveConfirm");
+        try { await navigator.clipboard.writeText(resultsText()); confirm.textContent = "Copied. Paste it into your notes or messages."; }
+        catch { confirm.textContent = "Couldn't copy here. Try Email or Text instead."; }
+      });
       document.getElementById("assessAnother").addEventListener("click", () => resetAll(false));
       document.getElementById("restartDemo").addEventListener("click", () => resetAll(true));
       document.getElementById("resetDemo").addEventListener("click", () => resetAll(true));
-      document.getElementById("printPassport").addEventListener("click", () => window.print());
       document.getElementById("displacement").addEventListener("change", event => {
         const displaced = event.target.value === "1";
         document.getElementById("carbonValue").textContent = displaced ? "44.8 kg CO₂e" : "0 kg CO₂e";

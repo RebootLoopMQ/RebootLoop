@@ -27,11 +27,13 @@
       --radius: 24px;
       /* Fluid sizes: each grows smoothly from a 620px-tall window to a 940px-tall one (and with width where noted). */
       --header-h: clamp(48px, calc(48px + (100vh - 620px) * .05), 64px);
-      --gap: clamp(8px, calc(8px + (100vh - 620px) * .03), 18px);
-      --pad-y: clamp(14px, calc(14px + (100vh - 620px) * .0625), 34px);
-      --pad-x: clamp(20px, 2.6vw, 36px);
-      --row-pad: clamp(6px, calc(6px + (100vh - 620px) * .02), 12px);
+      --gap: clamp(10px, calc(10px + (100vh - 620px) * .05), 26px);
+      --pad-y: clamp(20px, calc(20px + (100vh - 620px) * .085), 48px);
+      --pad-x: clamp(24px, 3.4vw, 56px);
+      --row-pad: clamp(8px, calc(8px + (100vh - 620px) * .025), 16px);
       --field-h: clamp(34px, calc(34px + (100vh - 620px) * .03), 44px);
+      --zoom: 1;
+      --progress-h: clamp(38px, calc(38px + (100vh - 620px) * .02), 46px);
       --fs-h1: clamp(2rem, min(5vw, calc(2rem + (100vh - 620px) * .08)), 4.4rem);
       --fs-h2: clamp(1.5rem, min(2.8vw, calc(1.5rem + (100vh - 620px) * .025)), 2.4rem);
     }
@@ -170,6 +172,10 @@
 
     .screen { display: none; animation: reveal .28s ease; }
     .screen.is-active { display: block; }
+    /* On desktop each step fills the window with its card centred, so the sections below start under the fold. */
+    @media (min-width: 621px) {
+      .screen.is-active { display: flex; flex-direction: column; justify-content: center; min-height: calc(100vh / var(--zoom) - var(--header-h) - 4px - var(--gap) * 2 - var(--progress-h) - 9px); }
+    }
     @keyframes reveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
     .surface {
@@ -192,6 +198,7 @@
       margin: 0 0 14px;
     }
     h1, h2, h3, p { margin-top: 0; }
+    h1, h2 { text-wrap: balance; }
     h1 { font-size: var(--fs-h1); line-height: .98; letter-spacing: -.06em; margin-bottom: calc(var(--gap) + 4px); max-width: 820px; }
     h2 { font-size: clamp(2rem, 4vw, 3.15rem); line-height: 1.05; letter-spacing: -.045em; margin-bottom: 14px; }
     h3 { font-size: 1.2rem; line-height: 1.2; margin-bottom: 9px; }
@@ -243,7 +250,28 @@
       align-items: start;
     }
     .promise-icon { width: 40px; height: 40px; border-radius: 12px; background: rgba(183, 216, 75, .15); color: var(--lime); display: grid; place-items: center; font-weight: 900; }
-    .promise p { color: #c6dbd5; margin: 3px 0 0; font-size: .95rem; }
+    .promise strong { align-self: center; }
+
+    /* "More detail" toggles: secondary content sits one click away. */
+    .more-list { display: grid; gap: 2px; margin-top: calc(var(--gap) * 1.4); padding-top: calc(var(--gap) * .6); border-top: 1px solid var(--line); }
+    .more > summary { display: inline-flex; align-items: center; gap: 8px; padding: 6px 0; color: var(--forest); font-weight: 800; cursor: pointer; list-style: none; }
+    .more > summary::-webkit-details-marker { display: none; }
+    .more > summary::before { content: "▸"; font-size: .8em; transition: transform .15s ease; }
+    .more[open] > summary::before { transform: rotate(90deg); }
+    .more[open] { padding-bottom: var(--gap); }
+    .more-dark { margin-top: var(--gap); }
+    .more-dark > summary { color: var(--lime); }
+    .promise-detail { display: grid; gap: 6px; margin: 8px 0 0; padding-left: 18px; color: #c6dbd5; font-size: .9rem; }
+    .more-label { margin: var(--gap) 0 0; color: var(--muted); font-size: .78rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .more .route-destination { margin-top: 8px; }
+    .more .route-destination h3 { display: none; }
+    .more .assurance-levels { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .steps-foot .more { flex: 1 1 320px; }
+    .finale-next .more { margin-top: 12px; }
+
+    /* Each question's helper text appears when that question is open or needs an answer. */
+    #assessmentForm .helper { display: none; }
+    #assessmentForm fieldset.is-open .helper, #assessmentForm fieldset.is-missing .helper { display: block; }
     .notice {
       margin-top: 20px;
       padding: 16px;
@@ -371,10 +399,9 @@
     .form-note { margin: 0; color: var(--muted); font-size: .85rem; max-width: 560px; }
     .form-status:has(.error-message:not(:empty)) .form-note { display: none; }
 
-    .route-layout, .prepare-layout { display: grid; grid-template-columns: 1.25fr .75fr; }
-    .route-layout { grid-template-columns: minmax(0, 1fr) clamp(280px, 27vw, 360px); }
+    /* Screens with a single message sit in a narrower centred card so there is room around them. */
+    .focus-surface { max-width: 880px; margin-inline: auto; }
     .main-panel { padding: var(--pad-y) var(--pad-x); }
-    .side-panel { padding: var(--pad-y) calc(var(--pad-x) - 4px); background: #f0f7f5; border-left: 1px solid var(--line); }
     .route-kicker { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-bottom: calc(var(--gap) * .6); }
     .route-kicker .eyebrow { margin: 0; }
     .route-badge { display: inline-flex; border-radius: 999px; padding: 6px 12px; background: var(--mint); color: var(--forest); font-weight: 900; font-size: .84rem; letter-spacing: .06em; text-transform: uppercase; }
@@ -391,7 +418,7 @@
     .safety-callout { margin-top: var(--gap); border-left: 5px solid var(--coral); border-radius: 13px; padding: calc(var(--gap) + 2px) 16px; background: #fff5f2; color: #6b332c; }
     .route-layout .reason-list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; font-size: .95rem; }
     .route-layout .safety-callout { font-size: .95rem; }
-    .route-reason { font-size: 1.02rem; margin-bottom: 0; color: var(--muted); max-width: 760px; }
+    .route-reason { font-size: 1.05rem; line-height: 1.6; margin-bottom: 0; color: var(--muted); max-width: 680px; }
 
     .checklist { display: grid; gap: 8px; margin: 16px 0; }
     .check-item { position: relative; }
@@ -439,8 +466,8 @@
     .finale-stat span { display: block; margin-top: 6px; color: #e3efeb; font-weight: 700; font-size: .95rem; }
     .finale-stat small { display: block; margin-top: 4px; color: #a9c7be; font-size: .8rem; }
     .finale-stat small a { color: #cbe987; }
-    .finale-session { margin: 16px 0 0; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.12); color: #a9c7be; font-size: .8rem; }
-    .finale-session strong { color: white; }
+    .finale-session { margin: 4px 0 0; color: var(--muted); font-size: .88rem; }
+    .finale-session strong { color: var(--ink); }
     .finale-next { padding: calc(var(--pad-y) * .7) var(--pad-x) calc(var(--pad-y) * .6); }
     .finale-next .eyebrow { margin-bottom: 2px; }
     .finale-next h3 { margin: 0 0 12px; }
@@ -464,8 +491,6 @@
     .finale-note { margin: 10px 0 0; color: var(--muted); font-size: .72rem; }
     .save-confirm { margin: 10px 0 0; min-height: 1.2em; font-weight: 800; color: var(--forest); font-size: .9rem; }
     .help-links { display: flex; flex-wrap: wrap; gap: 4px 20px; }
-    .help-strip { display: grid; gap: 4px; margin-top: var(--gap); padding: calc(var(--gap) + 2px) 16px; border-radius: 14px; background: #f0f7f5; }
-    .help-strip .micro-note { font-size: .84rem; }
     .steps-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px 24px; margin-top: var(--gap); }
     .steps-foot .micro-note { flex: 1 1 280px; min-width: 0; margin: 0; max-width: 560px; }
     .steps-foot .button-row { margin-top: 0; }
@@ -559,19 +584,20 @@
     .site-footer { padding: 18px 16px 34px; text-align: center; color: var(--muted); font-size: .84rem; }
 
     @media (max-width: 900px) {
-      .start-grid, .route-layout, .prepare-layout { grid-template-columns: 1fr; }
+      .start-grid { grid-template-columns: 1fr; }
       .assurance-levels { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .carbon-card { grid-template-columns: 1fr; }
       .fact-grid, .path-grid, .plan-grid { grid-template-columns: 1fr 1fr; }
-      .start-aside, .side-panel { border-left: 0; border-top: 1px solid var(--line); }
+      .start-aside { border-left: 0; border-top: 1px solid var(--line); }
       .progress-step { font-size: 0; gap: 0; }
       .progress-step span { font-size: .84rem; }
       .prototype-label { display: none; }
     }
 
     /* Large monitors: scale the whole page up so it doesn't sit as a small column in a big window. */
-    @media (min-width: 1800px) and (min-height: 1000px) { body { zoom: 1.15; } }
-    @media (min-width: 2300px) and (min-height: 1250px) { body { zoom: 1.35; } }
+    @media (min-width: 1800px) and (min-height: 1000px) { :root { --zoom: 1.15; } }
+    @media (min-width: 2300px) and (min-height: 1250px) { :root { --zoom: 1.35; } }
+    body { zoom: var(--zoom); }
 
     /* Short but wide windows: put each question's helper beside its title so every row is one line. */
     @media (max-height: 800px) and (min-width: 900px) {
@@ -583,6 +609,7 @@
 
     /* Wide but short windows: dock the progress bar into the header bar to free a whole row. */
     @media (max-height: 780px) and (min-width: 1024px) {
+      :root { --progress-h: 0px; }
       .progress-wrap { position: absolute; top: calc(var(--header-h) / 2); left: 50%; z-index: 3; width: min(600px, 44vw); margin: 0; padding: 0; transform: translate(-50%, -50%); background: none; border: 0; box-shadow: none; }
       .progress-track { grid-auto-columns: auto; justify-content: space-between; gap: 14px; }
       .progress-step { color: #9fc3b8; font-size: .7rem; letter-spacing: .02em; white-space: nowrap; }
@@ -601,12 +628,11 @@
     /* Extras that disappear as the window gets shorter, least important first.
        Safety warnings, privacy notes and partnership disclaimers are never hidden. Phones keep everything and scroll. */
     @media (max-height: 780px) and (min-width: 621px) {
-      .brand-sub, .prototype-label, .finale-session, .steps-foot .micro-note, .route-layout .side-panel h3 { display: none; }
+      .brand-sub, .prototype-label { display: none; }
     }
     @media (max-height: 700px) and (min-width: 621px) {
       .content-head .eyebrow, .route-kicker .eyebrow, #screen-4 .main-panel > .eyebrow, .steps-head .eyebrow, .finale-next .eyebrow,
-      .start-aside .eyebrow, .demo-label, .help-strip .micro-note, .action-time { display: none; }
-      .help-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 20px; }
+      .start-aside .eyebrow, .demo-label, .action-time { display: none; }
       .promise-list { gap: 8px; margin-top: 4px; }
       .promise { grid-template-columns: 32px 1fr; gap: 10px; }
       .promise-icon { width: 32px; height: 32px; border-radius: 10px; }
@@ -616,7 +642,7 @@
       .route-destination small { font-size: .78rem; }
     }
     @media (max-height: 620px) and (min-width: 621px) {
-      .start-main > .eyebrow, .promise p, .helper, .presentation-shortcuts strong { display: none; }
+      .start-main > .eyebrow, .presentation-shortcuts strong { display: none; }
       .route-reason, .route-layout .reason-list, .route-layout .safety-callout, .route-destination p { font-size: .84rem; }
       .route-destination h3 { font-size: 1rem; margin-bottom: 2px; }
     }
@@ -630,7 +656,8 @@
       .reset-button { padding: 9px 12px; font-size: .85rem; }
       .shell { width: min(100% - 20px, 1180px); padding-top: 12px; }
       .progress-wrap { padding: 12px; }
-      .start-main, .start-aside, .main-panel, .side-panel { padding: 26px 22px; }
+      .start-main, .start-aside, .main-panel { padding: 26px 22px; }
+      .more .assurance-levels { grid-template-columns: 1fr; }
       .content-head, .assessment-form { padding-left: 22px; padding-right: 22px; }
       .content-head { align-items: start; flex-direction: column; }
       .head-side { justify-items: start; }
@@ -714,10 +741,18 @@
           <p class="eyebrow" style="color: var(--lime)">Safety promise</p>
           <h2 class="aside-title">A useful answer, with clear limits.</h2>
           <div class="promise-list">
-            <div class="promise"><div class="promise-icon">1</div><div><strong>Safety and ownership first</strong><p>Hazards and managed devices stop the normal flow.</p></div></div>
-            <div class="promise"><div class="promise-icon">2</div><div><strong>Official preparation guidance</strong><p>Platform links are shown without asking for credentials.</p></div></div>
-            <div class="promise"><div class="promise-icon">3</div><div><strong>Your next action</strong><p>Get relevant public services when eligible, and see the difference finishing the job makes.</p></div></div>
+            <div class="promise"><div class="promise-icon">1</div><strong>Safety and ownership first</strong></div>
+            <div class="promise"><div class="promise-icon">2</div><strong>Official preparation guidance</strong></div>
+            <div class="promise"><div class="promise-icon">3</div><strong>Your next action</strong></div>
           </div>
+          <details class="more more-dark">
+            <summary>What these mean</summary>
+            <ul class="promise-detail">
+              <li>Hazards and managed devices stop the normal flow.</li>
+              <li>Platform links are shown without asking for credentials.</li>
+              <li>Get relevant public services when eligible, and see the difference finishing the job makes.</li>
+            </ul>
+          </details>
           <div class="notice"><strong>Important:</strong> RebootLoop does not erase data, certify destruction, collect devices or guarantee that information is unrecoverable. We have no confirmed delivery partnership.</div>
         </aside>
       </div>
@@ -800,26 +835,31 @@
     </section>
 
     <section class="screen" id="screen-3" data-screen="3" aria-labelledby="route-title">
-      <div class="surface route-layout">
+      <div class="surface focus-surface route-layout">
         <div class="main-panel">
           <div class="route-kicker"><span class="route-badge" id="routeBadge">Recommended route</span><p class="eyebrow">Step 3 - route</p></div>
           <h2 id="route-title">Prepare, then donate.</h2>
           <p class="route-reason" id="routeReason"></p>
-          <ul class="reason-list" id="routeReasons"></ul>
           <div class="safety-callout" id="routeWarning"></div>
-          <div class="route-destination" id="routeDestination" aria-live="polite"></div>
           <div class="button-row"><button class="quiet-button" type="button" data-go="2">Change answers</button><button class="primary-button" type="button" id="routeNext">View preparation path <span aria-hidden="true">→</span></button></div>
+          <div class="more-list">
+            <details class="more">
+              <summary>Why this route?</summary>
+              <ul class="reason-list" id="routeReasons"></ul>
+              <p class="more-label">Your answers, not a hidden score</p>
+              <ul class="summary-list" id="answerSummary"></ul>
+            </details>
+            <details class="more">
+              <summary id="destinationSummary">What happens next</summary>
+              <div class="route-destination" id="routeDestination" aria-live="polite"></div>
+            </details>
+          </div>
         </div>
-        <aside class="side-panel">
-          <p class="eyebrow">Why this route</p>
-          <h3>Your answers, not a hidden score.</h3>
-          <ul class="summary-list" id="answerSummary"></ul>
-        </aside>
       </div>
     </section>
 
     <section class="screen" id="screen-4" data-screen="4" aria-labelledby="prepare-title">
-      <div class="surface prepare-layout">
+      <div class="surface focus-surface prepare-layout">
         <div class="main-panel">
           <p class="eyebrow">Step 4 - next steps</p>
           <h2 id="prepare-title">Secure preparation checklist</h2>
@@ -829,10 +869,10 @@
           <div id="specialistActions"></div>
           <a class="official-link" id="officialLink" href="https://www.cyber.gov.au/protect-yourself/securing-your-devices/how-secure-your-device/how-dispose-your-device-securely" target="_blank" rel="noreferrer">Open official guidance <span aria-hidden="true">↗</span></a>
           <div class="button-row"><button class="quiet-button" type="button" data-go="3">Back</button><button class="primary-button" type="button" id="finishStop">Finish and assess another device</button></div>
-        </div>
-        <aside class="side-panel">
+          <div class="more-list">
+          <details class="more">
+            <summary>What a tick does and doesn't prove</summary>
           <div class="assurance-card">
-            <p class="eyebrow" style="color:var(--lime)">Assurance model</p>
             <h3>Status must match evidence.</h3>
             <p>A tick is a declaration, not a security certificate.</p>
             <div class="assurance-levels">
@@ -841,7 +881,9 @@
               <div class="assurance-level"><strong>3. Partner-verified</strong><br><small>Future pilot only - local service matching and verification require approved partners and evidence.</small></div>
             </div>
           </div>
-        </aside>
+          </details>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -855,13 +897,13 @@
           <div class="safety-callout"><strong>Residual-risk warning:</strong> These steps reduce risk but do not guarantee that data is unrecoverable. If you cannot complete a step, stop and seek appropriate professional help.</div>
           <div class="action-cards" id="actionCards"></div>
           <div class="steps-foot">
-            <p class="micro-note">You don't have to finish now. RebootLoop can't check the device or confirm erasure; if any step fails, stop and get help.</p>
+            <details class="more">
+              <summary>Stuck on a step?</summary>
+              <p class="micro-note">You don't have to finish now. RebootLoop can't check the device or confirm erasure; if any step fails, stop and get help. These are official guidance and public services for your route; RebootLoop has no partnership with them.</p>
+              <div class="help-links" id="helpLinks"></div>
+            </details>
             <div class="button-row"><button class="quiet-button" type="button" data-go="3">Back</button><button class="primary-button" type="button" id="showImpact">See your impact <span aria-hidden="true">→</span></button></div>
           </div>
-          <aside class="help-strip" aria-label="Need help?">
-            <div><strong>Stuck on a step?</strong> <span class="micro-note">Official guidance and public services for your route. RebootLoop has no partnership with them.</span></div>
-            <div class="help-links" id="helpLinks"></div>
-          </aside>
         </div>
       </div>
     </section>
@@ -877,10 +919,8 @@
             </div>
             <div class="finale-stat" id="impactStats"></div>
           </div>
-          <p class="finale-session">This session: circular routes <strong id="metricCircular">0</strong> · safety stops <strong id="metricStops">0</strong> · CO₂e avoided (est.) <strong id="metricCarbon">0 kg</strong> · e-waste diverted (est.) <strong id="metricMass">0 kg</strong></p>
         </div>
         <div class="finale-next">
-          <p class="eyebrow">Where to go next</p>
           <h3 id="nextTitle">Where to go next</h3>
           <div class="next-links" id="nextLinks"></div>
           <div class="finale-foot">
@@ -894,6 +934,10 @@
             </div>
             <div class="button-row finale-buttons"><button class="quiet-button" type="button" data-go="5">Back to my steps</button><button class="secondary-button" type="button" id="assessAnother">Assess another device</button><button class="quiet-button" type="button" id="restartDemo">Start over</button></div>
           </div>
+          <details class="more">
+            <summary>This session's totals</summary>
+            <p class="finale-session">Circular routes <strong id="metricCircular">0</strong> · safety stops <strong id="metricStops">0</strong> · CO₂e avoided (est.) <strong id="metricCarbon">0 kg</strong> · e-waste diverted (est.) <strong id="metricMass">0 kg</strong></p>
+          </details>
           <p class="finale-note">Impact is an estimate for a typical device, based on manufacturers' published footprints, and applies once the job is done. RebootLoop has no partnership with the services linked here. <a href="#why">How we estimate</a></p>
         </div>
       </div>
@@ -1116,6 +1160,9 @@
         trigger.className = "picker-trigger";
         trigger.setAttribute("aria-expanded", "false");
         trigger.setAttribute("aria-controls", list.id);
+        const helper = fieldset.querySelector(".helper");
+        helper.id = `helper-${index}`;
+        trigger.setAttribute("aria-describedby", helper.id);
         trigger.innerHTML = '<span class="picker-value">Choose…</span><span class="picker-caret" aria-hidden="true">▾</span>';
         list.before(trigger);
         trigger.addEventListener("click", () => setPickerOpen(fieldset, !fieldset.classList.contains("is-open")));
@@ -1290,6 +1337,7 @@
         } else {
           box.innerHTML = `<h3>Check local accepted items</h3><p>For an iPad, console or other device, use the Australian Government's drop-off guidance and confirm a local service accepts this exact item.</p>${safeLink(government, "Read government e-waste drop-off guidance")}<small>No particular collection point is booked or endorsed.</small>`;
         }
+        document.getElementById("destinationSummary").textContent = box.querySelector("h3").textContent;
       }
 
       function buildPrepare() {

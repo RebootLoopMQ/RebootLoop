@@ -413,7 +413,6 @@
     .finale-note { margin: 10px 0 0; color: var(--muted); font-size: .72rem; }
     .impact-cta { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 22px; }
     .impact-cta .micro-note { margin: 0; max-width: 560px; }
-    .next-layout { display: grid; grid-template-columns: 1.3fr .7fr; }
     .difference-list { list-style: none; padding: 0; margin: 14px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
     .difference-list li { display: grid; grid-template-rows: auto 1fr; gap: 12px; align-items: start; border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; background: #fbfdfc; }
     .difference-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--mint); display: grid; place-items: center; font-size: 1.35rem; }
@@ -426,7 +425,12 @@
     .save-options a, .save-options button { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; border: 1px solid #e3c56c; background: white; color: var(--ink); border-radius: 12px; padding: 9px 12px; font: inherit; font-weight: 800; text-decoration: none; cursor: pointer; }
     .save-options a:hover, .save-options button:hover { border-color: var(--ink); }
     .save-confirm { margin: 10px 0 0; min-height: 1.2em; font-weight: 800; color: var(--forest); font-size: .9rem; }
-    .help-links { margin-top: 16px; display: grid; gap: 10px; }
+    .help-links { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+    .help-strip { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 24px; margin-top: 18px; padding: 12px 16px; border-radius: 14px; background: #f0f7f5; }
+    .help-strip .micro-note { font-size: .84rem; }
+    .steps-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px 24px; margin-top: 14px; }
+    .steps-foot .micro-note { margin: 0; max-width: 560px; }
+    .steps-foot .button-row { margin-top: 0; }
     .save-row { display: grid; grid-template-columns: 1.1fr .9fr; gap: 22px; align-items: center; }
     .help-links a { font-weight: 850; }
     .steps-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; }
@@ -434,8 +438,8 @@
     .steps-progress span { display: block; font-size: .85rem; font-weight: 800; color: var(--muted); margin-bottom: 6px; text-align: right; }
     .steps-bar { height: 10px; border-radius: 99px; background: var(--mint); overflow: hidden; }
     .steps-bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--teal), var(--lime)); transition: width .4s ease; }
-    .action-cards { display: grid; gap: 14px; margin-top: 16px; }
-    .action-card { border: 1px solid var(--line); border-radius: 20px; padding: 22px; background: white; transition: .2s ease; }
+    .action-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); align-items: start; gap: 12px; margin-top: 14px; }
+    .action-card { border: 1px solid var(--line); border-radius: 20px; padding: 16px 18px; background: white; transition: .2s ease; }
     .action-card.is-done { border-color: #8dcab8; background: var(--mint); }
     .action-top { display: grid; grid-template-columns: 48px 1fr auto; gap: 16px; align-items: start; }
     .action-num { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; background: var(--navy); color: var(--lime); font-weight: 900; font-size: 1.2rem; }
@@ -443,15 +447,16 @@
     .action-card h3 { margin: 2px 0 4px; }
     .action-card p { margin: 0; color: var(--muted); }
     .action-time { font-size: .8rem; font-weight: 850; color: var(--forest); text-transform: uppercase; letter-spacing: .06em; }
-    .action-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .action-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .action-links .primary-button, .action-links .secondary-button { min-height: 44px; padding: 9px 16px; }
     .action-links a { text-decoration: none; }
     .done-toggle { border: 2px solid var(--forest); background: white; color: var(--forest); border-radius: 999px; padding: 8px 14px; font-weight: 850; cursor: pointer; white-space: nowrap; }
     .action-card.is-done .done-toggle { background: var(--forest); color: white; }
-    .action-card details { margin-top: 14px; }
+    .action-card details { margin-top: 10px; }
     .action-card summary { cursor: pointer; font-weight: 800; color: var(--forest); }
     .action-card .checklist { margin: 12px 0 0; }
     .action-card ul.plain { margin: 12px 0 0; padding-left: 20px; display: grid; gap: 6px; color: var(--ink); }
-    .handover-slip { position: relative; margin-top: 18px; border: 2px dashed #9bb5ad; border-radius: 16px; padding: 24px 22px 20px; background: #fffdf6; }
+    .handover-slip { position: relative; margin-top: 16px; border: 2px dashed #9bb5ad; border-radius: 16px; padding: 24px 22px 20px; background: #fffdf6; }
     .slip-cut { position: absolute; top: -12px; left: 18px; padding: 0 8px; background: white; color: var(--muted); font-size: .74rem; font-weight: 850; letter-spacing: .06em; text-transform: uppercase; }
     .action-card.is-done .slip-cut { background: var(--mint); }
     .handover-slip h4 { margin: 0; font-size: 1.1rem; }
@@ -528,7 +533,7 @@
     }
 
     @media (max-width: 900px) {
-      .start-grid, .route-layout, .prepare-layout, .plan-layout, .next-layout { grid-template-columns: 1fr; }
+      .start-grid, .route-layout, .prepare-layout, .plan-layout { grid-template-columns: 1fr; }
       .difference-list { grid-template-columns: 1fr; }
       .carbon-card { grid-template-columns: 1fr; }
       .fact-grid, .path-grid, .plan-grid { grid-template-columns: 1fr 1fr; }
@@ -761,22 +766,22 @@
     </section>
 
     <section class="screen" id="screen-5" data-screen="5" aria-labelledby="steps-title">
-      <div class="surface next-layout">
+      <div class="surface">
         <div class="main-panel">
           <div class="steps-head">
             <div><p class="eyebrow">Step 4 - next steps</p><h2 id="steps-title" style="margin:0">Finish the job.</h2></div>
             <div class="steps-progress"><span id="stepsCount">0 of 2 done</span><div class="steps-bar"><i id="stepsBar"></i></div></div>
           </div>
           <div class="action-cards" id="actionCards"></div>
-          <p class="micro-note" style="margin-top:18px">You don't have to finish now. RebootLoop can't check the device or confirm erasure; if any step fails, stop and get help.</p>
-          <div class="button-row"><button class="quiet-button" type="button" data-go="3">Back</button><button class="primary-button" type="button" id="showImpact">See your impact <span aria-hidden="true">→</span></button></div>
+          <div class="steps-foot">
+            <p class="micro-note">You don't have to finish now. RebootLoop can't check the device or confirm erasure; if any step fails, stop and get help.</p>
+            <div class="button-row"><button class="quiet-button" type="button" data-go="3">Back</button><button class="primary-button" type="button" id="showImpact">See your impact <span aria-hidden="true">→</span></button></div>
+          </div>
+          <aside class="help-strip" aria-label="Need help?">
+            <div><strong>Stuck on a step?</strong> <span class="micro-note">Official guidance and public services for your route. RebootLoop has no partnership with them.</span></div>
+            <div class="help-links" id="helpLinks"></div>
+          </aside>
         </div>
-        <aside class="side-panel">
-          <p class="eyebrow">Need help?</p>
-          <h3>Stuck on a step?</h3>
-          <p class="micro-note">Official guidance and public services for your route. RebootLoop has no partnership with them.</p>
-          <div class="help-links" id="helpLinks"></div>
-        </aside>
       </div>
     </section>
 
@@ -1252,7 +1257,7 @@
             const [screen, lock] = handoverCheck[currentData.device] || handoverCheck.other;
             cards.push(card(2, "Hand it over", "5 minutes", "Give it to its next owner with this note, so they can check it's properly reset.",
               `<div class="action-links"><button class="secondary-button" type="button" id="printSlip">Print the note for the next owner</button></div>
-              <div class="handover-slip" id="handoverSlip"><span class="slip-cut">✂ Note for the next owner</span>
+              <details class="slip-details"><summary>Preview the note</summary><div class="handover-slip" id="handoverSlip"><span class="slip-cut">✂ Note for the next owner</span>
                 <h4>Before you set up this ${noun}</h4>
                 <ol>
                   <li>Turn it on. It should open at <strong>${screen}</strong>, not someone else's home screen or files.</li>
@@ -1261,7 +1266,7 @@
                 </ol>
                 <p class="micro-note">RebootLoop didn't check this device. These steps are how you check it yourself.</p>
                 <div class="slip-contact">If something's wrong, contact:</div>
-              </div>`));
+              </div></details>`));
           } else {
             const dest = recycleDestination();
             cards.push(card(2, "Drop it off", "On your next trip out", dest.note,
@@ -1275,7 +1280,10 @@
           const all = [...holder.querySelectorAll(".checklist input")];
           setStepDone(holder.querySelector('[data-step="1"]'), all.every(i => i.checked));
         }));
-        document.getElementById("printSlip")?.addEventListener("click", () => window.print());
+        document.getElementById("printSlip")?.addEventListener("click", () => {
+          document.getElementById("handoverSlip").closest("details").open = true;
+          window.print();
+        });
         document.getElementById("steps-title").textContent = { transfer: `Get your ${noun} ready for its next owner.`, recycle: `Get your ${noun} recycled.`, repair: `Get your ${noun} fixed.` }[currentRoute.id];
 
         renderSaveAndHelp();

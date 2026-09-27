@@ -317,18 +317,22 @@
     .route-layout, .prepare-layout, .plan-layout { display: grid; grid-template-columns: 1.25fr .75fr; }
     .main-panel { padding: 26px 34px; }
     .side-panel { padding: 26px 30px; background: #f0f7f5; border-left: 1px solid var(--line); }
-    .route-badge { display: inline-flex; border-radius: 999px; padding: 8px 13px; margin-bottom: 18px; background: var(--mint); color: var(--forest); font-weight: 900; font-size: .84rem; letter-spacing: .06em; text-transform: uppercase; }
+    .route-kicker { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-bottom: 10px; }
+    .route-kicker .eyebrow { margin: 0; }
+    .route-badge { display: inline-flex; border-radius: 999px; padding: 6px 12px; background: var(--mint); color: var(--forest); font-weight: 900; font-size: .84rem; letter-spacing: .06em; text-transform: uppercase; }
     .route-badge.is-stop { background: #fff0ed; color: #a54034; }
     .route-badge.is-specialist { background: #fff5de; color: #7f5a0a; }
-    .reason-list, .action-list, .summary-list { display: grid; gap: 12px; padding: 0; margin: 22px 0 0; list-style: none; }
+    .reason-list, .action-list, .summary-list { display: grid; gap: 8px; padding: 0; margin: 14px 0 0; list-style: none; }
     .reason-list li, .action-list li { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start; }
     .reason-list li::before, .action-list li::before { content: "✓"; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--mint); color: var(--forest); font-weight: 900; }
-    .summary-list li { border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+    .summary-list li { border-bottom: 1px solid var(--line); padding-bottom: 7px; }
     .summary-list li:last-child { border-bottom: 0; }
     .summary-list span { display: block; color: var(--muted); font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
     .summary-list strong { display: block; margin-top: 2px; }
     .safety-callout { margin-top: 16px; border-left: 5px solid var(--coral); border-radius: 13px; padding: 12px 16px; background: #fff5f2; color: #6b332c; }
-    .route-reason { font-size: 1.14rem; color: var(--muted); max-width: 760px; }
+    .route-layout .reason-list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; font-size: .95rem; }
+    .route-layout .safety-callout { font-size: .95rem; }
+    .route-reason { font-size: 1.02rem; margin-bottom: 0; color: var(--muted); max-width: 760px; }
 
     .checklist { display: grid; gap: 8px; margin: 16px 0; }
     .check-item { position: relative; }
@@ -463,11 +467,11 @@
     .metric strong { display: block; margin-top: 4px; font-size: 1.65rem; letter-spacing: -.04em; }
     .demo-label { margin-top: 12px; color: var(--muted); font-size: .82rem; }
 
-    .route-destination { margin-top: 24px; border: 1px solid #b7d9ce; background: var(--mint); border-radius: 17px; padding: 19px; }
-    .route-destination h3 { margin-bottom: 7px; }
-    .route-destination p { margin: 0 0 10px; color: #315750; }
+    .route-destination { margin-top: 16px; border: 1px solid #b7d9ce; background: var(--mint); border-radius: 17px; padding: 14px 18px; }
+    .route-destination h3 { font-size: 1.08rem; margin-bottom: 4px; }
+    .route-destination p { margin: 0 0 6px; color: #315750; font-size: .94rem; }
     .route-destination a { font-weight: 850; }
-    .route-destination small { display: block; margin-top: 9px; color: #43645c; }
+    .route-destination small { display: block; margin-top: 5px; color: #43645c; }
     .micro-note { color: var(--muted); font-size: .88rem; }
     .below { margin-top: 26px; display: grid; gap: 22px; }
     .section-card { background: white; border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(24px,4vw,40px); box-shadow: 0 10px 28px rgba(9,46,53,.04); scroll-margin-top: 18px; }
@@ -558,6 +562,7 @@
       .action-num { width: 40px; height: 40px; }
       .done-toggle { grid-column: 1 / -1; justify-self: start; }
       .fact-grid, .path-grid, .plan-grid { grid-template-columns: 1fr; }
+      .route-layout .reason-list { grid-template-columns: 1fr; }
     }
 
     @media print {
@@ -712,8 +717,7 @@
     <section class="screen" id="screen-3" data-screen="3" aria-labelledby="route-title">
       <div class="surface route-layout">
         <div class="main-panel">
-          <span class="route-badge" id="routeBadge">Recommended route</span>
-          <p class="eyebrow">Step 3 - route</p>
+          <div class="route-kicker"><span class="route-badge" id="routeBadge">Recommended route</span><p class="eyebrow">Step 3 - route</p></div>
           <h2 id="route-title">Prepare, then donate.</h2>
           <p class="route-reason" id="routeReason"></p>
           <ul class="reason-list" id="routeReasons"></ul>

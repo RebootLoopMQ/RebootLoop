@@ -478,7 +478,7 @@
     .route-destination a { font-weight: 850; }
     .route-destination small { display: block; margin-top: 5px; color: #43645c; }
     .micro-note { color: var(--muted); font-size: .88rem; }
-    .below { margin-top: 26px; display: grid; gap: 22px; }
+    .below { margin-top: 26px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; }
     .section-card { background: white; border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(24px,4vw,40px); box-shadow: 0 10px 28px rgba(9,46,53,.04); scroll-margin-top: 18px; }
     .section-intro { max-width: 800px; color: var(--muted); font-size: 1.06rem; }
     .fact-grid, .path-grid, .plan-grid { display: grid; gap: 15px; grid-template-columns: repeat(3,minmax(0,1fr)); margin-top: 20px; }
@@ -494,6 +494,7 @@
     .carbon-card h3 { font-size: clamp(1.5rem,3vw,2.25rem); }
     .carbon-card p { color: #cde1dc; }
     .carbon-card a { color: #cbe987; }
+    .carbon-card > * { min-width: 0; }
     .carbon-control { display: grid; gap: 10px; align-content: center; }
     .carbon-control label { font-weight: 800; }
     .carbon-control select { width: 100%; border: 2px solid #9bcab8; border-radius: 12px; padding: 12px; background: white; color: var(--ink); }
@@ -568,6 +569,7 @@
       .done-toggle { grid-column: 1 / -1; justify-self: start; }
       .fact-grid, .path-grid, .plan-grid { grid-template-columns: 1fr; }
       .route-layout .reason-list { grid-template-columns: 1fr; }
+      .source-strip a { white-space: normal; }
     }
 
     @media print {

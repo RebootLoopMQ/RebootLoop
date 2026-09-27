@@ -744,6 +744,18 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
 .footer-links a { color: var(--forest); font-weight: 750; }
 .site-footer p { margin: 0; }
 
+.contact-card { display: grid; gap: 16px; max-width: 780px; padding: clamp(24px, 4vw, 40px); border: 1px solid var(--line); border-radius: var(--radius); background: white; box-shadow: 0 10px 28px rgba(9,46,53,.04); }
+.contact-email { display: grid; gap: 14px; }
+.contact-email h2 { margin: 0; font-size: clamp(1.5rem, 3vw, 2rem); }
+.contact-email p { margin: 0; }
+.email-ready, .email-pending { display: grid; gap: 14px; }
+.email-ready .button-row, .email-pending .button-row { margin: 0; }
+.email-pending p { color: var(--muted); line-height: 1.6; }
+.email-address { font-size: clamp(1.2rem, 2.4vw, 1.6rem); font-weight: 850; color: var(--forest); overflow-wrap: anywhere; user-select: all; }
+.copy-status { min-height: 1.2em; color: var(--forest); font-weight: 750; font-size: .9rem; }
+.copy-status:empty { display: none; }
+.contact-note { margin: 0; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: .92rem; }
+
 @media (max-width: 960px) {
   .site-nav a:not(.nav-cta) { display: none; }
   .home-hero, .audience-grid, .team-grid, .stat-row { grid-template-columns: 1fr; }

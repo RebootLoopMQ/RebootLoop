@@ -225,6 +225,7 @@
       z-index: -1;
       background: radial-gradient(circle at 100% 0%, rgba(16, 167, 131, .32), transparent 52%);
     }
+    .aside-title { font-size: 1.8rem; }
     .promise-list { display: grid; gap: 14px; margin-top: 10px; }
     .promise {
       display: grid;
@@ -246,7 +247,6 @@
 
     .content-head {
       padding: 14px 34px 12px;
-      border-bottom: 1px solid var(--line);
       display: flex;
       justify-content: space-between;
       align-items: end;
@@ -261,9 +261,10 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
+      justify-content: flex-end;
       gap: 10px;
     }
-    .head-side { display: grid; justify-items: end; gap: 8px; flex: 0 0 auto; }
+    .head-side { display: grid; justify-items: end; gap: 8px; flex: 0 1 auto; min-width: 0; }
     .presentation-shortcuts strong { margin-right: 4px; font-size: .84rem; }
     .shortcut {
       min-height: 40px;
@@ -277,37 +278,84 @@
     .shortcut:hover { background: var(--mint); }
 
     .assessment-form { padding: 12px 34px 0; }
-    .question-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
-    .question-grid .span-2 { grid-column: span 2; }
+    /* One row per question: the question on the left, its answer field on the right. */
+    .question-grid { --field-width: min(440px, 48%); display: grid; }
     fieldset {
-      min-width: 0;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 6px 12px 11px;
-      margin: 0;
-      background: #fbfdfc;
-    }
-    legend { padding: 0 6px; font-size: .95rem; font-weight: 850; }
-    .helper { color: var(--muted); font-size: .8rem; line-height: 1.35; margin: 0 0 7px; }
-    .choices { display: flex; flex-wrap: wrap; gap: 6px; }
-    .choices input { position: absolute; opacity: 0; pointer-events: none; }
-    .choices label {
-      display: inline-flex;
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) var(--field-width);
+      grid-template-areas: "label field" "help field";
       align-items: center;
-      min-height: 32px;
-      border: 1px solid #bed2cc;
-      border-radius: 10px;
+      column-gap: 32px;
+      min-width: 0;
+      border: 0;
+      border-top: 1px solid var(--line);
+      padding: 11px 0;
+      margin: 0;
+    }
+    /* Floated so the legend is laid out like normal content instead of sitting on the divider line. */
+    legend { float: left; grid-area: label; align-self: end; padding: 0; font-size: .98rem; font-weight: 850; }
+    .helper { grid-area: help; align-self: start; color: var(--muted); font-size: .82rem; line-height: 1.35; margin: 2px 0 0; }
+
+    /* Each question is a select button; its answers open in a floating list. */
+    .picker-trigger {
+      grid-area: field;
+      width: 100%;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 9px 14px;
+      border: 1px solid #cfe0da;
+      border-radius: 12px;
       background: white;
-      color: #304b51;
-      padding: 4px 10px;
-      font-size: .86rem;
-      font-weight: 720;
-      cursor: pointer;
+      color: var(--muted);
+      font-weight: 700;
+      text-align: left;
       transition: .15s ease;
     }
-    .choices label:hover { border-color: var(--teal); background: var(--mint); }
-    .choices input:checked + label { background: var(--forest); border-color: var(--forest); color: white; box-shadow: 0 7px 16px rgba(11, 107, 87, .16); }
+    .picker-trigger:hover { border-color: #9fcfbf; }
+    .picker-trigger.has-value { color: var(--ink); background: var(--mint); border-color: #b7d9ce; }
+    .picker-caret { flex: 0 0 auto; color: var(--forest); transition: transform .15s ease; }
+    fieldset.is-open .picker-trigger { border-color: var(--forest); }
+    fieldset.is-open .picker-caret { transform: rotate(180deg); }
+    fieldset.is-missing .picker-trigger { border-color: var(--coral); background: #fff5f2; }
+    .choices {
+      display: none;
+      position: absolute;
+      top: calc(100% - 6px);
+      right: 0;
+      width: var(--field-width);
+      z-index: 5;
+      flex-direction: column;
+      gap: 2px;
+      padding: 6px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 18px 40px rgba(9, 46, 53, .16);
+    }
+    fieldset.is-open .choices { display: flex; }
+    .device-q.is-open .choices { display: grid; grid-template-columns: 1fr 1fr; width: max(var(--field-width), 540px); }
+    .choices input { position: absolute; opacity: 0; pointer-events: none; }
+    .choices label {
+      display: flex;
+      align-items: center;
+      min-height: 38px;
+      border-radius: 9px;
+      color: #304b51;
+      padding: 7px 12px;
+      font-size: .9rem;
+      font-weight: 720;
+      cursor: pointer;
+    }
+    .choices label:hover { background: var(--mint); }
+    .choices input:checked + label { background: var(--forest); color: white; }
     .form-footer { position: sticky; bottom: 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: 18px; margin: 10px -34px 0; padding: 10px 34px 12px; background: rgba(255,255,255,.96); border-top: 1px solid var(--line); }
+    /* Let answer lists float past the card edge; the footer carries the rounded bottom instead. */
+    #screen-2 .surface { overflow: visible; }
+    .form-footer { border-radius: 0 0 var(--radius) var(--radius); }
     .form-footer .button-row { margin-top: 0; flex: 0 0 auto; }
     .form-footer .button-row button { min-height: 46px; padding-top: 10px; padding-bottom: 10px; }
     .error-message { color: #a43d32; font-weight: 750; margin: 0; }
@@ -315,6 +363,7 @@
     .form-status:has(.error-message:not(:empty)) .form-note { display: none; }
 
     .route-layout, .prepare-layout { display: grid; grid-template-columns: 1.25fr .75fr; }
+    .route-layout { grid-template-columns: minmax(0, 1fr) 340px; }
     .main-panel { padding: 26px 34px; }
     .side-panel { padding: 26px 30px; background: #f0f7f5; border-left: 1px solid var(--line); }
     .route-kicker { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-bottom: 10px; }
@@ -325,8 +374,8 @@
     .reason-list, .action-list, .summary-list { display: grid; gap: 8px; padding: 0; margin: 14px 0 0; list-style: none; }
     .reason-list li, .action-list li { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start; }
     .reason-list li::before, .action-list li::before { content: "✓"; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--mint); color: var(--forest); font-weight: 900; }
+    .summary-list { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); column-gap: 18px; }
     .summary-list li { border-bottom: 1px solid var(--line); padding-bottom: 7px; }
-    .summary-list li:last-child { border-bottom: 0; }
     .summary-list span { display: block; color: var(--muted); font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
     .summary-list strong { display: block; margin-top: 2px; }
     .safety-callout { margin-top: 16px; border-left: 5px solid var(--coral); border-radius: 13px; padding: 12px 16px; background: #fff5f2; color: #6b332c; }
@@ -404,11 +453,11 @@
     .finale-buttons button { min-height: 40px; padding: 8px 13px; font-size: .9rem; }
     .finale-note { margin: 10px 0 0; color: var(--muted); font-size: .72rem; }
     .save-confirm { margin: 10px 0 0; min-height: 1.2em; font-weight: 800; color: var(--forest); font-size: .9rem; }
-    .help-links { display: flex; flex-wrap: wrap; gap: 6px 20px; }
-    .help-strip { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 24px; margin-top: 18px; padding: 12px 16px; border-radius: 14px; background: #f0f7f5; }
+    .help-links { display: flex; flex-wrap: wrap; gap: 4px 20px; }
+    .help-strip { display: grid; gap: 4px; margin-top: 18px; padding: 12px 16px; border-radius: 14px; background: #f0f7f5; }
     .help-strip .micro-note { font-size: .84rem; }
     .steps-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px 24px; margin-top: 14px; }
-    .steps-foot .micro-note { margin: 0; max-width: 560px; }
+    .steps-foot .micro-note { flex: 1 1 280px; min-width: 0; margin: 0; max-width: 560px; }
     .steps-foot .button-row { margin-top: 0; }
     .help-links a { font-weight: 850; }
     .steps-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; }
@@ -416,10 +465,10 @@
     .steps-progress span { display: block; font-size: .85rem; font-weight: 800; color: var(--muted); margin-bottom: 6px; text-align: right; }
     .steps-bar { height: 10px; border-radius: 99px; background: var(--mint); overflow: hidden; }
     .steps-bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--teal), var(--lime)); transition: width .4s ease; }
-    .action-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); align-items: start; gap: 12px; margin-top: 14px; }
+    .action-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); align-items: start; gap: 12px; margin-top: 14px; }
     .action-card { border: 1px solid var(--line); border-radius: 20px; padding: 16px 18px; background: white; transition: .2s ease; }
     .action-card.is-done { border-color: #8dcab8; background: var(--mint); }
-    .action-top { display: grid; grid-template-columns: 48px 1fr auto; gap: 16px; align-items: start; }
+    .action-top { display: grid; grid-template-columns: 48px 1fr; gap: 16px; align-items: start; }
     .action-num { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; background: var(--navy); color: var(--lime); font-weight: 900; font-size: 1.2rem; }
     .action-card.is-done .action-num { background: var(--forest); color: white; }
     .action-card h3 { margin: 2px 0 4px; }
@@ -428,7 +477,8 @@
     .action-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
     .action-links .primary-button, .action-links .secondary-button { min-height: 44px; padding: 9px 16px; }
     .action-links a { text-decoration: none; }
-    .done-toggle { border: 2px solid var(--forest); background: white; color: var(--forest); border-radius: 999px; padding: 8px 14px; font-weight: 850; cursor: pointer; white-space: nowrap; }
+    /* Floated so the card's text can use the full width below the button. */
+    .done-toggle { float: right; margin: 0 0 6px 12px; border: 2px solid var(--forest); background: white; color: var(--forest); border-radius: 999px; padding: 8px 14px; font-weight: 850; cursor: pointer; white-space: nowrap; }
     .action-card.is-done .done-toggle { background: var(--forest); color: white; }
     .action-card details { margin-top: 10px; }
     .action-card summary { cursor: pointer; font-weight: 800; color: var(--forest); }
@@ -498,22 +548,99 @@
 
     .site-footer { padding: 18px 16px 34px; text-align: center; color: var(--muted); font-size: .84rem; }
 
-    @media (max-width: 1100px) {
-      .question-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .question-grid .span-2 { grid-column: auto; }
-      .question-grid .device-q { grid-column: 1 / -1; }
-    }
-
     @media (max-width: 900px) {
       .start-grid, .route-layout, .prepare-layout { grid-template-columns: 1fr; }
+      .assurance-levels { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .carbon-card { grid-template-columns: 1fr; }
       .fact-grid, .path-grid, .plan-grid { grid-template-columns: 1fr 1fr; }
       .start-aside, .side-panel { border-left: 0; border-top: 1px solid var(--line); }
-      .question-grid { grid-template-columns: 1fr; }
-      .question-grid .span-2 { grid-column: auto; }
       .progress-step { font-size: 0; gap: 0; }
       .progress-step span { font-size: .84rem; }
       .prototype-label { display: none; }
+    }
+
+    /* Large monitors: scale the whole page up so it doesn't sit as a small column in a big window. */
+    @media (min-width: 1800px) and (min-height: 1000px) { body { zoom: 1.15; } }
+    @media (min-width: 2300px) and (min-height: 1250px) { body { zoom: 1.35; } }
+
+    /* Shorter windows (small laptops, landscape tablets): tighten spacing so each screen still fits. Phones keep their own layout. */
+    @media (max-height: 820px) and (min-width: 621px) {
+      .header-inner { min-height: 56px; }
+      .brand-mark { width: 36px; height: 36px; flex-basis: 36px; }
+      .brand-mark svg { width: 28px; height: 28px; }
+      .brand-name { font-size: 1.25rem; }
+      .brand-sub { margin-top: 3px; font-size: .7rem; }
+      .shell { padding-top: 8px; }
+      .progress-wrap { padding: 5px 14px; margin-bottom: 8px; }
+      .progress-step span { width: 24px; height: 24px; flex-basis: 24px; }
+      .start-main { padding: 28px 40px; }
+      h1 { font-size: clamp(2.2rem, 4.2vw, 3.6rem); margin-bottom: 14px; }
+      .lead { font-size: 1.05rem; }
+      .start-aside { padding: 24px 30px; }
+      .aside-title { font-size: 1.5rem; margin-bottom: 8px; }
+      .promise-list { gap: 10px; }
+      .promise p { font-size: .88rem; }
+      .notice { margin-top: 14px; padding: 12px 14px; font-size: .86rem; }
+      .content-head { padding-top: 10px; padding-bottom: 8px; }
+      fieldset { padding-top: 8px; padding-bottom: 8px; }
+      .main-panel { padding: 20px 30px; }
+      .side-panel { padding: 20px 26px; }
+      .main-panel h2 { font-size: clamp(1.6rem, 2.4vw, 2rem); margin-bottom: 6px; }
+      .route-kicker { margin-bottom: 6px; }
+      .reason-list, .action-list, .summary-list { margin-top: 10px; }
+      .safety-callout { margin-top: 12px; padding: 10px 14px; font-size: .92rem; }
+      .route-destination { margin-top: 12px; padding: 12px 16px; }
+      .route-destination h3 { margin-bottom: 2px; }
+      .route-destination small { margin-top: 3px; font-size: .78rem; }
+      .button-row { margin-top: 14px; }
+      .action-cards { margin-top: 10px; gap: 10px; }
+      .action-card { padding: 14px 16px; }
+      .action-top { grid-template-columns: 40px 1fr; gap: 12px; }
+      .action-num { width: 40px; height: 40px; }
+      .action-links { margin-top: 10px; }
+      .steps-foot { margin-top: 10px; }
+      .help-strip { margin-top: 12px; padding: 8px 14px; }
+      .action-card ul.plain { margin-top: 8px; gap: 4px; font-size: .9rem; }
+      .finale-hero { padding: 22px 30px 14px; }
+      .finale-next { padding: 16px 30px 14px; }
+    }
+
+    /* Short but wide windows: put each question's helper beside its title so every row is one line. */
+    @media (max-height: 800px) and (min-width: 900px) {
+      fieldset { grid-template-columns: auto minmax(0, 1fr) var(--field-width); grid-template-areas: "label help field"; column-gap: 16px; }
+      legend { align-self: center; }
+      .helper { align-self: center; margin: 0; }
+      .picker-trigger { min-height: 36px; padding-top: 6px; padding-bottom: 6px; }
+    }
+
+    /* Very short windows: drop secondary lines and tighten further. */
+    @media (max-height: 700px) and (min-width: 621px) {
+      .header-inner { min-height: 48px; }
+      .brand-sub, .prototype-label { display: none; }
+      .brand-mark { width: 32px; height: 32px; flex-basis: 32px; }
+      .reset-button { padding: 6px 12px; }
+      .progress-wrap { padding: 4px 12px; }
+      .start-main { padding: 22px 36px; }
+      h1 { font-size: clamp(2rem, 3.6vw, 3rem); }
+      .start-aside { padding: 20px 26px; }
+      .promise-list { gap: 8px; margin-top: 4px; }
+      .promise { grid-template-columns: 32px 1fr; gap: 10px; }
+      .promise-icon { width: 32px; height: 32px; border-radius: 10px; }
+      .notice { margin-top: 10px; padding: 10px 12px; }
+      .helper { font-size: .78rem; }
+      fieldset { padding-top: 6px; padding-bottom: 6px; }
+      .help-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 20px; }
+      .help-strip .micro-note { display: none; }
+      .main-panel { padding: 16px 28px; }
+      .side-panel { padding: 16px 24px; }
+      .main-panel h2 { font-size: clamp(1.5rem, 2.2vw, 1.8rem); margin-bottom: 6px; }
+      .route-kicker { margin-bottom: 6px; }
+      .route-reason { font-size: .95rem; }
+      .route-layout .reason-list, .route-layout .safety-callout { font-size: .88rem; }
+      .route-destination p { font-size: .88rem; }
+      .reason-list li::before, .action-list li::before { width: 22px; height: 22px; }
+      .action-card p { font-size: .9rem; }
+      .finale-hero h2 { font-size: clamp(1.6rem, 2.6vw, 2.1rem); }
     }
 
     @media (max-width: 620px) {
@@ -529,13 +656,17 @@
       .content-head, .assessment-form { padding-left: 22px; padding-right: 22px; }
       .content-head { align-items: start; flex-direction: column; }
       .head-side { justify-items: start; }
+      fieldset { grid-template-columns: 1fr; grid-template-areas: "label" "help" "field"; padding: 12px 0 14px; }
+      .picker-trigger { margin-top: 8px; }
+      .choices, .device-q.is-open .choices { left: 0; width: auto; }
+      .device-q.is-open .choices { grid-template-columns: 1fr; }
+      .presentation-shortcuts { justify-content: flex-start; }
       .form-footer { position: static; flex-direction: column; align-items: stretch; margin-left: -22px; margin-right: -22px; padding: 12px 22px 18px; gap: 10px; }
       .form-footer .button-row { width: 100%; margin: 0; }
       .form-footer button { flex: 1; }
       .finale-top { grid-template-columns: 1fr; }
       .action-top { grid-template-columns: 40px 1fr; }
       .action-num { width: 40px; height: 40px; }
-      .done-toggle { grid-column: 1 / -1; justify-self: start; }
       .fact-grid, .path-grid, .plan-grid { grid-template-columns: 1fr; }
       .route-layout .reason-list { grid-template-columns: 1fr; }
       .source-strip a { white-space: normal; }
@@ -603,7 +734,7 @@
         </div>
         <aside class="start-aside" aria-label="RebootLoop safety promise">
           <p class="eyebrow" style="color: var(--lime)">Safety promise</p>
-          <h2 style="font-size:1.8rem">A useful answer, with clear limits.</h2>
+          <h2 class="aside-title">A useful answer, with clear limits.</h2>
           <div class="promise-list">
             <div class="promise"><div class="promise-icon">1</div><div><strong>Safety and ownership first</strong><p>Hazards and managed devices stop the normal flow.</p></div></div>
             <div class="promise"><div class="promise-icon">2</div><div><strong>Official preparation guidance</strong><p>Platform links are shown without asking for credentials.</p></div></div>
@@ -634,7 +765,7 @@
               <input id="own-other" name="ownership" type="radio" value="other"><label for="own-other">No / borrowed / found</label>
             </div></fieldset>
 
-            <fieldset class="span-2 device-q"><legend>2. Device</legend><p class="helper">Choose the closest category.</p><div class="choices">
+            <fieldset class="device-q"><legend>2. Device</legend><p class="helper">Choose the closest category.</p><div class="choices">
               <input id="dev-iphone" name="device" type="radio" value="iphone"><label for="dev-iphone">iPhone</label>
               <input id="dev-ipad" name="device" type="radio" value="ipad"><label for="dev-ipad">iPad</label>
               <input id="dev-android" name="device" type="radio" value="android"><label for="dev-android">Android</label>
@@ -676,7 +807,7 @@
               <input id="goal-unsure" name="goal" type="radio" value="unsure"><label for="goal-unsure">Unsure</label>
             </div></fieldset>
 
-            <fieldset class="span-2"><legend>7. Data sensitivity</legend><p class="helper">Choose the highest sensitivity that ever applied to information on the device.</p><div class="choices">
+            <fieldset><legend>7. Data sensitivity</legend><p class="helper">Choose the highest sensitivity that ever applied to information on the device.</p><div class="choices">
               <input id="sens-everyday" name="sensitivity" type="radio" value="everyday"><label for="sens-everyday">Everyday - photos, messages, ordinary accounts</label>
               <input id="sens-sensitive" name="sensitivity" type="radio" value="sensitive"><label for="sens-sensitive">Sensitive - health, financial or identity records</label>
               <input id="sens-high" name="sensitivity" type="radio" value="high"><label for="sens-high">Highly sensitive - managed, research or regulated data</label>
@@ -955,7 +1086,80 @@
           : { ownership: "owned", device: "windows", power: "off", safety: "normal", condition: "unsure", goal: "recycle", sensitivity: "high" };
         Object.entries(demo).forEach(([key, value]) => setRadio(key, value));
         document.getElementById("formError").textContent = "";
+        syncPickers();
       }
+
+      // Each question shows a select button; its radio answers open in a floating list.
+      const pickers = [...document.querySelectorAll("#assessmentForm fieldset")];
+
+      function syncPickers() {
+        pickers.forEach(fieldset => {
+          const checked = fieldset.querySelector("input:checked");
+          const trigger = fieldset.querySelector(".picker-trigger");
+          trigger.querySelector(".picker-value").textContent = checked ? fieldset.querySelector(`label[for="${checked.id}"]`).textContent : "Choose…";
+          trigger.classList.toggle("has-value", Boolean(checked));
+          if (checked) fieldset.classList.remove("is-missing");
+        });
+      }
+
+      function setPickerOpen(fieldset, open) {
+        pickers.forEach(other => {
+          const isOpen = open && other === fieldset;
+          other.classList.toggle("is-open", isOpen);
+          other.querySelector(".picker-trigger").setAttribute("aria-expanded", String(isOpen));
+        });
+        if (open) (fieldset.querySelector("input:checked") || fieldset.querySelector("input")).focus();
+      }
+
+      function closePicker(fieldset) {
+        setPickerOpen(fieldset, false);
+        fieldset.querySelector(".picker-trigger").focus();
+      }
+
+      // After an answer, open the next unanswered question, or move on to the submit button.
+      function advancePicker(fieldset) {
+        if (!fieldset.querySelector("input:checked")) return;
+        const index = pickers.indexOf(fieldset);
+        const next = [...pickers.slice(index + 1), ...pickers.slice(0, index)].find(other => !other.querySelector("input:checked"));
+        if (next) {
+          setPickerOpen(next, true);
+          next.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        } else {
+          setPickerOpen(fieldset, false);
+          document.querySelector("#assessmentForm [type=submit]").focus();
+        }
+      }
+
+      pickers.forEach((fieldset, index) => {
+        const list = fieldset.querySelector(".choices");
+        list.id = `choices-${index}`;
+        const trigger = document.createElement("button");
+        trigger.type = "button";
+        trigger.className = "picker-trigger";
+        trigger.setAttribute("aria-expanded", "false");
+        trigger.setAttribute("aria-controls", list.id);
+        trigger.innerHTML = '<span class="picker-value">Choose…</span><span class="picker-caret" aria-hidden="true">▾</span>';
+        list.before(trigger);
+        trigger.addEventListener("click", () => setPickerOpen(fieldset, !fieldset.classList.contains("is-open")));
+        list.addEventListener("change", syncPickers);
+        // Mouse picks confirm straight away; arrow keys only move the selection, and Enter or Space confirms it.
+        // Deferred so the label has checked its radio before the next list takes focus.
+        list.addEventListener("click", event => { if (event.detail > 0) setTimeout(() => advancePicker(fieldset)); });
+        list.addEventListener("keydown", event => {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            if (!event.target.checked) event.target.click();
+            advancePicker(fieldset);
+          }
+          if (event.key === "Escape") closePicker(fieldset);
+        });
+        list.addEventListener("keyup", event => { if (event.key === " ") setTimeout(() => advancePicker(fieldset)); });
+      });
+
+      document.addEventListener("pointerdown", event => {
+        const open = pickers.find(fieldset => fieldset.classList.contains("is-open"));
+        if (open && !open.contains(event.target)) setPickerOpen(open, false);
+      });
 
       function collectForm() {
         const form = new FormData(document.getElementById("assessmentForm"));
@@ -964,8 +1168,9 @@
         if (missing.length) {
           const first = document.querySelector(`input[name="${missing[0]}"]`);
           document.getElementById("formError").textContent = `Please answer ${missing.length === 1 ? "the remaining question" : `all ${missing.length} remaining questions`}.`;
+          pickers.forEach(fieldset => fieldset.classList.toggle("is-missing", missing.includes(fieldset.querySelector("input").name)));
           first?.closest("fieldset")?.scrollIntoView({ behavior: "smooth", block: "center" });
-          first?.focus();
+          first?.closest("fieldset")?.querySelector(".picker-trigger").focus();
           return null;
         }
         document.getElementById("formError").textContent = "";
@@ -1196,7 +1401,7 @@
         const source = sources[currentData.device] || sources.other;
         const items = currentRoute.id === "repair" ? repairChecklist : [platformExtras[currentData.device] || platformExtras.other, ...(currentRoute.id === "transfer" ? transferChecklist : recycleChecklist)];
         const checklistHtml = items.map(([title, desc], i) => `<div class="check-item"><input type="checkbox" id="check-${i}"><label for="check-${i}"><span><strong>${title}</strong><small>${desc}</small></span></label></div>`).join("");
-        const card = (n, title, time, desc, body) => `<div class="action-card" data-step="${n}"><div class="action-top"><div class="action-num">${n}</div><div><span class="action-time">${time}</span><h3>${title}</h3><p>${desc}</p></div><button class="done-toggle" type="button" aria-pressed="false">Mark done</button></div>${body}</div>`;
+        const card = (n, title, time, desc, body) => `<div class="action-card" data-step="${n}"><div class="action-top"><div class="action-num">${n}</div><div><button class="done-toggle" type="button" aria-pressed="false">Mark done</button><span class="action-time">${time}</span><h3>${title}</h3><p>${desc}</p></div></div>${body}</div>`;
         const cards = [];
         if (currentRoute.id === "repair") {
           cards.push(card(1, "Back it up", "About 15 minutes", "Save what matters before anyone else touches your device.",
@@ -1344,6 +1549,8 @@
       function resetAll(startScreen = true) {
         document.getElementById("assessmentForm").reset();
         document.getElementById("formError").textContent = "";
+        pickers.forEach(fieldset => fieldset.classList.remove("is-missing"));
+        syncPickers();
         currentData = null;
         currentRoute = null;
         assessmentCounted = false;

@@ -788,6 +788,8 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
 .feedback-inline a { color: var(--forest); font-weight: 800; }
 .footer-feedback { margin: 0 0 4px; font-weight: 750; }
 .footer-feedback a { color: var(--forest); }
+.team-link { color: inherit; text-decoration-color: var(--line); text-underline-offset: 3px; }
+.team-link:hover { color: var(--forest); text-decoration-color: currentColor; }
 
 @media (max-width: 960px) {
   .site-nav a:not(.nav-cta) { display: none; }

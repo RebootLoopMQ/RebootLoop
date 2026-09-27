@@ -733,6 +733,8 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
 .member .initials { width: 52px; height: 52px; margin-bottom: 8px; display: grid; place-items: center; border-radius: 16px; background: var(--navy); color: var(--lime); font-weight: 900; }
 .member strong { font-size: 1.08rem; }
 .member span { color: var(--muted); }
+.member-links { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 10px; padding-top: 12px; border-top: 1px solid var(--line); }
+.member-links a { color: var(--forest); font-weight: 800; font-size: .92rem; }
 .source-list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
 .source-list li { display: grid; gap: 4px; padding: 16px 20px; border: 1px solid var(--line); border-radius: 16px; background: white; }
 .source-list a { font-weight: 800; }

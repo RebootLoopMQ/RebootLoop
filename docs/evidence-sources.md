@@ -10,10 +10,25 @@ Reviewed 27 September 2026. This ledger separates published evidence, an illustr
 | A public phone recycling pathway exists | [MobileMuster, Recycle a mobile](https://www.mobilemuster.com.au/recycle-a-mobile/) and [accepted items](https://www.mobilemuster.com.au/book-a-pickup/) | Phones and relevant accessories are accepted; iPads/tablets and other electronics are not generally accepted. Check current terms and battery instructions. RebootLoop has contacted MobileMuster for feedback, but there is no confirmed partnership. |
 | A public computer/TV collection pathway exists | [DCCEEW, National Television and Computer Recycling Scheme](https://www.dcceew.gov.au/environment/protection/waste/product-stewardship/television-computer-recycling-scheme) | Designated sites serve households and small businesses. It is not a blanket endpoint for phones, consoles, tablets or all storage media. Check a site's accepted items. |
 | Reference iPhone 16 128GB total 56 kg CO₂e, 80% production | [Apple, iPhone 16 Product Environmental Report, p. 10](https://www.apple.com/environment/pdf/products/iphone/iPhone_16_and_iPhone_16_Plus_PER_Sept2024.pdf) | 56 × 0.80 = **44.8 kg CO₂e** production component for that specific reference model. Apple's percentages are rounded. It is not the old device's footprint. |
+| 96% of materials from phones MobileMuster collects are kept out of landfill (impact screen, phone recycling) | [MobileMuster, About us](https://www.mobilemuster.com.au/about-us/) | Linked in the app but not yet reviewed in this ledger. Confirm the current figure and wording before the showcase. |
 
 ## Carbon scenario shown in the app
 
-The user chooses whether to assume that a working hand-me-down or reuse event actually displaced one purchase of the *reference iPhone 16 128GB*. If the assumption is **no or unknown**, the displayed scenario is 0. If **yes**, the arithmetic displays 44.8 kg CO₂e of production footprint for that new reference device. This is an illustrative comparison, not a measured or certified avoided-emissions result. It excludes repair, refurbishment, shipping, continued use, alternative phone models, changed buying behaviour and rebound effects. The app does not add this figure to session counts or passports. **Verified RebootLoop carbon savings: 0 kg CO₂e.**
+The user chooses whether to assume that a working hand-me-down or reuse event actually displaced one purchase of the *reference iPhone 16 128GB*. If the assumption is **no or unknown**, the displayed scenario is 0. If **yes**, the arithmetic displays 44.8 kg CO₂e of production footprint for that new reference device. This is an illustrative comparison, not a measured or certified avoided-emissions result. It excludes repair, refurbishment, shipping, continued use, alternative phone models, changed buying behaviour and rebound effects. This scenario figure is not added to session counts. **Verified RebootLoop carbon savings: 0 kg CO₂e.**
+
+## Impact estimates shown after a route
+
+The Next steps redesign added an impact screen and a session line. These are estimates for a typical device, not measured outcomes, and several are still placeholders in the code:
+
+| Figure | Current value | Status |
+|---|---|---|
+| Production CO₂e of a new phone | 45–60 kg | Based on Apple iPhone 16 (56 × 0.80 ≈ 45 kg) to iPhone 16 Pro Max (74 kg, similar production share ≈ 59 kg). Add the Pro Max report to the table above. |
+| Production CO₂e of a new tablet | 50–90 kg | **Placeholder.** Needs manufacturer product environmental reports. |
+| Production CO₂e of a new computer | 100–250 kg | **Placeholder.** Needs manufacturer product environmental reports. |
+| Driving comparison | 0.17 kg CO₂e per car-km | **Placeholder.** Needs a sourced Australian average passenger-car factor. |
+| Typical device weights for "e-waste diverted (est.)" | 0.1–4 kg by category | **Placeholder.** Unsourced, and see the removed-statements list below. |
+
+The app describes the CO₂e range as "avoided" when a device is reused or repaired. That assumes a new purchase was actually displaced, which the carbon scenario above deliberately does not assume. The team should resolve this before presenting it.
 
 ## What our own evidence currently establishes
 
@@ -25,8 +40,8 @@ The user chooses whether to assume that a working hand-me-down or reuse event ac
 
 ## Statements deliberately removed from the competition draft
 
-- “Estimated mass diverted” based on generic device weights and generated passports: no actual diversion was observed.
-- Static QR codes implying an individually retrievable, verified passport: the new record is local JSON/print only, with no registry.
+- “Estimated mass diverted” based on generic device weights and generated passports: no actual diversion was observed. **Note:** the redesign reintroduced this as “e-waste diverted (est.)” in the session line; the team needs to decide whether to keep it.
+- Static QR codes implying an individually retrievable, verified passport. The passport itself has since been removed; the app produces no record, only a plan the user can choose to save and a printable note for the next owner.
 - Claims that other schemes offer no guidance or tracking: this was not systematically evaluated and MobileMuster itself publishes data preparation advice.
 - A secondary claim about 2023 Australian e-waste tonnage sourced via a vendor, and a broad “36% data concern” claim without a precise linked source: neither is needed for the app.
 - Any specific wildlife or plant benefit per phone, actual CO₂e savings, pickup availability, partner verification, price or revenue: no evidence yet.

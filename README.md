@@ -25,7 +25,8 @@ In under two minutes, a user answers a short set of non-identifying questions ab
 - **Routes** the device toward repair, transfer or recycling, with explicit stops for hazards, non-owned devices, high-sensitivity data, non-functioning devices and storage media that need a specific process
 - **Guides** preparation with links to official sources for working consumer devices; stops when a reset cannot be completed or checked
 - **Shows a relevant public pathway** for eligible phones (MobileMuster) and computers (NTCRS), with accepted-item checks and no claimed partnership
-- **Creates a local, printable passport** showing a recommended route and Guided or Self-declared status, without an owner or hardware identifier. Its QR encodes the local record text; it is not an online verification link
+- **Breaks the route into two next steps**, such as wiping the device with the official guide and then handing it over or dropping it off, with a residual-risk warning up front. For a handover, it offers a printable note that tells the next owner how to check the device was properly reset
+- **Shows an estimated impact** for finishing the job: a CO₂e range for a typical phone, tablet or computer based on manufacturers' published footprints, or published recycling figures for recycle routes. People can save their plan by email, text, share sheet or copy
 - **Explains a single-model carbon scenario** based on Apple's published iPhone 16 footprint; it does not claim measured carbon savings
 
 RebootLoop does **not** erase data, certify sanitisation, or guarantee non-recoverability. It is a decision layer *before* handover — not a replacement for existing recycling/reuse schemes like MobileMuster or the NTCRS.
@@ -34,7 +35,7 @@ RebootLoop does **not** erase data, certify sanitisation, or guarantee non-recov
 
 **Live demo: [rebootloopmq.github.io/RebootLoop](https://rebootloopmq.github.io/RebootLoop/)**
 
-The app is a static page with no accounts or RebootLoop backend. Assessment answers and session counts remain in browser memory; hosting and external links may process ordinary access information. Reloading clears the assessment. A PDF saved through the browser's print window remains with the user unless they choose to share it.
+The app is a static page with no accounts or RebootLoop backend. Assessment answers and session counts remain in browser memory; hosting and external links may process ordinary access information. Reloading clears the assessment. A saved plan or printed next-owner note stays with the user unless they choose to share it.
 
 ```bash
 git clone https://github.com/RebootLoopMQ/RebootLoop.git
@@ -64,8 +65,8 @@ The carbon example and limits are in the [`evidence and claim ledger`](./docs/ev
 
 ## Tech stack
 
-- Vanilla HTML / CSS / JavaScript with a locally bundled, MIT-licensed QR generator; no runtime network dependency for the assessment
-- No accounts or RebootLoop backend; the QR and printable passport are created in the browser
+- Vanilla HTML / CSS / JavaScript in a single file; no runtime network dependency for the assessment
+- No accounts or RebootLoop backend; plans and the next-owner note are generated in the browser and only leave it if the user saves or shares them
 
 ## Team
 

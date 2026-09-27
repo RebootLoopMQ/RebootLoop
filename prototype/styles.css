@@ -696,11 +696,19 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
 .page-head .lead { margin: 0; }
 
 .home-hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(32px, 5vw, 64px); align-items: center; }
+/* On desktop the hero gets the first screen to itself. */
+@media (min-width: 961px) {
+  .home-hero { min-height: calc(100vh / var(--zoom) - var(--header-h) - 4px - clamp(32px, 6vh, 64px) - 16px); }
+}
 .hero-copy { display: grid; gap: 20px; justify-items: start; }
 .hero-copy h1 { margin: 0; }
-.hero-copy .lead { margin: 0; }
+.hero-copy .lead { margin: 0; max-width: 46ch; text-wrap: balance; }
 .hero-copy .button-row { margin: 0; }
-.hero-note { margin: 0; color: var(--muted); font-size: .9rem; }
+.slogan span { display: block; }
+.slogan { margin: 0; max-width: 30ch; color: var(--forest); font-size: clamp(1.35rem, 2.3vw, 1.9rem); font-weight: 850; line-height: 1.2; letter-spacing: -.03em; text-wrap: balance; }
+.hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.hero-tags li { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px; background: white; color: var(--muted); font-size: .85rem; font-weight: 750; }
+.hero-tags li::before { content: "✓"; color: var(--teal); font-weight: 900; }
 .award { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: #fff5de; color: #7f5a0a; font-size: .85rem; font-weight: 800; }
 .hero-figure { margin: 0; }
 .hero-figure img { display: block; width: 100%; max-width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--radius); box-shadow: var(--shadow); }

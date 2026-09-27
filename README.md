@@ -4,7 +4,7 @@
 
 # RebootLoop ↻
 
-**A privacy-first decision-support platform helping university students securely repair, reuse, donate or recycle old technology.**
+**A public, privacy-conscious decision-support prototype helping people choose a safer next step for unused technology.**
 
 🏆 Placed **5th of 24 teams** at Macquarie University's *Pitch for the Planet 2026* (Faculty of Science and Engineering).
 
@@ -18,14 +18,15 @@
 
 Students often keep unused phones, laptops and storage devices in drawers — not because they don't care about sustainability, but because they're uncertain whether their personal data can still be recovered, and unsure what to do next. This creates both an e-waste problem and a cybersecurity barrier.
 
-## What RebootLoop does
+## What the Phase 2 public version does
 
 In under two minutes, a user answers a short set of non-identifying questions about a device (ownership, power state, physical safety, condition, goal, and data sensitivity). RebootLoop then:
 
-- **Routes** the device toward the safest next step: repair, reuse, donation, or responsible recycling — or stops the process entirely for hazardous or non-owned devices
-- **Guides** secure, platform-specific data preparation (iPhone/iPad, Android, Windows, Mac, removable media)
-- **Generates** a minimal QR "device passport" recording the route and an honest assurance level (guided / self-declared / partner-verified)
-- **Measures** aggregate impact (devices assessed, route mix, estimated mass diverted) without inflating claims
+- **Routes** the device toward repair, transfer or recycling, with explicit stops for hazards, non-owned devices, high-sensitivity data, non-functioning devices and storage media that need a specific process
+- **Guides** preparation with links to official sources for working consumer devices; stops when a reset cannot be completed or checked
+- **Shows a relevant public pathway** for eligible phones (MobileMuster) and computers (NTCRS), with accepted-item checks and no claimed partnership
+- **Creates a local, downloadable JSON or printable passport** showing a recommended route and Guided or Self-declared status, without an owner or hardware identifier
+- **Explains a single-model carbon scenario** based on Apple's published iPhone 16 footprint; it does not claim measured carbon savings
 
 RebootLoop does **not** erase data, certify sanitisation, or guarantee non-recoverability. It is a decision layer *before* handover — not a replacement for existing recycling/reuse schemes like MobileMuster or the NTCRS.
 
@@ -33,7 +34,7 @@ RebootLoop does **not** erase data, certify sanitisation, or guarantee non-recov
 
 **Live demo: [rebootloopmq.github.io/RebootLoop](https://rebootloopmq.github.io/RebootLoop/)**
 
-The prototype runs entirely offline in the browser — no accounts, no backend, no data collection.
+The app is a static page with no accounts or RebootLoop backend. Assessment answers and session counts remain in browser memory; hosting and external links may process ordinary access information. Reloading clears the assessment. Downloaded passport files remain with the user unless they choose to share them.
 
 ```bash
 git clone https://github.com/RebootLoopMQ/RebootLoop.git
@@ -41,23 +42,11 @@ cd RebootLoop/prototype
 open index.html   # or double-click it
 ```
 
-## Walkthrough
-
-| Start | Assess |
-|---|---|
-| ![Start screen](./assets/screenshots/01-start.png) | ![Assess screen](./assets/screenshots/02-assess.png) |
-
-| Route | Prepare |
-|---|---|
-| ![Route screen](./assets/screenshots/03-route.png) | ![Prepare screen](./assets/screenshots/04-prepare.png) |
-
-### Passport
-
-![Passport screen](./assets/screenshots/05-passport.png)
+The [`prototype/index.html`](./prototype/index.html) file is the GitHub Pages deployment source. The original competition screenshots remain in `assets/screenshots` as historical material; they do not depict the current public app.
 
 ## Routing logic
 
-Priority order: **physical safety → authority/ownership → data sensitivity → device viability → circular outcome → convenience.**
+Priority order: **physical safety → authority/ownership → high data sensitivity → inability to reset / media-specific risk → device viability → preferred outcome.**
 
 Every recommendation is produced by explicit, inspectable rules — not an opaque AI score. See [`/docs`](./docs) for the full routing table and five mandatory edge-case tests.
 
@@ -67,16 +56,16 @@ RebootLoop's problem framing and safety boundaries are grounded in published res
 
 - **511,000 t** of e-waste generated in Australia in 2019, projected to reach **657,000 t by 2030** — [Australian Government DCCEEW](https://www.dcceew.gov.au/environment/protection/waste/e-waste)
 - Sydney university students know *what* e-waste is but have a real knowledge gap around collection points and recycling programs — Islam, Dias & Huda, [Macquarie University research](https://researchers.mq.edu.au/en/publications/young-consumers-e-waste-awareness-consumption-disposal-and-recycl/) (2021)
-- **81%** of people would be more inclined to hand down a phone if they knew how to remove their data properly, and **36%** worry about the data stored on their old phones — [MobileMuster](https://www.mobilemuster.com.au/?p=5020)
+- **40%** of people asked directly about data security considered it a barrier to recycling — [MobileMuster Annual Report 2024, p. 23](https://www.mobilemuster.com.au/wp-content/uploads/2026/02/MOB_AnnualReport2024_UPDATE.v1.pdf)
 - Correct disposal preparation reduces but does not guarantee data cannot be recovered — [Australian Cyber Security Centre (ACSC)](https://www.cyber.gov.au/protect-yourself/securing-your-devices/how-secure-your-device/how-dispose-your-device-securely)
 - Aligns with **UN SDG 12** Targets 12.5 (waste reduction/reuse/recycling) and 12.8 (awareness and information) — [UN SDG 12](https://sdgs.un.org/goals/goal12)
 
-Full citation table, links, and a note on stats we checked and deliberately excluded: [`docs/evidence-sources.md`](./docs/evidence-sources.md).
+The carbon example and limits are in the [`evidence and claim ledger`](./docs/evidence-sources.md).
 
 ## Tech stack
 
-- Vanilla HTML / CSS / JavaScript (offline-first, zero dependencies)
-- No accounts, no server, no data persistence beyond the browser session
+- Vanilla HTML / CSS / JavaScript (zero runtime dependencies)
+- No accounts or RebootLoop backend; local downloads are created only on request
 
 ## Team
 
@@ -86,12 +75,11 @@ Full citation table, links, and a note on stats we checked and deliberately excl
 | Sustainability + Evidence Lead | Nafe Ibne Mamun |
 | UX + Practicality Lead | Alexander Kai Cryan |
 
-## Roadmap
+## Showcase and pilot status
 
-- [ ] MQ discovery pilot (20–50 devices)
-- [ ] Verified partner directory for repair/donation/recycling
-- [ ] Accessibility review
-- [ ] Partner-verified assurance state (real evidence-backed sanitisation records)
+The team is invited to the **(Tech)^US BIT Industry Showcase on 8 October 2026**. MobileMuster has been contacted for feedback; there is no confirmed partnership. A campus device-handling pilot needs separate university permission, privacy review and agreed partners. The immediate work is real usability testing and a truthful presentation of what people can do in the public app. See the [showcase test and evidence plan](./docs/showcase-test-plan.md) and [proposed pilot plan](./docs/pilot-plan.md).
+
+Potential institution-funded operations and reporting are **business-model hypotheses**. There are no paying customers, price tests, pickup service or verified outcomes yet.
 
 ## Alignment
 

@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#092e35">
-  <meta name="description" content="RebootLoop is a privacy-first decision platform for securely routing unused student technology toward repair, reuse, donation or responsible recycling.">
-  <title>RebootLoop - Securely unlock the next life of your technology</title>
+  <meta name="description" content="RebootLoop helps you choose a safer next step for an unused device, prepare your data and find an existing recycling pathway. Free public Phase 2 pilot prototype.">
+  <title>RebootLoop | A safer next step for your old device</title>
   <style>
     :root {
       color-scheme: light;
@@ -28,6 +28,7 @@
     }
 
     * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
@@ -41,10 +42,10 @@
       line-height: 1.5;
     }
 
-    button, input { font: inherit; }
+    button, input, select { font: inherit; }
     button { cursor: pointer; }
     a { color: var(--forest); }
-    a:focus-visible, button:focus-visible, input:focus-visible + label {
+    a:focus-visible, button:focus-visible, input:focus-visible + label, select:focus-visible {
       outline: 4px solid rgba(47, 120, 183, .35);
       outline-offset: 3px;
     }
@@ -87,6 +88,7 @@
     .brand-sub { margin-top: 5px; color: #bfd9d0; font-size: .82rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
 
     .header-actions { display: flex; align-items: center; gap: 14px; }
+    .header-link { color: #e3f4eb; font-weight: 750; text-decoration-color: var(--lime); text-underline-offset: 5px; white-space: nowrap; }
     .prototype-label {
       color: #d8ebe5;
       font-size: .84rem;
@@ -127,7 +129,7 @@
     }
 
     .progress-step {
-      color: #71858a;
+      color: #526a70;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -146,7 +148,7 @@
       display: grid;
       place-items: center;
       background: #e4eeeb;
-      color: #60757a;
+      color: #4f666c;
       flex: 0 0 28px;
     }
 
@@ -352,8 +354,6 @@
     .passport-top { display: flex; justify-content: space-between; gap: 22px; align-items: start; position: relative; z-index: 1; }
     .passport-label { color: var(--lime); font-weight: 900; letter-spacing: .08em; text-transform: uppercase; font-size: .82rem; }
     .passport-id { font-size: 2rem; font-weight: 900; letter-spacing: -.03em; margin-top: 6px; }
-    .qr-frame { width: 158px; height: 158px; flex: 0 0 158px; background: white; border-radius: 16px; padding: 10px; display: grid; place-items: center; }
-    .qr-frame img { width: 100%; height: 100%; display: block; }
     .passport-data { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 15px; margin-top: 28px; position: relative; z-index: 1; }
     .passport-field { border-top: 1px solid rgba(255,255,255,.17); padding-top: 10px; }
     .passport-field span { color: #a9c7be; display: block; font-size: .75rem; font-weight: 850; letter-spacing: .07em; text-transform: uppercase; }
@@ -366,6 +366,49 @@
     .metric span { display: block; color: var(--muted); font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; }
     .metric strong { display: block; margin-top: 4px; font-size: 1.65rem; letter-spacing: -.04em; }
     .demo-label { margin-top: 12px; color: var(--muted); font-size: .82rem; }
+
+    .route-destination { margin-top: 24px; border: 1px solid #b7d9ce; background: var(--mint); border-radius: 17px; padding: 19px; }
+    .route-destination h3 { margin-bottom: 7px; }
+    .route-destination p { margin: 0 0 10px; color: #315750; }
+    .route-destination a { font-weight: 850; }
+    .route-destination small { display: block; margin-top: 9px; color: #43645c; }
+    .passport-tools { margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .passport-tools button { min-height: 44px; }
+    .micro-note { color: var(--muted); font-size: .88rem; }
+    .below { margin-top: 26px; display: grid; gap: 22px; }
+    .section-card { background: white; border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(24px,4vw,40px); box-shadow: 0 10px 28px rgba(9,46,53,.04); scroll-margin-top: 18px; }
+    .section-intro { max-width: 800px; color: var(--muted); font-size: 1.06rem; }
+    .fact-grid, .path-grid, .plan-grid { display: grid; gap: 15px; grid-template-columns: repeat(3,minmax(0,1fr)); margin-top: 20px; }
+    .fact, .path, .plan-step { border: 1px solid var(--line); border-radius: 17px; padding: 20px; background: #fbfdfc; }
+    .fact strong { display: block; font-size: clamp(1.65rem,3vw,2.5rem); letter-spacing: -.05em; line-height: 1.1; color: var(--forest); }
+    .fact span { display: block; color: var(--muted); margin-top: 8px; }
+    .path h3, .plan-step h3 { margin: 5px 0 8px; }
+    .path p, .plan-step p { margin: 0; color: var(--muted); }
+    .path-number { display: inline-grid; place-items: center; width: 31px; height: 31px; border-radius: 9px; background: var(--mint); color: var(--forest); font-weight: 900; }
+    .plan-step .path-number { width: auto; padding: 0 9px; }
+    .carbon-card { background: var(--navy); color: white; border-radius: 22px; padding: clamp(22px,4vw,36px); margin-top: 26px; display: grid; grid-template-columns: .9fr 1.1fr; gap: 34px; }
+    .carbon-card .eyebrow { color: var(--lime); }
+    .carbon-card h3 { font-size: clamp(1.5rem,3vw,2.25rem); }
+    .carbon-card p { color: #cde1dc; }
+    .carbon-card a { color: #cbe987; }
+    .carbon-control { display: grid; gap: 10px; align-content: center; }
+    .carbon-control label { font-weight: 800; }
+    .carbon-control select { width: 100%; border: 2px solid #9bcab8; border-radius: 12px; padding: 12px; background: white; color: var(--ink); }
+    .carbon-result { border: 1px solid rgba(255,255,255,.22); border-radius: 16px; padding: 16px 20px; background: rgba(255,255,255,.07); }
+    .carbon-result strong { display: block; font-size: clamp(2rem,4vw,3rem); color: var(--lime); line-height: 1; }
+    .carbon-result span { display: block; margin-top: 8px; color: #d5e7df; }
+    .status-table { width: 100%; border-collapse: collapse; margin-top: 18px; }
+    .status-table th, .status-table td { padding: 13px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    .status-table th { background: var(--mint); color: var(--forest); }
+    .status-table td:nth-child(2) { font-weight: 800; white-space: nowrap; }
+    .status-table-wrap { overflow-x: auto; }
+    .status-pill { display: inline-block; padding: 4px 9px; border-radius: 99px; background: #fff0d1; color: #71500b; font-size: .85rem; }
+    .status-pill.proposed { background: #e9f1f8; color: #285478; }
+    .business-card { margin-top: 20px; border-left: 5px solid var(--teal); background: var(--mint); border-radius: 14px; padding: 18px 20px; }
+    .business-card p { margin: 7px 0 0; }
+    .callout-row { display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 22px; }
+    .privacy-note { background: #f0f7f5; padding: 16px 20px; border-radius: 14px; }
+    .privacy-note p { margin: 0; }
 
     .source-strip {
       margin-top: 20px;
@@ -382,6 +425,8 @@
 
     @media (max-width: 900px) {
       .start-grid, .route-layout, .prepare-layout, .passport-layout { grid-template-columns: 1fr; }
+      .carbon-card { grid-template-columns: 1fr; }
+      .fact-grid, .path-grid, .plan-grid { grid-template-columns: 1fr 1fr; }
       .start-aside, .side-panel { border-left: 0; border-top: 1px solid var(--line); }
       .question-grid { grid-template-columns: 1fr; }
       .progress-step { font-size: 0; gap: 0; }
@@ -394,6 +439,7 @@
       .brand-sub { display: none; }
       .brand-mark { width: 44px; height: 44px; flex-basis: 44px; }
       .brand-name { font-size: 1.35rem; }
+      .header-link { display: none; }
       .reset-button { padding: 9px 12px; font-size: .85rem; }
       .shell { width: min(100% - 20px, 1180px); padding-top: 12px; }
       .progress-wrap { padding: 12px; }
@@ -406,6 +452,18 @@
       .form-footer button { flex: 1; }
       .passport-top { flex-direction: column; }
       .passport-data, .metric-grid { grid-template-columns: 1fr; }
+      .fact-grid, .path-grid, .plan-grid { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      body { background: white; }
+      .site-header, .progress-wrap, #screen-1, #screen-2, #screen-3, #screen-4, .below, .source-strip, .site-footer, .button-row, .passport-tools, .side-panel { display: none !important; }
+      .shell { width: 100%; padding: 0; }
+      #screen-5 { display: block; }
+      .surface { border: 0; box-shadow: none; }
+      .passport-layout { display: block; }
+      .main-panel { padding: 0; }
+      .passport-card { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -432,8 +490,9 @@
         </div>
       </div>
       <div class="header-actions">
-        <div class="prototype-label">Pitch for the Planet<br>Interactive proof-of-concept</div>
-        <button class="reset-button" id="resetDemo" type="button">Reset demo</button>
+        <a class="header-link" href="#industry">For industry ↗</a>
+        <div class="prototype-label">Public Phase 2 prototype<br>Independent student project</div>
+        <button class="reset-button" id="resetDemo" type="button">Start over</button>
       </div>
     </div>
   </header>
@@ -452,23 +511,23 @@
     <section class="screen is-active" id="screen-1" data-screen="1" aria-labelledby="start-title">
       <div class="surface start-grid">
         <div class="start-main">
-          <p class="eyebrow">Your device still has value</p>
-          <h1 id="start-title">Find its safest next life.</h1>
-          <p class="lead">Answer a few questions about the device - not about you. RebootLoop recommends a safe route toward repair, reuse, donation or responsible recycling.</p>
+          <p class="eyebrow">A new phone. An old one in the drawer.</p>
+          <h1 id="start-title">Unsure what to do with the old one?</h1>
+          <p class="lead">Keeping it “just in case” is understandable when your photos and accounts are on it. Tell us about the device, and get a practical next step for repair, reuse, donation or responsible recycling.</p>
           <div class="button-row">
             <button class="primary-button" type="button" data-go="2">Assess a device <span aria-hidden="true">→</span></button>
           </div>
-          <p class="demo-label">Takes under two minutes. No account, file upload, serial number or IMEI.</p>
+          <p class="demo-label">About two minutes. No account, file upload, serial number or IMEI. The assessment works on this public page without a booking or partner account.</p>
         </div>
         <aside class="start-aside" aria-label="RebootLoop safety promise">
           <p class="eyebrow" style="color: var(--lime)">Safety promise</p>
-          <h2 style="font-size:2rem">Guidance without false confidence.</h2>
+          <h2 style="font-size:2rem">A useful answer, with clear limits.</h2>
           <div class="promise-list">
             <div class="promise"><div class="promise-icon">1</div><div><strong>Safety and ownership first</strong><p>Hazards and managed devices stop the normal flow.</p></div></div>
             <div class="promise"><div class="promise-icon">2</div><div><strong>Official preparation guidance</strong><p>Platform links are shown without asking for credentials.</p></div></div>
-            <div class="promise"><div class="promise-icon">3</div><div><strong>Honest assurance</strong><p>Guided, self-declared and partner-verified are never blurred.</p></div></div>
+            <div class="promise"><div class="promise-icon">3</div><div><strong>Your next action</strong><p>Get relevant public services when eligible, then save a minimal local record.</p></div></div>
           </div>
-          <div class="notice"><strong>Important:</strong> RebootLoop does not erase data, certify destruction or guarantee that information is unrecoverable.</div>
+          <div class="notice"><strong>Important:</strong> RebootLoop does not erase data, certify destruction, collect devices or guarantee that information is unrecoverable. We have no confirmed delivery partnership.</div>
         </aside>
       </div>
     </section>
@@ -476,7 +535,7 @@
     <section class="screen" id="screen-2" data-screen="2" aria-labelledby="assess-title">
       <div class="surface">
         <header class="content-head">
-          <div><p class="eyebrow">Step 2 - assess</p><h2 id="assess-title">Tell us about the device.</h2><p>These answers drive a transparent safety and circularity decision. No information leaves this browser.</p></div>
+          <div><p class="eyebrow">Step 2 - assess</p><h2 id="assess-title">Tell us about the device.</h2><p>These answers drive a transparent decision. Assessment answers stay in this tab and are not sent to RebootLoop.</p></div>
           <div class="timer-chip">About 60-90 seconds</div>
         </header>
         <div class="presentation-shortcuts" aria-label="Presentation shortcuts">
@@ -493,7 +552,8 @@
             </div></fieldset>
 
             <fieldset><legend>2. Device</legend><p class="helper">Choose the closest category.</p><div class="choices">
-              <input id="dev-iphone" name="device" type="radio" value="iphone"><label for="dev-iphone">iPhone / iPad</label>
+              <input id="dev-iphone" name="device" type="radio" value="iphone"><label for="dev-iphone">iPhone</label>
+              <input id="dev-ipad" name="device" type="radio" value="ipad"><label for="dev-ipad">iPad</label>
               <input id="dev-android" name="device" type="radio" value="android"><label for="dev-android">Android</label>
               <input id="dev-windows" name="device" type="radio" value="windows"><label for="dev-windows">Windows PC (laptop / desktop)</label>
               <input id="dev-mac" name="device" type="radio" value="mac"><label for="dev-mac">Mac (laptop / desktop)</label>
@@ -556,6 +616,7 @@
           <p class="route-reason" id="routeReason"></p>
           <ul class="reason-list" id="routeReasons"></ul>
           <div class="safety-callout" id="routeWarning"></div>
+          <div class="route-destination" id="routeDestination" aria-live="polite"></div>
           <div class="button-row"><button class="quiet-button" type="button" data-go="2">Change answers</button><button class="primary-button" type="button" id="routeNext">View preparation path <span aria-hidden="true">→</span></button></div>
         </div>
         <aside class="side-panel">
@@ -572,11 +633,12 @@
           <p class="eyebrow">Step 4 - prepare</p>
           <h2 id="prepare-title">Secure preparation checklist</h2>
           <p class="route-reason" id="prepareIntro"></p>
-          <div class="safety-callout"><strong>Residual-risk warning:</strong> These steps reduce risk but do not guarantee that data is unrecoverable. Seek professional help when sensitivity is high, the device does not work or any step fails.</div>
+          <div class="safety-callout"><strong>Residual-risk warning:</strong> These steps reduce risk but do not guarantee that data is unrecoverable. If you cannot complete a step, stop and seek appropriate professional help.</div>
           <div class="checklist" id="checklist"></div>
           <div id="specialistActions"></div>
           <a class="official-link" id="officialLink" href="https://www.cyber.gov.au/protect-yourself/securing-your-devices/how-secure-your-device/how-dispose-your-device-securely" target="_blank" rel="noreferrer">Open official guidance <span aria-hidden="true">↗</span></a>
           <div class="button-row"><button class="quiet-button" type="button" data-go="3">Back</button><button class="primary-button" type="button" id="generatePassport">Complete all checklist items</button></div>
+          <p class="micro-note">A checkbox records your statement only. RebootLoop cannot inspect the device or check that erasure succeeded.</p>
         </div>
         <aside class="side-panel">
           <div class="assurance-card">
@@ -597,11 +659,11 @@
       <div class="surface passport-layout">
         <div class="main-panel">
           <p class="eyebrow">Step 5 - passport</p>
-          <h2 id="passport-screen-title">A minimal record for the next step.</h2>
-          <div class="passport-card" aria-label="RebootLoop demonstration passport">
+          <h2 id="passport-screen-title">Save your next step.</h2>
+          <p class="section-intro">This passport exists in this tab until you leave. Download or print a local copy if useful; neither version verifies an outcome.</p>
+          <div class="passport-card" aria-label="RebootLoop self-declared device passport">
             <div class="passport-top">
-              <div><div class="passport-label">RebootLoop device passport</div><div class="passport-id" id="passportId">RL-DEMO</div><p style="margin-top:8px;color:#c6dbd5">Synthetic competition record</p></div>
-              <div class="qr-frame"><img id="passportQr" src="qr-guided.svg" alt="QR code for the demonstration passport"></div>
+              <div><div class="passport-label">RebootLoop device passport</div><div class="passport-id" id="passportId">RL-LOCAL</div><p style="margin-top:8px;color:#c6dbd5">Local record · no registry or external verification</p></div>
             </div>
             <div class="passport-data">
               <div class="passport-field"><span>Device category</span><strong id="passportDevice"></strong></div>
@@ -609,34 +671,96 @@
               <div class="passport-field"><span>Assurance</span><strong id="passportAssurance"></strong></div>
               <div class="passport-field"><span>Recorded</span><strong id="passportDate"></strong></div>
             </div>
-            <p class="passport-disclaimer">This prototype passport records a route and declared preparation status. It is not proof that data is unrecoverable, and it contains no owner or hardware identifier.</p>
+            <p class="passport-disclaimer">This record shows a recommendation and the level of preparation you declared. It does not prove erasure, handover, recycling or carbon savings. No owner or hardware identifier is included.</p>
           </div>
+          <div class="passport-tools"><button class="secondary-button" type="button" id="downloadPassport">Download local JSON</button><button class="quiet-button" type="button" id="printPassport">Print / save PDF</button></div>
           <div class="button-row"><button class="secondary-button" type="button" id="assessAnother">Assess another device</button><button class="quiet-button" type="button" id="restartDemo">Return to start</button></div>
         </div>
         <aside class="side-panel">
-          <p class="eyebrow">Session impact</p>
-          <h3>Measured without inventing carbon savings.</h3>
+          <p class="eyebrow">This tab only</p>
+          <h3>Activity, not completed impact.</h3>
           <div class="dashboard">
             <div class="metric-grid">
-              <div class="metric"><span>Passports created</span><strong id="metricDevices">0</strong></div>
-              <div class="metric"><span>Estimated device mass</span><strong id="metricMass">0.00 kg</strong></div>
-              <div class="metric"><span>Circular routes</span><strong id="metricCircular">0</strong></div>
-              <div class="metric"><span>Safety stops</span><strong id="metricStops">0</strong></div>
+              <div class="metric"><span>Assessments submitted</span><strong id="metricDevices">0</strong></div>
+              <div class="metric"><span>Self-declared records</span><strong id="metricDeclared">0</strong></div>
+              <div class="metric"><span>Guided records</span><strong id="metricGuided">0</strong></div>
+              <div class="metric"><span>Verified outcomes</span><strong>0</strong></div>
             </div>
-            <p class="demo-label">Demo-session figures only. A real pilot would count completed outcomes separately from recommendations.</p>
+            <p class="demo-label">Counts reset when this tab reloads. No handover or carbon outcome is collected or verified here.</p>
           </div>
         </aside>
       </div>
     </section>
 
-    <div class="source-strip"><strong>Evidence behind the prototype:</strong> Australian Government DCCEEW e-stewardship data; Islam, Dias and Huda's peer-reviewed Sydney university-student study; ASD Australian Cyber Security Centre disposal guidance; UN SDG 12 Targets 12.5 and 12.8. <a href="https://www.dcceew.gov.au/environment/protection/waste/e-waste" target="_blank" rel="noreferrer">DCCEEW</a> · <a href="https://researchers.mq.edu.au/en/publications/young-consumers-e-waste-awareness-consumption-disposal-and-recycl/" target="_blank" rel="noreferrer">Macquarie research</a> · <a href="https://www.cyber.gov.au/protect-yourself/securing-your-devices/how-secure-your-device/how-dispose-your-device-securely" target="_blank" rel="noreferrer">ACSC</a> · <a href="https://sdgs.un.org/goals/goal12" target="_blank" rel="noreferrer">UN Goal 12</a></div>
+    <div class="below">
+      <section class="section-card" id="why" aria-labelledby="why-title">
+        <p class="eyebrow">Why this matters</p>
+        <h2 id="why-title">The device is physical. The hesitation is personal.</h2>
+        <p class="section-intro">It is reasonable to worry about photos, messages and account access. Knowing how to prepare a device can help someone decide what to do with it. Responsible collection also keeps hazardous materials out of inappropriate disposal pathways; the ecological effect of one device cannot be measured from a web assessment.</p>
+        <div class="fact-grid">
+          <div class="fact"><strong>40%</strong><span>In MobileMuster's 2024 report, people asked directly about data security considered it a barrier to recycling. <a href="https://www.mobilemuster.com.au/wp-content/uploads/2026/02/MOB_AnnualReport2024_UPDATE.v1.pdf" target="_blank" rel="noopener noreferrer">Source: MobileMuster, p. 23</a></span></div>
+          <div class="fact"><strong>511,000 t</strong><span>Australian e-waste generated in 2019; DCCEEW projects 657,000 t in 2030. <a href="https://www.dcceew.gov.au/environment/protection/waste/e-waste" target="_blank" rel="noopener noreferrer">Source: DCCEEW</a></span></div>
+          <div class="fact"><strong>1 safe step</strong><span>Our goal for each assessment: a suitable next action, with a clear stop when ownership, physical safety or data risks need expert help. This is a product goal, not a measured outcome.</span></div>
+        </div>
+        <div class="path-grid" aria-label="How the decision flow works">
+          <div class="path"><span class="path-number">1</span><h3>Check the boundary</h3><p>Hazards, lack of authority, unavailable erasure and high sensitivity trigger escalation.</p></div>
+          <div class="path"><span class="path-number">2</span><h3>Choose the next life</h3><p>Repair or reuse where viable; use an accepted recycling pathway when appropriate.</p></div>
+          <div class="path"><span class="path-number">3</span><h3>Prepare and save</h3><p>Read official guidance and download a local record of what you declared.</p></div>
+        </div>
+        <div class="carbon-card" id="carbon">
+          <div>
+            <p class="eyebrow">Carbon scenario · one reference model</p>
+            <h3>What could a genuinely displaced new purchase mean?</h3>
+            <p>Apple reports a 56 kg CO₂e life cycle footprint for an iPhone 16 128GB, with 80% attributed to production. The reference production portion is <strong>56 × 0.80 = 44.8 kg CO₂e</strong>. This is a comparison for one specific model, not the footprint of your device.</p>
+            <a href="https://www.apple.com/environment/pdf/products/iphone/iPhone_16_and_iPhone_16_Plus_PER_Sept2024.pdf" target="_blank" rel="noopener noreferrer">Read Apple's product environmental report, p. 10 ↗</a>
+          </div>
+          <div class="carbon-control">
+            <label for="displacement">In this illustrative scenario, was a new iPhone 16 purchase actually displaced?</label>
+            <select id="displacement"><option value="0">No / unknown — do not count a displacement</option><option value="1">Yes — assume one new reference phone was displaced</option></select>
+            <div class="carbon-result" aria-live="polite"><strong id="carbonValue">0 kg CO₂e</strong><span id="carbonExplanation">No displacement assumed. An assessment or recycling decision alone does not avoid a new purchase.</span></div>
+            <p class="micro-note" style="color:#d4e5df;margin:0">Scenario arithmetic only. It excludes repair and reuse emissions, differences between phones, rebound effects and proof of a changed purchase. RebootLoop has verified <strong>0 kg CO₂e savings</strong>.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-card" id="industry" aria-labelledby="industry-title">
+        <p class="eyebrow">For the BIT Industry Showcase · 8 October 2026</p>
+        <h2 id="industry-title">A decision layer before handover.</h2>
+        <p class="section-intro">RebootLoop gives a person an informed route and secure-preparation guidance, then points them to established services where the category fits. We are a three-person Macquarie University student team. We placed fifth of 24 at Pitch for the Planet with an A1 poster and interactive proof-of-concept; this public version is the next test, not a running collection service.</p>
+        <div class="plan-grid">
+          <div class="plan-step"><span class="path-number">Now</span><h3>Public self-service</h3><p>Run the route, read linked official guidance, and save a local self-declared or Guided record. No device intake or booking.</p></div>
+          <div class="plan-step"><span class="path-number">Next</span><h3>Test with real people</h3><p>Observe whether students choose the right route, understand the warning, find the destination and can explain the limits. Report actual counts and failures.</p></div>
+          <div class="plan-step"><span class="path-number">Later</span><h3>Small campus pilot</h3><p>Only after campus permission, privacy review and an agreed handover process. Track completed outcomes separately from recommendations.</p></div>
+        </div>
+        <div class="status-table-wrap">
+          <table class="status-table">
+            <thead><tr><th scope="col">Organisation / route</th><th scope="col">Current status</th><th scope="col">What this means today</th></tr></thead>
+            <tbody>
+              <tr><td>MobileMuster</td><td><span class="status-pill">Contacted for feedback</span></td><td>Independent public phone recycling service linked where relevant. No partnership, referral agreement or pilot endpoint confirmed.</td></tr>
+              <tr><td>Macquarie University campus pilot</td><td><span class="status-pill proposed">Proposed</span></td><td>Campus hosting, IT review and any device collection would need separate approval. A showcase invitation is not pilot approval.</td></tr>
+              <tr><td>NTCRS collection network</td><td><span class="status-pill proposed">Public pathway</span></td><td>Government information for eligible TV and computer products; check the specific site and accepted items before visiting.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="business-card"><strong>Business model to test</strong><p>Potential buyer: a university or organisation seeking student engagement, safe guidance and evidence of completed reuse or recycling. We would test an institution-funded setup and annual licence for maintained local pathways and de-identified outcome reporting. We have no customers, revenue, unit economics or pricing evidence yet. A future pickup path would first need a verified provider, accepted-item rules, consent and a documented chain of custody. No pickup is bookable in this app.</p></div>
+        <div class="callout-row"><p style="margin:0;max-width:730px"><strong>What we would ask an industry representative:</strong> help us test the route with users, review our safety and privacy boundaries, and discuss whether a small approved campus pilot has a real owner and budget.</p><a class="secondary-button" href="https://github.com/RebootLoopMQ/RebootLoop" target="_blank" rel="noopener noreferrer">View the project ↗</a></div>
+      </section>
+
+      <section class="section-card" id="trust" aria-labelledby="trust-title">
+        <p class="eyebrow">Privacy and evidence</p>
+        <h2 id="trust-title">What this page knows, and what it cannot prove.</h2>
+        <div class="privacy-note"><p>Assessment answers and in-tab counts are processed in your browser memory. RebootLoop does not ask for identity, serial number, IMEI, credentials or files; it does not transmit assessment answers to a RebootLoop server. GitHub Pages and linked third-party sites may process ordinary access information under their own policies. A downloaded or printed record stays with you unless you choose to share it.</p></div>
+        <p class="micro-note" style="margin:16px 0 0">Source dates, assumptions and known limits are documented in the <a href="https://github.com/RebootLoopMQ/RebootLoop/blob/main/docs/evidence-sources.md" target="_blank" rel="noopener noreferrer">evidence note</a>. Routing is guidance, not a data erasure service, collection confirmation, third-party endorsement or measured environmental result.</p>
+      </section>
+    </div>
+    <div class="source-strip"><strong>Primary guidance:</strong> <a href="https://www.cyber.gov.au/protect-yourself/securing-your-devices/how-secure-your-device/how-dispose-your-device-securely" target="_blank" rel="noopener noreferrer">Australian Cyber Security Centre</a> · <a href="https://www.dcceew.gov.au/environment/protection/waste/consumers/recycling-drop-off" target="_blank" rel="noopener noreferrer">Australian Government e-waste drop-off guidance</a> · <a href="https://www.mobilemuster.com.au/recycle-a-mobile/" target="_blank" rel="noopener noreferrer">MobileMuster public phone collection</a>.</div>
   </main>
 
-  <footer class="site-footer"><strong>RebootLoop Team:</strong> Shah Noor Mostafa Bhuiyan · Nafe Ibne Mamun · Alexander Kai Cryan<br>Competition proof-of-concept · No credentials or personal files are collected · Refreshing clears the in-memory demo session</footer>
+  <footer class="site-footer"><strong>RebootLoop Team:</strong> Shah Noor Mostafa Bhuiyan · Nafe Ibne Mamun · Alexander Kai Cryan<br>Independent student project · Phase 2 public prototype · Your in-tab assessment resets on reload</footer>
 
   <script>
     (() => {
-      const deviceLabels = { iphone: "iPhone / iPad", android: "Android device", windows: "Windows PC", mac: "Mac", chromeos: "Chromebook / ChromeOS device", linux: "Linux computer", console: "Game console", storage: "HDD / SSD / USB / SD", other: "Other technology" };
+      const deviceLabels = { iphone: "iPhone", ipad: "iPad", android: "Android device", windows: "Windows PC", mac: "Mac", chromeos: "Chromebook / ChromeOS device", linux: "Linux computer", console: "Game console", storage: "HDD / SSD / USB / SD", other: "Other technology" };
       const optionLabels = {
         ownership: { owned: "Owned by user", managed: "University / employer managed", other: "Not owned / borrowed / found" },
         power: { works: "Works normally", intermittent: "Intermittent", off: "Does not power on" },
@@ -645,11 +769,11 @@
         goal: { repair: "Keep / repair", sell: "Sell", donate: "Donate", family: "Give to family", recycle: "Recycle", unsure: "Unsure" },
         sensitivity: { everyday: "Everyday", sensitive: "Sensitive", high: "Highly sensitive" }
       };
-      const weights = { iphone: .09, android: .09, windows: 1.26, mac: 1.26, chromeos: 1.26, linux: 1.26, console: 3.00, storage: .40, other: .40 };
       const sources = {
-        iphone: { url: "https://support.apple.com/en-au/109511", label: "Open Apple's current iPhone / iPad transfer and erase guidance" },
-        android: { url: "https://support.google.com/android/answer/9459346?hl=en", label: "Open Google's Android device-protection guidance" },
-        windows: { url: "https://support.microsoft.com/en-us/windows/windows-recovery-options-31ce2444-7de3-818c-d626-e3b5a3024da5", label: "Open Microsoft's current Windows recovery guidance" },
+        iphone: { url: "https://support.apple.com/en-au/109511", label: "Open Apple's iPhone transfer and erase guidance" },
+        ipad: { url: "https://support.apple.com/en-au/109511", label: "Open Apple's iPad transfer and erase guidance" },
+        android: { url: "https://support.google.com/accounts/answer/17299872?hl=en", label: "Open Google's old-Android-device preparation guidance" },
+        windows: { url: "https://support.microsoft.com/en-US/Windows/Experience/backup-recovery/reset-your-pc", label: "Open Microsoft's Reset your PC guidance" },
         mac: { url: "https://support.apple.com/en-au/102773", label: "Open Apple's current Mac transfer and erase guidance" },
         chromeos: { url: "https://support.google.com/chromebook/answer/183084?hl=en", label: "Open Google's current Chromebook reset guidance" },
         linux: { url: "https://www.cyber.gov.au/protect-yourself/securing-your-devices/how-secure-your-device/how-dispose-your-device-securely", label: "Open ASD ACSC secure-disposal guidance" },
@@ -658,17 +782,31 @@
         other: { url: "https://www.cyber.gov.au/protect-yourself/securing-your-devices/how-secure-your-device/how-dispose-your-device-securely", label: "Open ASD ACSC secure-disposal guidance" }
       };
 
-      const universalChecklist = [
+      const transferChecklist = [
         ["Back up what you need", "Copy important files to another secure device before any erase or reset."],
         ["Transfer access", "Move authenticator apps, passkeys and recovery methods needed for your accounts."],
         ["Remove connections", "Sign out or unlink accounts, payment methods and trusted-device relationships where applicable."],
         ["Remove physical media", "Take out SIM cards, SD cards, USB devices and any other removable media."],
         ["Follow the official erase guide", "Use the current manufacturer guidance linked below for this device and software version."],
-        ["Verify the handover state", "Confirm the device starts at its initial setup screen and no account or activation lock remains."],
+        ["Check the handover state", "Where the device supports it, check for the initial setup screen and remove activation locks before transfer."],
+      ];
+      const recycleChecklist = [
+        ["Back up what you need", "Save important files before they are lost."],
+        ["Transfer account access", "Move authenticator apps and recovery methods that you still need."],
+        ["Remove removable media", "Take out SIM cards, SD cards and other media and handle them separately."],
+        ["Use the official erase guide", "Follow the manufacturer's current steps if the device can be reset. Stop and seek advice if it fails."],
+        ["Check accepted items", "Confirm the collection point accepts this device and follow its current safety instructions."],
+      ];
+      const repairChecklist = [
+        ["Back up important files", "Keep a current backup before a repair attempt."],
+        ["Choose a suitable repairer", "Ask about repair scope, cost and device-data practices before handover."],
+        ["Limit access", "Remove unnecessary sensitive information and avoid sharing passwords where possible; ask what access is genuinely needed."],
+        ["Agree on the return", "Confirm how and when you will receive the device and check it after service."],
       ];
 
       const platformExtras = {
         iphone: ["For Apple devices", "Unpair an Apple Watch if relevant, choose how to handle the eSIM, and confirm the device reaches the Hello screen."],
+        ipad: ["For iPad", "Follow Apple's model-specific erase and account guidance, then check the device is ready for a new user."],
         android: ["For Android devices", "Remove the Google Account before reset where required so device protection does not block the next owner."],
         windows: ["For Windows PCs", "Use Reset this PC, Remove everything and the clean-data option when transferring the device. This is consumer preparation, not certified sanitisation."],
         mac: ["For Mac computers", "Use Erase All Content and Settings when supported; otherwise follow Apple's model-specific process and remove Find My / Activation Lock."],
@@ -681,10 +819,11 @@
 
       let currentData = null;
       let currentRoute = null;
-      let passportCount = 0;
-      let massTotal = 0;
-      let circularCount = 0;
-      let stopCount = 0;
+      let currentPassport = null;
+      let assessmentCount = 0;
+      let assessmentCounted = false;
+      let declaredCount = 0;
+      let guidedCount = 0;
 
       function goTo(number) {
         document.querySelectorAll(".screen").forEach(el => el.classList.toggle("is-active", Number(el.dataset.screen) === number));
@@ -694,6 +833,8 @@
           el.classList.toggle("is-complete", step < number);
         });
         window.scrollTo({ top: 0, behavior: "smooth" });
+        const heading = document.querySelector(`#screen-${number} h1, #screen-${number} h2`);
+        if (heading) { heading.setAttribute("tabindex", "-1"); heading.focus({ preventScroll: true }); }
       }
 
       function setRadio(name, value) {
@@ -727,40 +868,49 @@
 
       function evaluate(d) {
         const transferGoal = ["sell", "donate", "family"].includes(d.goal);
+        if (d.safety !== "normal") return {
+          id: "hazard", type: "stop", title: "Use a qualified battery or e-waste service.",
+          short: "Hazard specialist",
+          reason: "A swollen, leaking, hot or seriously damaged device needs specialist handling before any data or circularity decision.",
+          reasons: ["Physical safety is RebootLoop's highest-priority rule.", "Normal charging, posting and self-service preparation are suppressed.", "The correct local pathway depends on the battery and device type."],
+          warning: `Do not charge, puncture, crush or post the device. Seek current advice from a qualified service or local council.${d.ownership !== "owned" ? " Also contact the owner or authorised IT team." : ""}`,
+          actions: ["Do not continue ordinary handling.", "Move away from heat or flammable materials only if it is safe to do so.", "Contact a qualified battery / e-waste service or local council for instructions."],
+          next: "View hazard actions"
+        };
         if (d.ownership !== "owned") return {
           id: "return", type: "stop", title: "Return it to the owner or authorised IT.",
-          short: "Return to owner / IT", circular: false,
+          short: "Return to owner / IT",
           reason: "RebootLoop cannot authorise the transfer, preparation or destruction of a device you do not own.",
-          reasons: ["Authority overrides convenience and sustainability preferences.", "Managed devices may contain organisational data and must follow the owner's process.", "No erasure or transfer checklist is offered for this stop route."],
+          reasons: ["Managed devices may contain organisational data and must follow the owner's process.", "No erasure or transfer checklist is offered for this stop route."],
           warning: "Do not reset, sell, donate or recycle this device. Contact the owner or the relevant university / employer IT team.",
           actions: ["Stop the disposal flow.", "Keep the device secure.", "Contact the owner or authorised IT service."],
           next: "View safe return actions"
         };
-        if (d.safety !== "normal") return {
-          id: "hazard", type: "stop", title: "Use a qualified battery or e-waste service.",
-          short: "Hazard specialist", circular: false,
-          reason: "A swollen, leaking, hot or seriously damaged device needs specialist handling before any data or circularity decision.",
-          reasons: ["Physical safety is RebootLoop's highest-priority rule.", "Normal charging, posting and self-service preparation are suppressed.", "The correct local pathway depends on the battery and device type."],
-          warning: "Do not charge, puncture, crush or post the device. Keep it away from heat and seek current advice from a qualified service or local council.",
-          actions: ["Do not continue ordinary handling.", "Move away from heat or flammable materials only if it is safe to do so.", "Contact a qualified battery / e-waste service or local council for instructions."],
-          next: "View hazard actions"
-        };
-        if (d.power === "off" && d.sensitivity === "high") return {
-          id: "destroy", type: "specialist", title: "Professional destruction, then responsible recycling.",
-          short: "Professional destruction -> recycling", circular: true,
-          reason: "A self-service reset cannot be verified on a device that will not power on, and the reported data sensitivity is high.",
-          reasons: ["The prototype never pretends that an unavailable reset occurred.", "Data handling is escalated before materials recovery.", "Assurance remains Guided until a qualified partner supplies acceptable evidence."],
-          warning: "Do not create a 'securely erased' claim. Confirm the destruction provider's scope and downstream recycling pathway before handover.",
-          actions: ["Keep the non-functioning device secure.", "Use a qualified sanitisation / destruction provider appropriate to the media.", "Confirm the remaining material enters a responsible recycling pathway."],
+        if (d.sensitivity === "high") return {
+          id: "high", type: "specialist", title: "Get professional data-handling advice first.",
+          short: "Professional data review",
+          reason: "Highly sensitive, research or regulated data needs a process appropriate to its obligations before repair, transfer or recycling.",
+          reasons: ["A general-purpose checklist cannot verify the necessary sanitisation standard.", "The right outcome depends on the information and storage medium.", "This app cannot create a verified destruction record."],
+          warning: "Keep the device secure. Ask the responsible data owner or a qualified professional about sanitisation or destruction before any handover.",
+          actions: ["Do not self-certify erasure in this app.", "Consult the responsible data owner or an appropriate IT / data-destruction professional.", "Agree on the next physical route only after the data process is defined."],
           next: "View specialist actions"
         };
-        if (d.device === "storage" && d.sensitivity !== "everyday") return {
-          id: "sanitise", type: "specialist", title: "Specialist sanitisation or destruction.",
-          short: "Specialist sanitisation / destruction", circular: true,
-          reason: "Sensitive data on removable or internal storage needs a media-specific process; a quick format is not reliable evidence of erasure.",
-          reasons: ["The medium type changes the correct sanitisation method.", "Professional advice is safer when the required process cannot be verified.", "Reusable material should still enter an appropriate circular pathway afterward."],
-          warning: "Keep the media secure until the correct sanitisation or destruction process is confirmed.",
-          actions: ["Identify the exact media type and sensitivity.", "Follow manufacturer / ACSC guidance or use a qualified provider.", "Record only evidence that the provider actually supplies."],
+        if (d.power === "off") return {
+          id: "off", type: "specialist", title: "Resolve data handling before handover.",
+          short: "Data review before handover",
+          reason: "The device does not power on, so you cannot complete or check a normal on-device reset here.",
+          reasons: ["An unavailable reset must not be marked complete.", "A provider may need a medium-specific process before repair or recycling.", "The physical route can be chosen after data handling is resolved."],
+          warning: "Keep the device secure and consult a suitable professional if data may remain. Do not claim the device was erased.",
+          actions: ["Keep the device secure.", "Ask a qualified provider about access, sanitisation or destruction appropriate to the device and data.", "Check accepted items and handling terms before any handover."],
+          next: "View specialist actions"
+        };
+        if (d.device === "storage") return {
+          id: "storage", type: "specialist", title: "Identify the storage medium and erase method.",
+          short: "Media-specific data review",
+          reason: "HDDs, SSDs, USB drives and SD cards need different processes; a generic checkbox cannot establish that data is gone.",
+          reasons: ["The exact medium and any encryption affect the correct process.", "A quick format is not evidence of secure erasure.", "Reuse or recycling follows a suitable data process."],
+          warning: "Keep the media secure until you have checked current manufacturer / ACSC guidance or consulted a qualified provider.",
+          actions: ["Identify the precise media type and the information it held.", "Follow current manufacturer / ACSC advice or seek professional sanitisation.", "Check the receiving service accepts the item before drop-off."],
           next: "View specialist actions"
         };
         if (d.goal === "repair" && ["good", "repairable"].includes(d.condition)) return {
@@ -802,6 +952,7 @@
 
       function showRoute() {
         currentRoute = evaluate(currentData);
+        if (!assessmentCounted) { assessmentCount += 1; assessmentCounted = true; }
         const badge = document.getElementById("routeBadge");
         badge.textContent = currentRoute.type === "stop" ? "Safety / authority stop" : currentRoute.type === "specialist" ? "Specialist route" : "Recommended circular route";
         badge.className = `route-badge${currentRoute.type === "stop" ? " is-stop" : currentRoute.type === "specialist" ? " is-specialist" : ""}`;
@@ -820,7 +971,29 @@
           ["Sensitivity", optionLabels.sensitivity[currentData.sensitivity]],
         ];
         document.getElementById("answerSummary").innerHTML = summary.map(([k,v]) => `<li><span>${k}</span><strong>${v}</strong></li>`).join("");
+        showDestination();
         goTo(3);
+      }
+
+      function showDestination() {
+        const box = document.getElementById("routeDestination");
+        const safeLink = (url, label) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${label} ↗</a>`;
+        const government = "https://www.dcceew.gov.au/environment/protection/waste/consumers/recycling-drop-off";
+        if (currentRoute.type === "stop") {
+          box.innerHTML = `<h3>Next action: stop and ask</h3><p>No self-service drop-off or collection is suggested for this case. Follow the safe actions on the next screen.</p><small>No booking or handover is made in RebootLoop.</small>`;
+        } else if (currentRoute.type === "specialist") {
+          box.innerHTML = `<h3>Next action: resolve data handling</h3><p>Seek suitable advice before any handover. The Australian Cyber Security Centre explains when professional help may be needed.</p>${safeLink(sources.storage.url, "Read official secure-disposal guidance")}<small>This is public guidance, not a booked or verified provider.</small>`;
+        } else if (currentRoute.id === "repair") {
+          box.innerHTML = `<h3>Next action: ask a repairer</h3><p>Get a diagnosis, cost and data-handling terms before you leave the device. We have not vetted or booked a repair provider.</p><small>A recommendation does not confirm a repair happened.</small>`;
+        } else if (currentRoute.id === "transfer") {
+          box.innerHTML = `<h3>Next action: prepare for your recipient</h3><p>Confirm the person or organisation wants this working device, then complete the current manufacturer steps before transfer. We have not verified a donation recipient.</p><small>A self-declaration does not confirm a donation or displaced purchase.</small>`;
+        } else if (["iphone", "android"].includes(currentData.device)) {
+          box.innerHTML = `<h3>Existing public phone pathway</h3><p>MobileMuster lists phone drop-off points and free post-back options. Check the site's accepted items and battery instructions before going.</p>${safeLink("https://www.mobilemuster.com.au/recycle-a-mobile/", "Find MobileMuster public options")}<small>MobileMuster has been contacted for feedback; no partnership or referral agreement is confirmed. Do not post a hazardous device.</small>`;
+        } else if (["windows", "mac", "chromeos", "linux"].includes(currentData.device)) {
+          box.innerHTML = `<h3>Existing public computer pathway</h3><p>Australia's National Television and Computer Recycling Scheme gives households and small businesses access to designated collection sites. Check the exact accepted items and opening hours.</p>${safeLink("https://www.dcceew.gov.au/environment/protection/waste/product-stewardship/television-computer-recycling-scheme", "Read NTCRS collection guidance")}<small>Public information only; no site, pickup or service agreement is confirmed here.</small>`;
+        } else {
+          box.innerHTML = `<h3>Check local accepted items</h3><p>For an iPad, console or other device, use the Australian Government's drop-off guidance and confirm a local service accepts this exact item.</p>${safeLink(government, "Read government e-waste drop-off guidance")}<small>No particular collection point is booked or endorsed.</small>`;
+        }
       }
 
       function buildPrepare() {
@@ -829,8 +1002,10 @@
         const source = currentRoute.type === "normal"
           ? (sources[currentData.device] || sources.other)
           : sources.storage;
-        document.getElementById("officialLink").href = source.url;
-        document.getElementById("officialLink").innerHTML = `${source.label} <span aria-hidden="true">↗</span>`;
+        const official = document.getElementById("officialLink");
+        official.href = source.url;
+        official.innerHTML = `${source.label} <span aria-hidden="true">↗</span>`;
+        official.hidden = currentRoute.id === "repair";
         document.getElementById("prepare-title").textContent = currentRoute.type === "normal" ? "Secure preparation checklist" : "Safe next actions";
         document.getElementById("prepareIntro").textContent = currentRoute.type === "normal"
           ? `Complete the applicable steps for this ${deviceLabels[currentData.device].toLowerCase()}. Your final status will be self-declared, not certified.`
@@ -842,7 +1017,7 @@
         document.getElementById("assuranceGuided").classList.add("is-current");
 
         if (currentRoute.type === "normal") {
-          const items = [platformExtras[currentData.device] || platformExtras.other, ...universalChecklist];
+          const items = currentRoute.id === "repair" ? repairChecklist : [platformExtras[currentData.device] || platformExtras.other, ...(currentRoute.id === "transfer" ? transferChecklist : recycleChecklist)];
           checklist.innerHTML = items.map(([title, desc], i) => `<div class="check-item"><input type="checkbox" id="check-${i}"><label for="check-${i}"><span><strong>${title}</strong><small>${desc}</small></span></label></div>`).join("");
           checklist.querySelectorAll("input").forEach(input => input.addEventListener("change", updateChecklistButton));
           button.dataset.action = "passport";
@@ -868,35 +1043,40 @@
       }
 
       function makeId() {
-        const code = { iphone: "PH", android: "PH", windows: "PC", mac: "PC", chromeos: "PC", linux: "PC", console: "GC", storage: "ST", other: "OT" }[currentData.device];
-        const suffix = Math.floor(4096 + Math.random() * 61439).toString(16).toUpperCase();
+        const code = { iphone: "PH", ipad: "TB", android: "PH", windows: "PC", mac: "PC", chromeos: "PC", linux: "PC", console: "GC", storage: "ST", other: "OT" }[currentData.device];
+        const suffix = Array.from(crypto.getRandomValues(new Uint8Array(3)), n => n.toString(16).padStart(2, "0")).join("").toUpperCase();
         return `RL-${code}-${suffix}`;
       }
 
       function generatePassport() {
         const declared = currentRoute.type === "normal";
         const assurance = declared ? "Self-declared" : "Guided";
-        document.getElementById("passportId").textContent = makeId();
+        const id = makeId();
+        const recordedAt = new Date();
+        currentPassport = {
+          schema: "rebootloop.local.v1",
+          id,
+          recordedAt: recordedAt.toISOString(),
+          deviceCategory: deviceLabels[currentData.device],
+          recommendedRoute: currentRoute.short,
+          assurance,
+          note: "Local self-report; not proof of erasure, handover, recycling or carbon savings. No registry or external verification."
+        };
+        document.getElementById("passportId").textContent = id;
         document.getElementById("passportDevice").textContent = deviceLabels[currentData.device];
         document.getElementById("passportRoute").textContent = currentRoute.short;
         document.getElementById("passportAssurance").textContent = assurance;
-        document.getElementById("passportDate").textContent = new Intl.DateTimeFormat("en-AU", { day: "numeric", month: "short", year: "numeric" }).format(new Date());
-        document.getElementById("passportQr").src = declared ? "qr-self-declared.svg" : "qr-guided.svg";
-        passportCount += 1;
-        massTotal += weights[currentData.device] || .4;
-        if (currentRoute.circular) circularCount += 1;
-        document.getElementById("metricDevices").textContent = passportCount;
-        document.getElementById("metricMass").textContent = `${massTotal.toFixed(2)} kg`;
-        document.getElementById("metricCircular").textContent = circularCount;
-        document.getElementById("metricStops").textContent = stopCount;
+        document.getElementById("passportDate").textContent = new Intl.DateTimeFormat("en-AU", { day: "numeric", month: "short", year: "numeric" }).format(recordedAt);
+        if (declared) declaredCount += 1; else guidedCount += 1;
+        document.getElementById("metricDevices").textContent = assessmentCount;
+        document.getElementById("metricDeclared").textContent = declaredCount;
+        document.getElementById("metricGuided").textContent = guidedCount;
         goTo(5);
       }
 
       function completePreparation() {
         const button = document.getElementById("generatePassport");
         if (button.dataset.action === "stop") {
-          stopCount += 1;
-          document.getElementById("metricStops").textContent = stopCount;
           resetAll(false);
           return;
         }
@@ -908,10 +1088,11 @@
         document.getElementById("formError").textContent = "";
         currentData = null;
         currentRoute = null;
+        currentPassport = null;
+        assessmentCounted = false;
         if (startScreen) {
-          passportCount = 0; massTotal = 0; circularCount = 0; stopCount = 0;
-          ["metricDevices", "metricCircular", "metricStops"].forEach(id => document.getElementById(id).textContent = "0");
-          document.getElementById("metricMass").textContent = "0.00 kg";
+          assessmentCount = 0; declaredCount = 0; guidedCount = 0;
+          ["metricDevices", "metricDeclared", "metricGuided"].forEach(id => document.getElementById(id).textContent = "0");
           goTo(1);
         } else goTo(2);
       }
@@ -928,6 +1109,24 @@
       document.getElementById("assessAnother").addEventListener("click", () => resetAll(false));
       document.getElementById("restartDemo").addEventListener("click", () => resetAll(true));
       document.getElementById("resetDemo").addEventListener("click", () => resetAll(true));
+      document.getElementById("downloadPassport").addEventListener("click", () => {
+        if (!currentPassport) return;
+        const blob = new Blob([JSON.stringify(currentPassport, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `rebootloop-${currentPassport.id.toLowerCase()}.json`;
+        link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      });
+      document.getElementById("printPassport").addEventListener("click", () => window.print());
+      document.getElementById("displacement").addEventListener("change", event => {
+        const displaced = event.target.value === "1";
+        document.getElementById("carbonValue").textContent = displaced ? "44.8 kg CO₂e" : "0 kg CO₂e";
+        document.getElementById("carbonExplanation").textContent = displaced
+          ? "Illustrative production portion of one reference iPhone 16. This is not verified RebootLoop savings."
+          : "No displacement assumed. An assessment or recycling decision alone does not avoid a new purchase.";
+      });
     })();
   </script>
 </body>

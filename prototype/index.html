@@ -354,6 +354,10 @@
     .passport-top { display: flex; justify-content: space-between; gap: 22px; align-items: start; position: relative; z-index: 1; }
     .passport-label { color: var(--lime); font-weight: 900; letter-spacing: .08em; text-transform: uppercase; font-size: .82rem; }
     .passport-id { font-size: 2rem; font-weight: 900; letter-spacing: -.03em; margin-top: 6px; }
+    .qr-block { flex: 0 0 210px; text-align: center; }
+    .qr-frame { width: 210px; height: 210px; background: white; border-radius: 16px; padding: 8px; display: grid; place-items: center; }
+    .qr-frame svg { width: 100%; height: 100%; display: block; }
+    .qr-caption { display: block; margin-top: 8px; color: #c6dbd5; font-size: .78rem; line-height: 1.35; }
     .passport-data { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 15px; margin-top: 28px; position: relative; z-index: 1; }
     .passport-field { border-top: 1px solid rgba(255,255,255,.17); padding-top: 10px; }
     .passport-field span { color: #a9c7be; display: block; font-size: .75rem; font-weight: 850; letter-spacing: .07em; text-transform: uppercase; }
@@ -451,13 +455,14 @@
       .form-footer .button-row { width: 100%; margin: 0; }
       .form-footer button { flex: 1; }
       .passport-top { flex-direction: column; }
+      .qr-block { flex-basis: auto; }
       .passport-data, .metric-grid { grid-template-columns: 1fr; }
       .fact-grid, .path-grid, .plan-grid { grid-template-columns: 1fr; }
     }
 
     @media print {
       body { background: white; }
-      .site-header, .progress-wrap, #screen-1, #screen-2, #screen-3, #screen-4, .below, .source-strip, .site-footer, .button-row, .passport-tools, .side-panel { display: none !important; }
+      .site-header, .progress-wrap, #screen-1, #screen-2, #screen-3, #screen-4, .below, .source-strip, .site-footer, .button-row, .passport-tools, .passport-tools + .micro-note, .side-panel { display: none !important; }
       .shell { width: 100%; padding: 0; }
       #screen-5 { display: block; }
       .surface { border: 0; box-shadow: none; }
@@ -660,10 +665,11 @@
         <div class="main-panel">
           <p class="eyebrow">Step 5 - passport</p>
           <h2 id="passport-screen-title">Save your next step.</h2>
-          <p class="section-intro">This passport exists in this tab until you leave. Download or print a local copy if useful; neither version verifies an outcome.</p>
+          <p class="section-intro">This passport stays in this tab until you leave. Save it as a PDF or print it if useful. It records your statements, not a verified outcome.</p>
           <div class="passport-card" aria-label="RebootLoop self-declared device passport">
             <div class="passport-top">
               <div><div class="passport-label">RebootLoop device passport</div><div class="passport-id" id="passportId">RL-LOCAL</div><p style="margin-top:8px;color:#c6dbd5">Local record · no registry or external verification</p></div>
+              <div class="qr-block"><div class="qr-frame" id="passportQr"></div><span class="qr-caption">Scan to read this local record.<br>No online verification.</span></div>
             </div>
             <div class="passport-data">
               <div class="passport-field"><span>Device category</span><strong id="passportDevice"></strong></div>
@@ -673,7 +679,8 @@
             </div>
             <p class="passport-disclaimer">This record shows a recommendation and the level of preparation you declared. It does not prove erasure, handover, recycling or carbon savings. No owner or hardware identifier is included.</p>
           </div>
-          <div class="passport-tools"><button class="secondary-button" type="button" id="downloadPassport">Download local JSON</button><button class="quiet-button" type="button" id="printPassport">Print / save PDF</button></div>
+          <div class="passport-tools"><button class="secondary-button" type="button" id="printPassport">Save as PDF / print</button></div>
+          <p class="micro-note">In the print window, choose “Save as PDF” to keep a copy. The QR contains only the details shown on the card and its unverified status.</p>
           <div class="button-row"><button class="secondary-button" type="button" id="assessAnother">Assess another device</button><button class="quiet-button" type="button" id="restartDemo">Return to start</button></div>
         </div>
         <aside class="side-panel">
@@ -758,6 +765,7 @@
 
   <footer class="site-footer"><strong>RebootLoop Team:</strong> Shah Noor Mostafa Bhuiyan · Nafe Ibne Mamun · Alexander Kai Cryan<br>Independent student project · Phase 2 public prototype · Your in-tab assessment resets on reload</footer>
 
+  <script src="vendor/qrcode.js"></script>
   <script>
     (() => {
       const deviceLabels = { iphone: "iPhone", ipad: "iPad", android: "Android device", windows: "Windows PC", mac: "Mac", chromeos: "Chromebook / ChromeOS device", linux: "Linux computer", console: "Game console", storage: "HDD / SSD / USB / SD", other: "Other technology" };
@@ -1048,15 +1056,42 @@
         return `RL-${code}-${suffix}`;
       }
 
+      function renderPassportQr(passport) {
+        const holder = document.getElementById("passportQr");
+        if (typeof qrcode !== "function") {
+          holder.textContent = "QR unavailable";
+          return;
+        }
+        const payload = [
+          "RebootLoop local record (unverified)",
+          `ID: ${passport.id}`,
+          `Device: ${passport.deviceCategory}`,
+          `Route: ${passport.recommendedRoute}`,
+          `Status: ${passport.assurance}`,
+          `Recorded: ${passport.recordedDate}`,
+          "No proof of erasure, handover, recycling or carbon savings."
+        ].join("\n");
+        const qr = qrcode(0, "M");
+        qr.addData(payload);
+        qr.make();
+        holder.innerHTML = qr.createSvgTag({
+          cellSize: 4, margin: 16, scalable: true,
+          title: "RebootLoop local record QR",
+          alt: "Scan to read the device category, recommended route, self-reported status and date. No online verification."
+        });
+      }
+
       function generatePassport() {
         const declared = currentRoute.type === "normal";
         const assurance = declared ? "Self-declared" : "Guided";
         const id = makeId();
         const recordedAt = new Date();
+        const recordedDate = new Intl.DateTimeFormat("en-AU", { day: "numeric", month: "short", year: "numeric" }).format(recordedAt);
         currentPassport = {
           schema: "rebootloop.local.v1",
           id,
           recordedAt: recordedAt.toISOString(),
+          recordedDate,
           deviceCategory: deviceLabels[currentData.device],
           recommendedRoute: currentRoute.short,
           assurance,
@@ -1066,7 +1101,8 @@
         document.getElementById("passportDevice").textContent = deviceLabels[currentData.device];
         document.getElementById("passportRoute").textContent = currentRoute.short;
         document.getElementById("passportAssurance").textContent = assurance;
-        document.getElementById("passportDate").textContent = new Intl.DateTimeFormat("en-AU", { day: "numeric", month: "short", year: "numeric" }).format(recordedAt);
+        document.getElementById("passportDate").textContent = recordedDate;
+        renderPassportQr(currentPassport);
         if (declared) declaredCount += 1; else guidedCount += 1;
         document.getElementById("metricDevices").textContent = assessmentCount;
         document.getElementById("metricDeclared").textContent = declaredCount;
@@ -1109,16 +1145,6 @@
       document.getElementById("assessAnother").addEventListener("click", () => resetAll(false));
       document.getElementById("restartDemo").addEventListener("click", () => resetAll(true));
       document.getElementById("resetDemo").addEventListener("click", () => resetAll(true));
-      document.getElementById("downloadPassport").addEventListener("click", () => {
-        if (!currentPassport) return;
-        const blob = new Blob([JSON.stringify(currentPassport, null, 2)], { type: "application/json" });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = `rebootloop-${currentPassport.id.toLowerCase()}.json`;
-        link.click();
-        setTimeout(() => URL.revokeObjectURL(url), 1000);
-      });
       document.getElementById("printPassport").addEventListener("click", () => window.print());
       document.getElementById("displacement").addEventListener("change", event => {
         const displaced = event.target.value === "1";

@@ -2,10 +2,11 @@ REBOOTLOOP OFFLINE COMPETITION DEMO
 
 Team: Shah Noor Mostafa Bhuiyan, Nafe Ibne Mamun and Alexander Kai Cryan
 
-1. Keep index.html with the rest of this folder. The two QR SVG files are
-   historical competition assets and are not used by the current app.
-2. Double-click index.html to open the prototype in Chrome or Edge. It runs
-   independently in the browser and does not require ChatGPT or a login.
+1. Keep the pages, styles.css and the images folder together. The two QR SVG
+   files are historical competition assets and are not used by the site.
+2. Double-click demo.html to open the demo in Chrome or Edge (index.html is
+   the home page). It runs independently in the browser and does not require
+   ChatGPT or a login.
 3. Use "A - working phone for donation" for the main live demonstration.
 4. Use "B - non-functioning sensitive laptop" if a judge asks about a difficult case.
 5. Click "Start over" before each new judge arrives.

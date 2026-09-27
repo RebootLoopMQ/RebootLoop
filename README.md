@@ -33,17 +33,17 @@ RebootLoop does **not** erase data, certify sanitisation, or guarantee non-recov
 
 ## Try it
 
-**Live demo: [rebootloopmq.github.io/RebootLoop](https://rebootloopmq.github.io/RebootLoop/)**
+**Website: [rebootloopmq.github.io/RebootLoop](https://rebootloopmq.github.io/RebootLoop/)** · **Demo: [rebootloopmq.github.io/RebootLoop/demo.html](https://rebootloopmq.github.io/RebootLoop/demo.html)**
 
-The app is a static page with no accounts or RebootLoop backend. Assessment answers and session counts remain in browser memory; hosting and external links may process ordinary access information. Reloading clears the assessment. A saved plan or printed next-owner note stays with the user unless they choose to share it.
+The site is a set of static pages with no accounts or RebootLoop backend. Assessment answers and session counts remain in browser memory; hosting and external links may process ordinary access information. Reloading clears the assessment. A saved plan or printed next-owner note stays with the user unless they choose to share it.
 
 ```bash
 git clone https://github.com/RebootLoopMQ/RebootLoop.git
 cd RebootLoop/prototype
-open index.html   # or double-click it
+open index.html   # home page; the demo is demo.html
 ```
 
-The [`prototype/index.html`](./prototype/index.html) file is the GitHub Pages deployment source. The original competition screenshots remain in `assets/screenshots` as historical material; they do not depict the current public app.
+The [`prototype/`](./prototype) folder is the GitHub Pages deployment source: `index.html` (home), `demo.html` (the assessment), `why.html`, `industry.html` and `evidence.html`, sharing `styles.css`. The original competition screenshots remain in `assets/screenshots` as historical material; they do not depict the current public app.
 
 ## Routing logic
 

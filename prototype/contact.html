@@ -43,9 +43,50 @@
       <p class="lead">Have an idea, feedback on the demo, or interest in testing it or running a pilot? We'd like to hear from you.</p>
     </div>
 
+    <section class="feedback-card" id="feedback" aria-labelledby="feedback-title">
+      <div class="band-head">
+        <p class="eyebrow">Feedback</p>
+        <h2 id="feedback-title">Tell us what you think.</h2>
+        <p>Four quick questions. Nothing is sent until you choose how to share it.</p>
+      </div>
+      <form class="feedback-form" id="feedbackForm" novalidate>
+        <label class="field" for="fbTried"><span>What you tried <small>(optional)</small></span>
+          <input id="fbTried" name="tried" type="text" autocomplete="off" placeholder="For example: an old iPhone I want to donate">
+        </label>
+        <fieldset class="chip-group">
+          <legend>How useful was the recommendation?</legend>
+          <input id="fbUse1" type="radio" name="useful" value="Very useful"><label for="fbUse1">Very useful</label>
+          <input id="fbUse2" type="radio" name="useful" value="Somewhat useful"><label for="fbUse2">Somewhat useful</label>
+          <input id="fbUse3" type="radio" name="useful" value="Not useful"><label for="fbUse3">Not useful</label>
+          <input id="fbUse4" type="radio" name="useful" value="Didn't finish"><label for="fbUse4">Didn't finish</label>
+        </fieldset>
+        <label class="field" for="fbConfusing"><span>What was confusing or unclear?</span>
+          <textarea id="fbConfusing" name="confusing" rows="3"></textarea>
+        </label>
+        <label class="field" for="fbBetter"><span>What would make it better?</span>
+          <textarea id="fbBetter" name="better" rows="3"></textarea>
+        </label>
+        <fieldset class="chip-group">
+          <legend>Who are you? <small>(optional)</small></legend>
+          <input id="fbWho1" type="radio" name="who" value="Student"><label for="fbWho1">Student</label>
+          <input id="fbWho2" type="radio" name="who" value="University staff"><label for="fbWho2">University staff</label>
+          <input id="fbWho3" type="radio" name="who" value="Industry"><label for="fbWho3">Industry</label>
+          <input id="fbWho4" type="radio" name="who" value="Other"><label for="fbWho4">Other</label>
+        </fieldset>
+        <p class="field-note">Please don't include your name, phone number, serial numbers or other personal details.</p>
+        <div class="button-row">
+          <a class="primary-button" id="fbEmail" href="#" hidden>Email it to us</a>
+          <a class="secondary-button" id="fbGitHub" href="https://github.com/RebootLoopMQ/RebootLoop/issues/new" target="_blank" rel="noopener noreferrer">Post it on GitHub ↗</a>
+          <button class="quiet-button" type="button" id="fbCopy">Copy feedback</button>
+        </div>
+        <p class="copy-status" id="fbStatus" aria-live="polite"></p>
+        <p class="field-note">Posts on GitHub are public and need a free GitHub account.<span id="fbEmailPending"> Email will be available once our team address is set up.</span></p>
+      </form>
+    </section>
+
     <section class="contact-card" aria-labelledby="email-title">
       <div class="contact-email" id="contactEmail" data-email="">
-        <h2 id="email-title">Email the team</h2>
+        <h2 id="email-title">Or email the team</h2>
         <div class="email-ready" hidden>
           <p class="email-address"><span id="emailText"></span></p>
           <div class="button-row">
@@ -120,6 +161,60 @@
         }
       });
     }
+
+    // Feedback: nothing is sent from this page. The answers become a message the person can email, post on GitHub or copy.
+    const form = document.getElementById("feedbackForm");
+    const fbStatus = document.getElementById("fbStatus");
+    const tried = new URLSearchParams(location.search).get("tried");
+    if (tried) document.getElementById("fbTried").value = tried;
+
+    function feedbackText() {
+      const value = name => (form.elements[name].value || "").trim();
+      const lines = [
+        ["What I tried", value("tried")],
+        ["How useful was the recommendation", value("useful")],
+        ["What was confusing or unclear", value("confusing")],
+        ["What would make it better", value("better")],
+        ["Who I am", value("who")]
+      ].filter(([, answer]) => answer).map(([question, answer]) => `${question}: ${answer}`);
+      return lines.join("\n\n");
+    }
+
+    // "What I tried" alone isn't feedback yet; at least one of the questions needs an answer.
+    const hasAnswers = () => ["useful", "confusing", "better"].some(name => (form.elements[name].value || "").trim());
+
+    function updateShareLinks() {
+      const text = feedbackText();
+      const title = `Feedback: ${form.elements.tried.value.trim() || "RebootLoop demo"}`;
+      document.getElementById("fbGitHub").href = `https://github.com/RebootLoopMQ/RebootLoop/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(text)}`;
+      if (email) document.getElementById("fbEmail").href = `mailto:${email}?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(text)}`;
+    }
+
+    if (email) {
+      document.getElementById("fbEmail").hidden = false;
+      document.getElementById("fbEmailPending").hidden = true;
+    }
+    form.addEventListener("input", updateShareLinks);
+    form.addEventListener("change", updateShareLinks);
+    updateShareLinks();
+
+    for (const id of ["fbEmail", "fbGitHub"]) {
+      document.getElementById(id).addEventListener("click", event => {
+        if (hasAnswers()) { fbStatus.textContent = ""; return; }
+        event.preventDefault();
+        fbStatus.textContent = "Answer at least one question first.";
+      });
+    }
+    document.getElementById("fbCopy").addEventListener("click", async () => {
+      if (!hasAnswers()) { fbStatus.textContent = "Answer at least one question first."; return; }
+      const text = feedbackText();
+      try {
+        await navigator.clipboard.writeText(text);
+        fbStatus.textContent = "Copied. Paste it wherever suits you.";
+      } catch {
+        fbStatus.textContent = "Couldn't copy here. Select your answers and copy them instead.";
+      }
+    });
   </script>
 </body>
 </html>

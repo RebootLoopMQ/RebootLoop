@@ -760,6 +760,10 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
 .copy-status:empty { display: none; }
 .contact-note { margin: 0; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: .92rem; }
 
+.talk-band .button-row { margin: 0; }
+.talk-band .quiet-button { color: white; border-color: rgba(255,255,255,.35); }
+.talk-band .quiet-button:hover { background: rgba(255,255,255,.1); }
+
 /* Feedback: a form on the contact page, and prompts at the end of the demo and in footers. */
 .feedback-card { display: grid; gap: 24px; max-width: 780px; }
 .feedback-form { display: grid; gap: 20px; padding: clamp(24px, 4vw, 40px); border: 1px solid var(--line); border-radius: var(--radius); background: white; box-shadow: 0 10px 28px rgba(9,46,53,.04); }
@@ -776,6 +780,12 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
 .chip-group input:checked + label { background: var(--forest); color: white; }
 .chip-group input:focus-visible + label { outline: 3px solid rgba(47, 120, 183, .35); outline-offset: 2px; }
 .field-note { margin: 0; color: var(--muted); font-size: .88rem; }
+.finale-extras { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 4px 24px; margin-top: 12px; }
+.finale-extras .more { margin-top: 0; }
+.feedback-inline { margin: 0; padding: 6px 0; color: var(--ink); }
+.feedback-inline a { color: var(--forest); font-weight: 800; }
+.footer-feedback { margin: 0 0 4px; font-weight: 750; }
+.footer-feedback a { color: var(--forest); }
 
 @media (max-width: 960px) {
   .site-nav a:not(.nav-cta) { display: none; }

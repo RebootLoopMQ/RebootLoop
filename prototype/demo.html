@@ -187,7 +187,7 @@
           <div class="checklist" id="checklist"></div>
           <div id="specialistActions"></div>
           <a class="official-link" id="officialLink" href="https://www.cyber.gov.au/protect-yourself/securing-your-devices/how-secure-your-device/how-dispose-your-device-securely" target="_blank" rel="noreferrer">Open official guidance <span aria-hidden="true">↗</span></a>
-          <div class="button-row"><button class="quiet-button" type="button" data-go="3">Back</button><button class="primary-button" type="button" id="finishStop">Finish and assess another device</button></div>
+          <div class="button-row"><button class="quiet-button" type="button" data-go="3">Back</button><button class="primary-button" type="button" id="finishStop">Finish and assess another device</button><a class="quiet-button feedback-link" href="contact.html#feedback" target="_blank" rel="noopener">Give feedback <span aria-hidden="true">↗</span></a></div>
           <div class="more-list">
           <details class="more">
             <summary>What a tick does and doesn't prove</summary>
@@ -253,10 +253,13 @@
             </div>
             <div class="button-row finale-buttons"><button class="quiet-button" type="button" data-go="5">Back to my steps</button><button class="secondary-button" type="button" id="assessAnother">Assess another device</button><button class="quiet-button" type="button" id="restartDemo">Start over</button></div>
           </div>
+          <div class="finale-extras">
           <details class="more">
             <summary>This session's totals</summary>
             <p class="finale-session">Circular routes <strong id="metricCircular">0</strong> · safety stops <strong id="metricStops">0</strong> · CO₂e avoided (est.) <strong id="metricCarbon">0 kg</strong> · e-waste diverted (est.) <strong id="metricMass">0 kg</strong></p>
           </details>
+          <p class="feedback-inline"><strong>How did we do?</strong> <a class="feedback-link" href="contact.html#feedback" target="_blank" rel="noopener">Give feedback <span aria-hidden="true">↗</span></a></p>
+          </div>
           <p class="finale-note">Impact is an estimate for a typical device, based on manufacturers' published footprints, and applies once the job is done. RebootLoop has no partnership with the services linked here. <a href="why.html#carbon" target="_blank" rel="noopener">How we estimate ↗</a></p>
         </div>
       </div>
@@ -264,7 +267,7 @@
 
   </main>
 
-  <footer class="site-footer"><strong>RebootLoop Team:</strong> Shah Noor Mostafa Bhuiyan · Nafe Ibne Mamun · Alexander Kai Cryan<br>Independent student project · Phase 2 public prototype · Your in-tab assessment resets on reload</footer>
+  <footer class="site-footer"><p class="footer-feedback">Tried the demo? <a class="feedback-link" href="contact.html#feedback" target="_blank" rel="noopener">Tell us what you think ↗</a></p><strong>RebootLoop Team:</strong> Shah Noor Mostafa Bhuiyan · Nafe Ibne Mamun · Alexander Kai Cryan<br>Independent student project · Phase 2 public prototype · Your in-tab assessment resets on reload</footer>
 
   <script>
     (() => {
@@ -597,6 +600,11 @@
         document.getElementById("destinationSummary").textContent = box.querySelector("h3").textContent;
       }
 
+      function setFeedbackLinks() {
+        const tried = `${currentRoute.title} · ${planNoun[currentData.device]}`;
+        document.querySelectorAll(".feedback-link").forEach(link => { link.href = `contact.html?tried=${encodeURIComponent(tried)}#feedback`; });
+      }
+
       function buildPrepare() {
         const official = document.getElementById("officialLink");
         official.href = sources.storage.url;
@@ -605,6 +613,7 @@
         document.getElementById("prepareIntro").textContent = "This route deliberately withholds a self-erasure checklist. Follow only the safe escalation actions below.";
         document.getElementById("checklist").innerHTML = "";
         document.getElementById("specialistActions").innerHTML = `<ul class="action-list">${currentRoute.actions.map(a => `<li>${a}</li>`).join("")}</ul>`;
+        setFeedbackLinks();
         goTo(4);
       }
 
@@ -732,6 +741,7 @@
 
         planCount += 1;
         updateMetrics();
+        setFeedbackLinks();
         goTo(5);
       }
 

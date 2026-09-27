@@ -19,5 +19,5 @@ certificate. The final screen shows an estimated impact, and people can save
 their plan by email, text, share or copy.
 
 The QR generator in vendor/qrcode.js is by Kazuhiko Arase and is distributed
-under the MIT licence in vendor/LICENSE. It is still bundled but no longer
-used by the current app.
+under the MIT licence in vendor/LICENSE. It is kept for reference but is no
+longer loaded by the current app.

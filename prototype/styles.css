@@ -744,6 +744,10 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
 .footer-links a { color: var(--forest); font-weight: 750; }
 .site-footer p { margin: 0; }
 
+.talk-band { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px 32px; padding: clamp(28px, 4vw, 44px); border-radius: var(--radius); background: var(--navy); color: white; }
+.talk-band h2 { margin: 0 0 8px; color: white; }
+.talk-band p { margin: 0; color: #c6dbd5; max-width: 560px; }
+.talk-band .primary-button { background: var(--lime); color: var(--navy); }
 .contact-card { display: grid; gap: 16px; max-width: 780px; padding: clamp(24px, 4vw, 40px); border: 1px solid var(--line); border-radius: var(--radius); background: white; box-shadow: 0 10px 28px rgba(9,46,53,.04); }
 .contact-email { display: grid; gap: 14px; }
 .contact-email h2 { margin: 0; font-size: clamp(1.5rem, 3vw, 2rem); }

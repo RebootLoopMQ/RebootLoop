@@ -22,7 +22,6 @@
   --gap: clamp(10px, calc(10px + (100vh - 620px) * .05), 26px);
   --pad-y: clamp(20px, calc(20px + (100vh - 620px) * .085), 48px);
   --pad-x: clamp(24px, 3.4vw, 56px);
-  --row-pad: clamp(8px, calc(8px + (100vh - 620px) * .025), 16px);
   --field-h: clamp(34px, calc(34px + (100vh - 620px) * .03), 44px);
   --zoom: 1;
   --progress-h: clamp(38px, calc(38px + (100vh - 620px) * .02), 46px);
@@ -309,45 +308,53 @@ h3 { font-size: 1.2rem; line-height: 1.2; margin-bottom: 9px; }
 .shortcut:hover { background: var(--mint); }
 
 .assessment-form { padding: 12px 34px 0; }
-/* One row per question: the question on the left, its answer field on the right. */
-.question-grid { --field-width: min(440px, 48%); display: grid; }
-fieldset {
+/* Each question is a tile with its own icon. Tapping a tile opens its answers in a floating list. */
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; padding: calc(var(--gap) + 4px) 0 6px; }
+#assessmentForm fieldset.tile {
   position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--field-width);
-  grid-template-areas: "label field" "help field";
-  align-items: center;
-  column-gap: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   min-width: 0;
-  border: 0;
-  border-top: 1px solid var(--line);
-  padding: var(--row-pad) 0;
+  min-height: clamp(140px, calc(140px + (100vh - 600px) * .2), 186px);
   margin: 0;
+  padding: 16px 16px 14px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: #fbfdfc;
+  transition: border-color .15s ease, background .15s ease, transform .15s ease, box-shadow .15s ease;
 }
-/* Floated so the legend is laid out like normal content instead of sitting on the divider line. */
-legend { float: left; grid-area: label; align-self: end; padding: 0; font-size: .98rem; font-weight: 850; }
-.helper { grid-area: help; align-self: start; color: var(--muted); font-size: .82rem; line-height: 1.35; margin: 2px 0 0; }
-
-/* Each question is a select button; its answers open in a floating list. */
+#assessmentForm fieldset.tile:hover { border-color: #9fcfbf; transform: translateY(-2px); box-shadow: 0 10px 24px rgba(9,46,53,.08); }
+#assessmentForm fieldset.tile::before { content: attr(data-icon); display: grid; place-items: center; width: 46px; height: 46px; margin-bottom: 12px; border-radius: 14px; background: white; box-shadow: 0 4px 12px rgba(9,46,53,.08); font-size: 1.5rem; }
+#assessmentForm fieldset.tile:has(input:checked) { border-color: #8dcab8; background: var(--mint); }
+#assessmentForm fieldset.tile:has(input:checked)::after { content: "✓"; position: absolute; top: 14px; right: 14px; width: 26px; height: 26px; display: grid; place-items: center; border-radius: 50%; background: var(--forest); color: white; font-size: .8rem; font-weight: 900; }
+#assessmentForm fieldset.tile.is-open { z-index: 6; border-color: var(--forest); box-shadow: 0 0 0 3px rgba(11,107,87,.15); }
+#assessmentForm fieldset.tile.is-missing { border-color: var(--coral); background: #fff5f2; }
+/* Floated so the legend is laid out inside the tile instead of on its border. */
+#assessmentForm legend { float: left; width: 100%; padding: 0; text-align: left; font-size: 1rem; font-weight: 850; }
+#assessmentForm .helper { margin: 4px 0 10px; color: var(--muted); font-size: .78rem; line-height: 1.35; }
 .picker-trigger {
-  grid-area: field;
+  margin-top: auto;
   width: 100%;
-  min-height: var(--field-h);
+  min-height: 36px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  padding: 9px 14px;
+  gap: 8px;
+  padding: 6px 12px;
   border: 1px solid #cfe0da;
-  border-radius: 12px;
+  border-radius: 999px;
   background: white;
   color: var(--muted);
+  font-size: .86rem;
   font-weight: 700;
   text-align: left;
   transition: .15s ease;
 }
-.picker-trigger:hover { border-color: #9fcfbf; }
-.picker-trigger.has-value { color: var(--ink); background: var(--mint); border-color: #b7d9ce; }
+/* The whole tile is the click target. */
+.picker-trigger::after { content: ""; position: absolute; inset: 0; border-radius: 20px; }
+.picker-trigger.has-value { background: white; color: var(--forest); border-color: #b7d9ce; }
+.picker-value { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .picker-caret { flex: 0 0 auto; color: var(--forest); transition: transform .15s ease; }
 fieldset.is-open .picker-trigger { border-color: var(--forest); }
 fieldset.is-open .picker-caret { transform: rotate(180deg); }
@@ -355,9 +362,9 @@ fieldset.is-missing .picker-trigger { border-color: var(--coral); background: #f
 .choices {
   display: none;
   position: absolute;
-  top: calc(100% - 6px);
-  right: 0;
-  width: var(--field-width);
+  top: calc(100% + 8px);
+  left: 0;
+  width: max(100%, 260px);
   z-index: 5;
   flex-direction: column;
   gap: 2px;
@@ -368,7 +375,8 @@ fieldset.is-missing .picker-trigger { border-color: var(--coral); background: #f
   box-shadow: 0 18px 40px rgba(9, 46, 53, .16);
 }
 fieldset.is-open .choices { display: flex; }
-.device-q.is-open .choices { display: grid; grid-template-columns: 1fr 1fr; width: max(var(--field-width), 540px); }
+.device-q.is-open .choices { display: grid; grid-template-columns: 1fr 1fr; width: 540px; }
+.tiles .tile:nth-child(4n) .choices { left: auto; right: 0; }
 .choices input { position: absolute; opacity: 0; pointer-events: none; }
 .choices label {
   display: flex;
@@ -383,6 +391,24 @@ fieldset.is-open .choices { display: flex; }
 }
 .choices label:hover { background: var(--mint); }
 .choices input:checked + label { background: var(--forest); color: white; }
+/* The eighth tile tracks progress with a ring. */
+.tile-progress { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px; min-height: clamp(140px, calc(140px + (100vh - 600px) * .2), 186px); padding: 16px; border: 1px dashed #b7d9ce; border-radius: 20px; text-align: center; color: var(--muted); font-size: .86rem; font-weight: 700; }
+.tile-progress.is-done { border-style: solid; border-color: var(--forest); background: var(--forest); color: white; }
+.ring-wrap { position: relative; width: 76px; height: 76px; flex: 0 0 76px; }
+.ring { width: 76px; height: 76px; transform: rotate(-90deg); }
+.ring circle { fill: none; stroke-width: 7; }
+.ring-track { stroke: #dcebe6; }
+.ring-fill { stroke: var(--teal); stroke-linecap: round; transition: stroke-dashoffset .35s ease; }
+.ring-count { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--ink); font-size: 1.05rem; font-weight: 900; }
+.ring-count small { color: var(--muted); font-size: .7rem; }
+.tile-progress.is-done .ring-count, .tile-progress.is-done .ring-count small { color: white; }
+.tile-progress.is-done .ring-track { stroke: rgba(255,255,255,.25); }
+.tile-progress.is-done .ring-fill { stroke: var(--lime); }
+@media (max-width: 1000px) {
+  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tiles .tile:nth-child(4n) .choices { left: 0; right: auto; }
+  .tiles .tile:nth-child(2n) .choices { left: auto; right: 0; }
+}
 .form-footer { position: sticky; bottom: 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: 18px; margin: 10px -34px 0; padding: 10px 34px 12px; background: rgba(255,255,255,.96); border-top: 1px solid var(--line); }
 /* Let answer lists float past the card edge; the footer carries the rounded bottom instead. */
 #screen-2 .surface { overflow: visible; }
@@ -593,13 +619,6 @@ fieldset.is-open .choices { display: flex; }
 @media (min-width: 2300px) and (min-height: 1250px) { :root { --zoom: 1.35; } }
 body { zoom: var(--zoom); }
 
-/* Short but wide windows: put each question's helper beside its title so every row is one line. */
-@media (max-height: 800px) and (min-width: 900px) {
-  fieldset { grid-template-columns: auto minmax(0, 1fr) var(--field-width); grid-template-areas: "label help field"; column-gap: 16px; }
-  legend { align-self: center; }
-  .helper { align-self: center; margin: 0; }
-  .picker-trigger { min-height: 36px; padding-top: 6px; padding-bottom: 6px; }
-}
 
 /* Wide but short windows: dock the progress bar into the header bar to free a whole row. */
 @media (max-height: 780px) and (min-width: 1024px) {
@@ -655,10 +674,12 @@ body { zoom: var(--zoom); }
   .content-head, .assessment-form { padding-left: 22px; padding-right: 22px; }
   .content-head { align-items: start; flex-direction: column; }
   .head-side { justify-items: start; }
-  fieldset { grid-template-columns: 1fr; grid-template-areas: "label" "help" "field"; padding: 12px 0 14px; }
-  .picker-trigger { margin-top: 8px; }
-  .choices, .device-q.is-open .choices { left: 0; width: auto; }
+  .tiles { gap: 10px; }
+  #assessmentForm fieldset.tile { min-height: 160px; padding: 14px 12px 12px; }
+  #assessmentForm fieldset.tile.is-open { grid-column: 1 / -1; }
+  .choices, .device-q.is-open .choices, .tiles .tile:nth-child(n) .choices { position: static; width: auto; margin-top: 10px; box-shadow: none; }
   .device-q.is-open .choices { grid-template-columns: 1fr; }
+  .tile-progress { min-height: 160px; }
   .presentation-shortcuts { justify-content: flex-start; }
   .form-footer { position: static; flex-direction: column; align-items: stretch; margin-left: -22px; margin-right: -22px; padding: 12px 22px 18px; gap: 10px; }
   .form-footer .button-row { width: 100%; margin: 0; }

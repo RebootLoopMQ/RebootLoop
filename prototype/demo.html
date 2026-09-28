@@ -90,14 +90,14 @@
           </div>
         </header>
         <form class="assessment-form" id="assessmentForm" novalidate>
-          <div class="question-grid">
-            <fieldset><legend>1. Authority</legend><p class="helper">Is this device yours to transfer?</p><div class="choices">
+          <div class="tiles">
+            <fieldset class="tile" data-icon="🔑"><legend>Authority</legend><p class="helper">Is this device yours to transfer?</p><div class="choices">
               <input id="own-owned" name="ownership" type="radio" value="owned"><label for="own-owned">Yes, it is mine</label>
               <input id="own-managed" name="ownership" type="radio" value="managed"><label for="own-managed">University / employer managed</label>
               <input id="own-other" name="ownership" type="radio" value="other"><label for="own-other">No / borrowed / found</label>
             </div></fieldset>
 
-            <fieldset class="device-q"><legend>2. Device</legend><p class="helper">Choose the closest category.</p><div class="choices">
+            <fieldset class="tile device-q" data-icon="📱"><legend>Device</legend><p class="helper">Choose the closest category.</p><div class="choices">
               <input id="dev-iphone" name="device" type="radio" value="iphone"><label for="dev-iphone">iPhone</label>
               <input id="dev-ipad" name="device" type="radio" value="ipad"><label for="dev-ipad">iPad</label>
               <input id="dev-android" name="device" type="radio" value="android"><label for="dev-android">Android</label>
@@ -110,27 +110,27 @@
               <input id="dev-other" name="device" type="radio" value="other"><label for="dev-other">Other technology</label>
             </div></fieldset>
 
-            <fieldset><legend>3. Power state</legend><p class="helper">Can the device turn on and operate? This means functionality, not battery percentage.</p><div class="choices">
+            <fieldset class="tile" data-icon="🔋"><legend>Power state</legend><p class="helper">Can the device turn on and operate? This means functionality, not battery percentage.</p><div class="choices">
               <input id="power-works" name="power" type="radio" value="works"><label for="power-works">Works normally</label>
               <input id="power-intermittent" name="power" type="radio" value="intermittent"><label for="power-intermittent">Intermittent</label>
               <input id="power-off" name="power" type="radio" value="off"><label for="power-off">Does not power on</label>
             </div></fieldset>
 
-            <fieldset><legend>4. Physical safety</legend><p class="helper">Stop if you notice a battery or heat hazard.</p><div class="choices">
+            <fieldset class="tile" data-icon="⚠️"><legend>Physical safety</legend><p class="helper">Stop if you notice a battery or heat hazard.</p><div class="choices">
               <input id="safe-normal" name="safety" type="radio" value="normal"><label for="safe-normal">Normal</label>
               <input id="safe-swollen" name="safety" type="radio" value="swollen"><label for="safe-swollen">Swollen / leaking battery</label>
               <input id="safe-heat" name="safety" type="radio" value="heat"><label for="safe-heat">Heat / odour</label>
               <input id="safe-damaged" name="safety" type="radio" value="damaged"><label for="safe-damaged">Seriously damaged</label>
             </div></fieldset>
 
-            <fieldset><legend>5. Condition</legend><p class="helper">Think about usefulness, not only appearance.</p><div class="choices">
+            <fieldset class="tile" data-icon="✨"><legend>Condition</legend><p class="helper">Think about usefulness, not only appearance.</p><div class="choices">
               <input id="cond-good" name="condition" type="radio" value="good"><label for="cond-good">Good</label>
               <input id="cond-repair" name="condition" type="radio" value="repairable"><label for="cond-repair">Repairable</label>
               <input id="cond-eol" name="condition" type="radio" value="eol"><label for="cond-eol">End-of-life</label>
               <input id="cond-unsure" name="condition" type="radio" value="unsure"><label for="cond-unsure">Unsure</label>
             </div></fieldset>
 
-            <fieldset><legend>6. Preferred outcome</legend><p class="helper">What would you like to do?</p><div class="choices">
+            <fieldset class="tile" data-icon="🎯"><legend>Preferred outcome</legend><p class="helper">What would you like to do?</p><div class="choices">
               <input id="goal-repair" name="goal" type="radio" value="repair"><label for="goal-repair">Keep / repair</label>
               <input id="goal-sell" name="goal" type="radio" value="sell"><label for="goal-sell">Sell</label>
               <input id="goal-donate" name="goal" type="radio" value="donate"><label for="goal-donate">Donate</label>
@@ -139,11 +139,12 @@
               <input id="goal-unsure" name="goal" type="radio" value="unsure"><label for="goal-unsure">Unsure</label>
             </div></fieldset>
 
-            <fieldset><legend>7. Data sensitivity</legend><p class="helper">Choose the highest sensitivity that ever applied to information on the device.</p><div class="choices">
+            <fieldset class="tile" data-icon="🔒"><legend>Data sensitivity</legend><p class="helper">Choose the highest sensitivity that ever applied to information on the device.</p><div class="choices">
               <input id="sens-everyday" name="sensitivity" type="radio" value="everyday"><label for="sens-everyday">Everyday - photos, messages, ordinary accounts</label>
               <input id="sens-sensitive" name="sensitivity" type="radio" value="sensitive"><label for="sens-sensitive">Sensitive - health, financial or identity records</label>
               <input id="sens-high" name="sensitivity" type="radio" value="high"><label for="sens-high">Highly sensitive - managed, research or regulated data</label>
             </div></fieldset>
+            <div class="tile-progress" id="tileProgress" aria-live="polite"></div>
           </div>
           <div class="form-footer">
             <div class="form-status"><p class="form-note">These answers drive a transparent decision. They stay in this tab and are not sent to RebootLoop.</p><p class="error-message" id="formError" role="alert" aria-live="polite"></p></div>
@@ -382,6 +383,24 @@
           trigger.classList.toggle("has-value", Boolean(checked));
           if (checked) fieldset.classList.remove("is-missing");
         });
+        renderTiles();
+      }
+
+      // The device tile shows the chosen device's icon, and the last tile rings up progress.
+      const deviceIcon = { iphone: "📱", android: "📱", ipad: "📱", windows: "💻", mac: "💻", chromeos: "💻", linux: "💻", console: "🎮", storage: "💾", other: "🔌" };
+
+      function progressRing(done, total) {
+        const r = 26, c = 2 * Math.PI * r;
+        return `<svg class="ring" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="${r}" class="ring-track"/><circle cx="32" cy="32" r="${r}" class="ring-fill" stroke-dasharray="${c}" stroke-dashoffset="${c * (1 - done / total)}"/></svg><span class="ring-count">${done}<small>/${total}</small></span>`;
+      }
+
+      function renderTiles() {
+        const device = document.querySelector('input[name="device"]:checked')?.value;
+        document.querySelector("#assessmentForm .device-q").dataset.icon = deviceIcon[device] || "📱";
+        const done = pickers.filter(fieldset => fieldset.querySelector("input:checked")).length;
+        const progress = document.getElementById("tileProgress");
+        progress.classList.toggle("is-done", done === pickers.length);
+        progress.innerHTML = `<div class="ring-wrap">${progressRing(done, pickers.length)}</div><span>${done === pickers.length ? "All set. See your route below." : done === 0 ? "Tap a tile to start" : `${pickers.length - done} to go`}</span>`;
       }
 
       function setPickerOpen(fieldset, open) {
@@ -440,6 +459,8 @@
         });
         list.addEventListener("keyup", event => { if (event.key === " ") setTimeout(() => advancePicker(fieldset)); });
       });
+
+      syncPickers();
 
       document.addEventListener("pointerdown", event => {
         const open = pickers.find(fieldset => fieldset.classList.contains("is-open"));

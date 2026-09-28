@@ -1,6 +1,6 @@
 # Phase 2 five-screen journey
 
-The public app also has visible sections for the problem evidence, illustrative carbon scenario, industry status and privacy. These are accessible without completing an assessment.
+The assessment runs on its own page (`demo.html`). A home page introduces the project, and separate pages cover why it matters (including the illustrative carbon scenario), industry status, and evidence and privacy. None of them require completing an assessment.
 
 | Screen | What happens | What it proves or does not prove |
 |---|---|---|

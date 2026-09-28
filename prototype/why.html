@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#092e35">
+  <meta name="description" content="Why RebootLoop focuses on the data worries that keep old devices in drawers, and an illustrative carbon scenario.">
+  <title>Why it matters | RebootLoop</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="site-page">
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="RebootLoop home">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none">
+            <path d="M50 23A21 21 0 1 0 48 45" stroke="#b7d84b" stroke-width="7" stroke-linecap="round"/>
+            <path d="M47 10l8 15-17 1" fill="#b7d84b"/>
+            <path d="M32 20l11 4-2 15c-3 7-9 10-9 10s-7-3-10-10l-1-15 11-4Z" stroke="#10a783" stroke-width="3"/>
+            <circle cx="32" cy="32" r="3.5" fill="#10a783"/>
+            <path d="M32 35v7" stroke="#10a783" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-name">RebootLoop</div>
+          <div class="brand-sub">Privacy-first circular technology</div>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="why.html" aria-current="page">Why it matters</a>
+        <a href="industry.html">For industry</a>
+        <a href="evidence.html">Evidence &amp; privacy</a>
+        <a href="contact.html">Contact</a>
+        <a class="nav-cta" href="demo.html">Try the demo <span aria-hidden="true">→</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="page-head">
+      <p class="eyebrow">Why it matters</p>
+      <h1>The device is physical. The hesitation is personal.</h1>
+      <p class="lead">How RebootLoop thinks about old devices, and what a carbon estimate can and can't tell you.</p>
+    </div>
+      <section class="section-card" id="why" aria-labelledby="why-title">
+        <p class="eyebrow">The problem and our approach</p>
+        <h2 id="why-title">Knowing how to prepare a device helps people decide.</h2>
+        <p class="section-intro">It is reasonable to worry about photos, messages and account access. Knowing how to prepare a device can help someone decide what to do with it. Responsible collection also keeps hazardous materials out of inappropriate disposal pathways; the ecological effect of one device cannot be measured from a web assessment.</p>
+        <div class="fact-grid">
+          <div class="fact"><strong>40%</strong><span>In MobileMuster's 2024 report, people asked directly about data security considered it a barrier to recycling. <a href="https://www.mobilemuster.com.au/wp-content/uploads/2026/02/MOB_AnnualReport2024_UPDATE.v1.pdf" target="_blank" rel="noopener noreferrer">Source: MobileMuster, p. 23</a></span></div>
+          <div class="fact"><strong>511,000 t</strong><span>Australian e-waste generated in 2019; DCCEEW projects 657,000 t in 2030. <a href="https://www.dcceew.gov.au/environment/protection/waste/e-waste" target="_blank" rel="noopener noreferrer">Source: DCCEEW</a></span></div>
+          <div class="fact"><strong>1 safe step</strong><span>Our goal for each assessment: a suitable next action, with a clear stop when ownership, physical safety or data risks need expert help. This is a product goal, not a measured outcome.</span></div>
+        </div>
+        <div class="path-grid" aria-label="How the decision flow works">
+          <div class="path"><span class="path-number">1</span><h3>Check the boundary</h3><p>Hazards, lack of authority, unavailable erasure and high sensitivity trigger escalation.</p></div>
+          <div class="path"><span class="path-number">2</span><h3>Choose the next life</h3><p>Repair or reuse where viable; use an accepted recycling pathway when appropriate.</p></div>
+          <div class="path"><span class="path-number">3</span><h3>See your impact</h3><p>Get the official guide, the right drop-off point and a copy of your results, plus what finishing the job does for the planet.</p></div>
+        </div>
+        <div class="carbon-card" id="carbon">
+          <div>
+            <p class="eyebrow">Carbon scenario · one reference model</p>
+            <h3>What could a genuinely displaced new purchase mean?</h3>
+            <p>Apple reports a 56 kg CO₂e life cycle footprint for an iPhone 16 128GB, with 80% attributed to production. The reference production portion is <strong>56 × 0.80 = 44.8 kg CO₂e</strong>. This is a comparison for one specific model, not the footprint of your device.</p>
+            <a href="https://www.apple.com/environment/pdf/products/iphone/iPhone_16_and_iPhone_16_Plus_PER_Sept2024.pdf" target="_blank" rel="noopener noreferrer">Read Apple's product environmental report, p. 10 ↗</a>
+          </div>
+          <div class="carbon-control">
+            <label for="displacement">In this illustrative scenario, was a new iPhone 16 purchase actually displaced?</label>
+            <select id="displacement"><option value="0">No / unknown — do not count a displacement</option><option value="1">Yes — assume one new reference phone was displaced</option></select>
+            <div class="carbon-result" aria-live="polite"><strong id="carbonValue">0 kg CO₂e</strong><span id="carbonExplanation">No displacement assumed. An assessment or recycling decision alone does not avoid a new purchase.</span></div>
+            <p class="micro-note" style="color:#d4e5df;margin:0">Scenario arithmetic only. It excludes repair and reuse emissions, differences between phones, rebound effects and proof of a changed purchase. RebootLoop has verified <strong>0 kg CO₂e savings</strong>.</p>
+          </div>
+        </div>
+      </section>
+    <div><a class="primary-button" href="demo.html">Try the demo <span aria-hidden="true">→</span></a></div>
+
+  </main>
+
+  <footer class="site-footer">
+    <p class="footer-feedback">Tried the demo? <a href="contact.html#feedback">Tell us what you think <span aria-hidden="true">→</span></a></p>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="index.html">Home</a>
+      <a href="demo.html">Try the demo</a>
+      <a href="why.html">Why it matters</a>
+      <a href="industry.html">For industry</a>
+      <a href="evidence.html">Evidence &amp; privacy</a>
+      <a href="contact.html">Contact</a>
+      <a href="https://github.com/RebootLoopMQ/RebootLoop" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      <a href="https://github.com/RebootLoopMQ/RebootLoop/blob/main/docs/poster.pdf" target="_blank" rel="noopener noreferrer">Poster (PDF) ↗</a>
+    </nav>
+    <p><strong>RebootLoop team:</strong> <a class="team-link" href="https://www.linkedin.com/in/shah-noor-mostafa-a42b8134a" target="_blank" rel="noopener noreferrer" aria-label="Shah Noor Mostafa Bhuiyan on LinkedIn">Shah Noor Mostafa Bhuiyan</a> · <a class="team-link" href="https://au.linkedin.com/in/nafe-ibne-mamun-7329b1255" target="_blank" rel="noopener noreferrer" aria-label="Nafe Ibne Mamun on LinkedIn">Nafe Ibne Mamun</a> · <a class="team-link" href="https://au.linkedin.com/in/kaicryan" target="_blank" rel="noopener noreferrer" aria-label="Alexander Kai Cryan on LinkedIn">Alexander Kai Cryan</a></p>
+    <p>Independent Macquarie University student project · Phase 2 public prototype</p>
+  </footer>
+  <script>
+    document.getElementById("displacement").addEventListener("change", event => {
+      const displaced = event.target.value === "1";
+      document.getElementById("carbonValue").textContent = displaced ? "44.8 kg CO₂e" : "0 kg CO₂e";
+      document.getElementById("carbonExplanation").textContent = displaced
+        ? "Illustrative production portion of one reference iPhone 16. This is not verified RebootLoop savings."
+        : "No displacement assumed. An assessment or recycling decision alone does not avoid a new purchase.";
+    });
+  </script>
+</body>
+</html>

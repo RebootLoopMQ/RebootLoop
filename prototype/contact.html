@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#092e35">
+  <meta name="description" content="Get in touch with the RebootLoop team about ideas, feedback, testing or a pilot.">
+  <title>Contact | RebootLoop</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="site-page">
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="RebootLoop home">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none">
+            <path d="M50 23A21 21 0 1 0 48 45" stroke="#b7d84b" stroke-width="7" stroke-linecap="round"/>
+            <path d="M47 10l8 15-17 1" fill="#b7d84b"/>
+            <path d="M32 20l11 4-2 15c-3 7-9 10-9 10s-7-3-10-10l-1-15 11-4Z" stroke="#10a783" stroke-width="3"/>
+            <circle cx="32" cy="32" r="3.5" fill="#10a783"/>
+            <path d="M32 35v7" stroke="#10a783" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-name">RebootLoop</div>
+          <div class="brand-sub">Privacy-first circular technology</div>
+        </div>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="why.html">Why it matters</a>
+        <a href="industry.html">For industry</a>
+        <a href="evidence.html">Evidence &amp; privacy</a>
+        <a href="contact.html" aria-current="page">Contact</a>
+        <a class="nav-cta" href="demo.html">Try the demo <span aria-hidden="true">→</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="page-head">
+      <p class="eyebrow">Contact</p>
+      <h1>Talk to us about RebootLoop.</h1>
+      <p class="lead">Have an idea, feedback on the demo, or interest in testing it or running a pilot? We'd like to hear from you.</p>
+    </div>
+
+    <section class="feedback-card" id="feedback" aria-labelledby="feedback-title">
+      <div class="band-head">
+        <p class="eyebrow">Feedback</p>
+        <h2 id="feedback-title">Tell us what you think.</h2>
+        <p>Four quick questions. Nothing is sent until you choose how to share it.</p>
+      </div>
+      <form class="feedback-form" id="feedbackForm" novalidate>
+        <label class="field" for="fbTried"><span>What you tried <small>(optional)</small></span>
+          <input id="fbTried" name="tried" type="text" autocomplete="off" placeholder="For example: an old iPhone I want to donate">
+        </label>
+        <fieldset class="chip-group">
+          <legend>How useful was the recommendation?</legend>
+          <input id="fbUse1" type="radio" name="useful" value="Very useful"><label for="fbUse1">Very useful</label>
+          <input id="fbUse2" type="radio" name="useful" value="Somewhat useful"><label for="fbUse2">Somewhat useful</label>
+          <input id="fbUse3" type="radio" name="useful" value="Not useful"><label for="fbUse3">Not useful</label>
+          <input id="fbUse4" type="radio" name="useful" value="Didn't finish"><label for="fbUse4">Didn't finish</label>
+        </fieldset>
+        <label class="field" for="fbConfusing"><span>What was confusing or unclear?</span>
+          <textarea id="fbConfusing" name="confusing" rows="3"></textarea>
+        </label>
+        <label class="field" for="fbBetter"><span>What would make it better?</span>
+          <textarea id="fbBetter" name="better" rows="3"></textarea>
+        </label>
+        <fieldset class="chip-group">
+          <legend>Who are you? <small>(optional)</small></legend>
+          <input id="fbWho1" type="radio" name="who" value="Student"><label for="fbWho1">Student</label>
+          <input id="fbWho2" type="radio" name="who" value="University staff"><label for="fbWho2">University staff</label>
+          <input id="fbWho3" type="radio" name="who" value="Industry"><label for="fbWho3">Industry</label>
+          <input id="fbWho4" type="radio" name="who" value="Other"><label for="fbWho4">Other</label>
+        </fieldset>
+        <p class="field-note">Please don't include your name, phone number, serial numbers or other personal details.</p>
+        <div class="button-row">
+          <a class="primary-button" id="fbEmail" href="#" hidden>Email it to us</a>
+          <a class="secondary-button" id="fbGitHub" href="https://github.com/RebootLoopMQ/RebootLoop/issues/new" target="_blank" rel="noopener noreferrer">Post it on GitHub ↗</a>
+          <button class="quiet-button" type="button" id="fbCopy">Copy feedback</button>
+        </div>
+        <p class="copy-status" id="fbStatus" aria-live="polite"></p>
+        <p class="field-note">Posts on GitHub are public and need a free GitHub account.<span id="fbEmailPending"> Email will be available once our team address is set up.</span></p>
+      </form>
+    </section>
+
+    <section class="contact-card" aria-labelledby="email-title">
+      <div class="contact-email" id="contactEmail" data-email="">
+        <h2 id="email-title">Or email the team</h2>
+        <div class="email-ready" hidden>
+          <p class="email-address"><span id="emailText"></span></p>
+          <div class="button-row">
+            <a class="primary-button" id="emailLink" href="#">Write to us <span aria-hidden="true">→</span></a>
+            <button class="quiet-button" type="button" id="copyEmail">Copy address</button>
+          </div>
+          <p class="copy-status" id="copyStatus" aria-live="polite"></p>
+        </div>
+        <div class="email-pending">
+          <p>Our shared team email is coming soon. In the meantime, you can reach us through the project on GitHub.</p>
+          <div class="button-row">
+            <a class="primary-button" href="https://github.com/RebootLoopMQ/RebootLoop/issues" target="_blank" rel="noopener noreferrer">Leave a note on GitHub ↗</a>
+          </div>
+        </div>
+      </div>
+      <p class="contact-note">We're students, so we usually reply within a week.</p>
+    </section>
+
+    <section class="band" aria-labelledby="about-title">
+      <div class="band-head">
+        <p class="eyebrow">What to get in touch about</p>
+        <h2 id="about-title">All of these are welcome.</h2>
+      </div>
+      <div class="feature-grid">
+        <div class="feature"><h3>Feedback and ideas</h3><p>Something confusing in the demo, a route that felt wrong, or an idea to make it more useful.</p></div>
+        <div class="feature"><h3>Helping us test</h3><p>We're running short usability sessions with students. No device is collected and no personal details are needed.</p></div>
+        <div class="feature"><h3>Universities and industry</h3><p>Reviewing our safety and privacy boundaries, mentoring, or talking about whether a small approved campus pilot could work.</p></div>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="limits-title">
+      <div class="band-head">
+        <p class="eyebrow">Good to know</p>
+        <h2 id="limits-title">What we can't help with.</h2>
+      </div>
+      <p class="limits">We can't advise on your individual device, collect devices or wipe data. For preparing a device, follow the <a href="https://www.cyber.gov.au/protect-yourself/securing-your-devices/how-secure-your-device/how-dispose-your-device-securely" target="_blank" rel="noopener noreferrer">Australian Cyber Security Centre's guidance ↗</a>. Please don't send us serial numbers, IMEIs, passwords or other personal details about a device.</p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p class="footer-feedback">Tried the demo? <a href="contact.html#feedback">Tell us what you think <span aria-hidden="true">→</span></a></p>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="index.html">Home</a>
+      <a href="demo.html">Try the demo</a>
+      <a href="why.html">Why it matters</a>
+      <a href="industry.html">For industry</a>
+      <a href="evidence.html">Evidence &amp; privacy</a>
+      <a href="contact.html">Contact</a>
+      <a href="https://github.com/RebootLoopMQ/RebootLoop" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      <a href="https://github.com/RebootLoopMQ/RebootLoop/blob/main/docs/poster.pdf" target="_blank" rel="noopener noreferrer">Poster (PDF) ↗</a>
+    </nav>
+    <p><strong>RebootLoop team:</strong> <a class="team-link" href="https://www.linkedin.com/in/shah-noor-mostafa-a42b8134a" target="_blank" rel="noopener noreferrer" aria-label="Shah Noor Mostafa Bhuiyan on LinkedIn">Shah Noor Mostafa Bhuiyan</a> · <a class="team-link" href="https://au.linkedin.com/in/nafe-ibne-mamun-7329b1255" target="_blank" rel="noopener noreferrer" aria-label="Nafe Ibne Mamun on LinkedIn">Nafe Ibne Mamun</a> · <a class="team-link" href="https://au.linkedin.com/in/kaicryan" target="_blank" rel="noopener noreferrer" aria-label="Alexander Kai Cryan on LinkedIn">Alexander Kai Cryan</a></p>
+    <p>Independent Macquarie University student project · Phase 2 public prototype</p>
+  </footer>
+  <script>
+    // Shows the team email once it is set in data-email; until then the GitHub fallback stays visible.
+    const box = document.getElementById("contactEmail");
+    const email = box.dataset.email.trim();
+    if (email) {
+      box.querySelector(".email-pending").hidden = true;
+      box.querySelector(".email-ready").hidden = false;
+      document.getElementById("emailText").textContent = email;
+      document.getElementById("emailLink").href = `mailto:${email}?subject=${encodeURIComponent("About RebootLoop")}`;
+      document.getElementById("copyEmail").addEventListener("click", async () => {
+        const status = document.getElementById("copyStatus");
+        try {
+          await navigator.clipboard.writeText(email);
+          status.textContent = "Copied.";
+        } catch {
+          getSelection().selectAllChildren(document.getElementById("emailText"));
+          status.textContent = "Press Ctrl+C or Cmd+C to copy.";
+        }
+      });
+    }
+
+    // Feedback: nothing is sent from this page. The answers become a message the person can email, post on GitHub or copy.
+    const form = document.getElementById("feedbackForm");
+    const fbStatus = document.getElementById("fbStatus");
+    const tried = new URLSearchParams(location.search).get("tried");
+    if (tried) document.getElementById("fbTried").value = tried;
+
+    function feedbackText() {
+      const value = name => (form.elements[name].value || "").trim();
+      const lines = [
+        ["What I tried", value("tried")],
+        ["How useful was the recommendation", value("useful")],
+        ["What was confusing or unclear", value("confusing")],
+        ["What would make it better", value("better")],
+        ["Who I am", value("who")]
+      ].filter(([, answer]) => answer).map(([question, answer]) => `${question}: ${answer}`);
+      return lines.join("\n\n");
+    }
+
+    // "What I tried" alone isn't feedback yet; at least one of the questions needs an answer.
+    const hasAnswers = () => ["useful", "confusing", "better"].some(name => (form.elements[name].value || "").trim());
+
+    function updateShareLinks() {
+      const text = feedbackText();
+      const title = `Feedback: ${form.elements.tried.value.trim() || "RebootLoop demo"}`;
+      document.getElementById("fbGitHub").href = `https://github.com/RebootLoopMQ/RebootLoop/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(text)}`;
+      if (email) document.getElementById("fbEmail").href = `mailto:${email}?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(text)}`;
+    }
+
+    if (email) {
+      document.getElementById("fbEmail").hidden = false;
+      document.getElementById("fbEmailPending").hidden = true;
+    }
+    form.addEventListener("input", updateShareLinks);
+    form.addEventListener("change", updateShareLinks);
+    updateShareLinks();
+
+    for (const id of ["fbEmail", "fbGitHub"]) {
+      document.getElementById(id).addEventListener("click", event => {
+        if (hasAnswers()) { fbStatus.textContent = ""; return; }
+        event.preventDefault();
+        fbStatus.textContent = "Answer at least one question first.";
+      });
+    }
+    document.getElementById("fbCopy").addEventListener("click", async () => {
+      if (!hasAnswers()) { fbStatus.textContent = "Answer at least one question first."; return; }
+      const text = feedbackText();
+      try {
+        await navigator.clipboard.writeText(text);
+        fbStatus.textContent = "Copied. Paste it wherever suits you.";
+      } catch {
+        fbStatus.textContent = "Couldn't copy here. Select your answers and copy them instead.";
+      }
+    });
+  </script>
+</body>
+</html>

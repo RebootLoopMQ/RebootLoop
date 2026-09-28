@@ -701,15 +701,24 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
   .home-hero { min-height: calc(100vh / var(--zoom) - var(--header-h) - 4px - clamp(32px, 6vh, 64px) - 16px); }
 }
 .hero-copy { display: grid; gap: 20px; justify-items: start; }
-.hero-copy h1 { margin: 0; }
 .hero-copy .lead { margin: 0; max-width: 46ch; text-wrap: balance; }
 .hero-copy .button-row { margin: 0; }
 .slogan span { display: block; }
-.slogan { margin: 0; max-width: 30ch; color: var(--forest); font-size: clamp(1.35rem, 2.3vw, 1.9rem); font-weight: 850; line-height: 1.2; letter-spacing: -.03em; text-wrap: balance; }
+.slogan { margin: 0; max-width: 32ch; padding-left: 16px; border-left: 4px solid var(--lime); color: var(--forest); font-size: clamp(1.1rem, 1.6vw, 1.35rem); font-weight: 800; line-height: 1.3; letter-spacing: -.025em; text-wrap: balance; }
+.slogan span:first-child { color: var(--ink); font-weight: 900; }
 .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .hero-tags li { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px; background: white; color: var(--muted); font-size: .85rem; font-weight: 750; }
 .hero-tags li::before { content: "✓"; color: var(--teal); font-weight: 900; }
-.award { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: #fff5de; color: #7f5a0a; font-size: .85rem; font-weight: 800; }
+.award { display: inline-flex; align-items: center; gap: 10px; margin: 0; padding: 4px 14px 4px 4px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.75); color: var(--ink); font-size: .82rem; font-weight: 650; }
+.award-tag { padding: 4px 10px; border-radius: 999px; background: var(--forest); color: white; font-size: .74rem; font-weight: 850; letter-spacing: .04em; font-variant-numeric: tabular-nums; }
+.award-org { color: var(--muted); }
+@media (max-width: 620px) { .award-org { display: none; } }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Hero type: a heavy sans headline with one italic serif accent, and a quieter pull-quote line under it. */
+.hero-copy h1 { margin: 0; font-size: clamp(2.2rem, 3.9vw, 3.5rem); line-height: 1; letter-spacing: -.055em; }
+.hero-copy h1 em { position: relative; z-index: 0; padding: 0 .06em; color: var(--forest); font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif; font-style: italic; font-weight: 600; letter-spacing: -.02em; white-space: nowrap; }
+.hero-copy h1 em::after { content: ""; position: absolute; z-index: -1; left: 0; right: 0; bottom: .08em; height: .32em; border-radius: 4px; background: var(--lime); opacity: .55; }
 .hero-figure { margin: 0; }
 .hero-figure img { display: block; width: 100%; max-width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--radius); box-shadow: var(--shadow); }
 .hero-figure figcaption { margin-top: 12px; color: var(--muted); font-size: .9rem; }

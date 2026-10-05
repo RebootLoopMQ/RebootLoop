@@ -909,15 +909,27 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
   padding: 26px 26px 24px;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  transition: transform .2s ease, box-shadow .2s ease;
+  transition: transform .45s cubic-bezier(.22,1,.36,1), box-shadow .3s ease, opacity .45s ease;
 }
-.site-page .member:hover { transform: translateY(-5px); box-shadow: 0 30px 60px rgba(9, 46, 53, .16); }
+/* Entrance: only hidden pre-reveal when JS is running the scroll-in observer (see index.html's
+   inline html.js-anim toggle + the IntersectionObserver script) — no-JS visitors just see them.
+   :where() keeps the gating out of the specificity count so the :hover rule below (declared
+   after, same 3-class weight) still wins once a card has been revealed. */
+:where(html.js-anim) .site-page .team-grid .member { opacity: 0; transform: translateY(30px) scale(.94); }
+:where(html.js-anim) .site-page .team-grid .member:where(.is-visible) { opacity: 1; transform: translateY(0) scale(1); }
+
+.site-page .member:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 32px 64px rgba(9, 46, 53, .18), 0 0 0 3px rgba(16, 167, 131, .32);
+}
+.site-page .member:hover .avatar-blob { transform: scale(1.14) rotate(4deg); }
 
 .site-page .member .avatar-wrap { grid-column: 1; grid-row: 1 / span 3; position: relative; width: 84px; height: 84px; }
 .site-page .member .avatar-blob {
   position: absolute; inset: -13px; z-index: 0;
   border-radius: 63% 37% 41% 59% / 46% 57% 43% 54%;
   background: var(--mint);
+  transition: transform .35s cubic-bezier(.22,1,.36,1);
 }
 .site-page .member:nth-child(3n+2) .avatar-blob {
   background: color-mix(in srgb, var(--gold) 26%, var(--pale));
@@ -961,7 +973,34 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
 }
 .site-page .member-links a:hover { background: var(--mint); border-color: #b8ddd1; }
 
-.site-page .award { transform: rotate(-1.4deg); }
+.site-page .award {
+  transform: rotate(-1.4deg);
+  animation: rl-award-pop .7s cubic-bezier(.34, 1.56, .64, 1) both;
+}
+.site-page .award-tag {
+  position: relative;
+  overflow: hidden;
+  animation: rl-award-glow 2.6s ease-in-out .7s infinite;
+}
+.site-page .award-tag::after {
+  content: "";
+  position: absolute; top: 0; left: -65%; width: 45%; height: 100%;
+  background: linear-gradient(115deg, transparent, rgba(255, 255, 255, .75), transparent);
+  animation: rl-award-shine 3.4s ease-in-out .7s infinite;
+}
+@keyframes rl-award-pop {
+  0%   { opacity: 0; transform: rotate(-1.4deg) scale(.7) translateY(-8px); }
+  65%  { opacity: 1; transform: rotate(-1.4deg) scale(1.08) translateY(0); }
+  100% { opacity: 1; transform: rotate(-1.4deg) scale(1) translateY(0); }
+}
+@keyframes rl-award-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(183, 216, 75, .55); }
+  50%      { box-shadow: 0 0 0 7px rgba(183, 216, 75, 0); }
+}
+@keyframes rl-award-shine {
+  0%          { left: -65%; }
+  22%, 100%   { left: 130%; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .site-page .ambient .blob, .site-page .ambient .drift-icon { animation: none; }

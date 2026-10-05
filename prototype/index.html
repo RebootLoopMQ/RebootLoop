@@ -7,6 +7,7 @@
   <meta name="description" content="RebootLoop is a Macquarie University student project: a free, privacy-first guide to repairing, passing on or recycling an old phone, laptop or drive.">
   <title>RebootLoop | A safer next step for your old device</title>
   <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.add('js-anim')</script>
 </head>
 <body class="site-page">
   <div class="ambient" aria-hidden="true">
@@ -177,5 +178,30 @@
     <p><strong>RebootLoop team:</strong> <a class="team-link" href="https://www.linkedin.com/in/shah-noor-mostafa-a42b8134a" target="_blank" rel="noopener noreferrer" aria-label="Shah Noor Mostafa Bhuiyan on LinkedIn">Shah Noor Mostafa Bhuiyan</a> · <a class="team-link" href="https://au.linkedin.com/in/nafe-ibne-mamun-7329b1255" target="_blank" rel="noopener noreferrer" aria-label="Nafe Ibne Mamun on LinkedIn">Nafe Ibne Mamun</a> · <a class="team-link" href="https://au.linkedin.com/in/kaicryan" target="_blank" rel="noopener noreferrer" aria-label="Alexander Kai Cryan on LinkedIn">Alexander Kai Cryan</a></p>
     <p>Independent Macquarie University student project · Phase 2 public prototype</p>
   </footer>
+
+  <script>
+    // Team cards animate in as the section scrolls into view. Progressive enhancement:
+    // without JS or IntersectionObserver, .member keeps its default (visible) styling
+    // because the hidden state only exists under html.js-anim (see styles.css).
+    (function () {
+      var cards = document.querySelectorAll(".team-grid .member");
+      if (!cards.length) return;
+      if (!("IntersectionObserver" in window)) {
+        cards.forEach(function (card) { card.classList.add("is-visible"); });
+        return;
+      }
+      var list = Array.prototype.slice.call(cards);
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var index = list.indexOf(entry.target);
+          entry.target.style.transitionDelay = (index * 110) + "ms";
+          entry.target.classList.add("is-visible");
+          io.unobserve(entry.target);
+        });
+      }, { threshold: .3 });
+      list.forEach(function (card) { io.observe(card); });
+    })();
+  </script>
 </body>
 </html>

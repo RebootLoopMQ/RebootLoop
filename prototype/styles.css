@@ -895,12 +895,12 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
   .site-page .ambient .icon-3, .site-page .ambient .icon-5 { display: none; }
 }
 
-/* ---- "Who made it" team cards: v4 — three big cards in a row.
-   Dark navy, same material as the site's own "special" sections (talk-band,
-   audience.primary), with a living gradient border, a radiant halo behind
-   each portrait, and a lime glow badge. Each card stacks internally
-   (portrait, then name/role/bio/links) so it reads well at a third of the
-   page width, with generous padding and a bio line for real substance. ---- */
+/* ---- "Who made it" team cards: v5 — three big cards in a row, light theme.
+   White card on the gradient teal/lime border, matching the rest of the
+   page's light cards, with a radiant halo behind each portrait and a lime
+   glow badge carrying the "premium" feel instead of a dark background.
+   Each card stacks internally (portrait, then name/role/bio/links) so it
+   reads well at a third of the page width. ---- */
 .site-page .team-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; padding-top: 10px; }
 @media (max-width: 960px) {
   .site-page .team-grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
@@ -917,10 +917,10 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
   border: 2px solid transparent;
   border-radius: 28px;
   background:
-    linear-gradient(165deg, var(--navy-2), var(--navy)) padding-box,
+    linear-gradient(165deg, #ffffff, var(--pale)) padding-box,
     linear-gradient(135deg, var(--teal), var(--lime) 45%, var(--teal) 90%) border-box;
   background-size: 100% 100%, 240% 240%;
-  box-shadow: 0 30px 64px rgba(9, 46, 53, .42);
+  box-shadow: 0 26px 52px rgba(9, 46, 53, .14);
   transition: transform .45s cubic-bezier(.22,1,.36,1), box-shadow .35s ease, opacity .45s ease;
   animation: rl-member-border-drift 7s ease-in-out infinite;
 }
@@ -935,8 +935,8 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
   position: absolute; inset: -40px; z-index: -1;
   border-radius: inherit;
   background:
-    radial-gradient(50% 60% at 16% 24%, rgba(183, 216, 75, .5), transparent 70%),
-    radial-gradient(45% 55% at 88% 86%, rgba(16, 167, 131, .4), transparent 70%);
+    radial-gradient(50% 60% at 16% 24%, rgba(183, 216, 75, .4), transparent 70%),
+    radial-gradient(45% 55% at 88% 86%, rgba(16, 167, 131, .32), transparent 70%);
   filter: blur(34px);
   opacity: .5;
   transition: opacity .4s ease, filter .4s ease;
@@ -951,20 +951,20 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
 
 .site-page .member:hover {
   transform: translateY(-8px) scale(1.012);
-  box-shadow: 0 44px 88px rgba(9, 46, 53, .5);
+  box-shadow: 0 36px 72px rgba(9, 46, 53, .2);
 }
 .site-page .member:hover::before { opacity: 1; filter: blur(40px); }
 .site-page .member:hover .avatar-blob { transform: scale(1.2); opacity: 1; }
-.site-page .member:hover .initials, .site-page .member:hover .member-photo { box-shadow: 0 0 0 8px rgba(183, 216, 75, .28), 0 16px 34px rgba(0, 0, 0, .5); }
+.site-page .member:hover .initials, .site-page .member:hover .member-photo { box-shadow: 0 0 0 8px rgba(183, 216, 75, .3), 0 14px 28px rgba(9, 46, 53, .22); }
 
 /* the portrait's radiant halo — a soft glowing aura, not a flat tint */
 .site-page .member .avatar-wrap { position: relative; width: 108px; height: 108px; margin-bottom: 22px; }
 .site-page .member .avatar-blob {
   position: absolute; inset: -24px; z-index: 0;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(183, 216, 75, .65) 0%, rgba(16, 167, 131, .35) 55%, transparent 75%);
+  background: radial-gradient(circle, rgba(183, 216, 75, .6) 0%, rgba(16, 167, 131, .3) 55%, transparent 75%);
   filter: blur(12px);
-  opacity: .85;
+  opacity: .8;
   animation: rl-halo-breathe 3.2s ease-in-out infinite;
   transition: transform .4s cubic-bezier(.22,1,.36,1), opacity .4s ease;
 }
@@ -973,10 +973,10 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
   50%      { transform: scale(1.08); }
 }
 .site-page .member:nth-child(3n+2) .avatar-blob {
-  background: radial-gradient(circle, rgba(243, 198, 91, .65) 0%, rgba(183, 216, 75, .3) 55%, transparent 75%);
+  background: radial-gradient(circle, rgba(243, 198, 91, .6) 0%, rgba(183, 216, 75, .28) 55%, transparent 75%);
 }
 .site-page .member:nth-child(3n) .avatar-blob {
-  background: radial-gradient(circle, rgba(47, 120, 183, .6) 0%, rgba(16, 167, 131, .32) 55%, transparent 75%);
+  background: radial-gradient(circle, rgba(47, 120, 183, .55) 0%, rgba(16, 167, 131, .28) 55%, transparent 75%);
 }
 
 .site-page .member .initials, .site-page .member .member-photo {
@@ -986,40 +986,43 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
   border: 3px solid transparent;
   background: linear-gradient(var(--navy), var(--navy)) padding-box,
               linear-gradient(140deg, var(--lime), var(--teal)) border-box;
-  box-shadow: 0 0 0 6px rgba(183, 216, 75, .18), 0 16px 32px rgba(0, 0, 0, .45);
+  box-shadow: 0 0 0 6px rgba(183, 216, 75, .2), 0 12px 26px rgba(9, 46, 53, .16);
   color: var(--lime);
   transition: box-shadow .4s ease;
 }
 .site-page .member .member-photo { object-fit: cover; }
 .site-page .member .initials { font-size: 1.55rem; display: grid; place-items: center; }
 
-.site-page .member strong { color: white; font-size: 1.28rem; letter-spacing: -.015em; }
+.site-page .member strong { color: var(--ink); font-size: 1.28rem; letter-spacing: -.015em; }
 
 .site-page .member .role-tag {
   display: inline-flex; justify-self: start; margin-top: 11px;
   padding: 7px 15px; border-radius: 10px;
   background: var(--lime); color: var(--navy);
   font-weight: 850; font-size: .86rem; line-height: 1.35;
-  box-shadow: 0 0 18px rgba(183, 216, 75, .45);
+  box-shadow: 0 0 18px rgba(183, 216, 75, .4);
 }
 
 .site-page .member .member-bio {
   margin: 16px 0 0;
-  color: #c6dbd5; font-size: .96rem; line-height: 1.6;
+  color: var(--muted); font-size: .96rem; line-height: 1.6;
 }
 
 .site-page .member-links {
-  position: relative; margin-top: 20px; padding-top: 18px; gap: 10px; border-top: 0;
+  position: relative; margin-top: 20px; padding-top: 18px; gap: 7px; border-top: 0; flex-wrap: nowrap;
 }
 .site-page .member-links::before {
-  content: ""; position: absolute; top: 0; left: 0; right: 0; border-top: 1.5px dashed rgba(255, 255, 255, .22);
+  content: ""; position: absolute; top: 0; left: 0; right: 0; border-top: 1.5px dashed var(--line);
 }
 .site-page .member-links a {
-  display: inline-flex; align-items: center; padding: 7px 15px;
-  border: 1.3px solid rgba(255, 255, 255, .28); border-radius: 999px; font-size: .86rem;
-  background: rgba(255, 255, 255, .05); color: #c6dbd5; font-weight: 750;
+  display: inline-flex; align-items: center; flex: 0 1 auto; padding: 6px 11px;
+  border: 1.3px solid var(--line); border-radius: 999px; font-size: .78rem; white-space: nowrap;
+  background: white; color: var(--forest); font-weight: 750;
 }
 .site-page .member-links a:hover { background: var(--lime); border-color: var(--lime); color: var(--navy); }
+@media (max-width: 420px) {
+  .site-page .member-links { flex-wrap: wrap; }
+}
 
 .site-page .award {
   transform: rotate(-1.4deg);

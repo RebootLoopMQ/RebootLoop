@@ -895,20 +895,27 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
   .site-page .ambient .icon-3, .site-page .ambient .icon-5 { display: none; }
 }
 
-/* ---- "Who made it" team cards: on-brand, with an organic halo behind each portrait ---- */
+/* ---- "Who made it" team cards: on-brand, with an organic halo behind each portrait.
+   Laid out as two columns (portrait | details) so the card fills its full width
+   instead of everything stacking down the left edge. ---- */
 .site-page .team-grid { gap: 24px 20px; padding-top: 8px; }
 .site-page .member {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  column-gap: 20px;
+  row-gap: 0;
+  align-items: start;
   position: relative;
-  padding: 28px 24px 24px;
+  padding: 26px 26px 24px;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   transition: transform .2s ease, box-shadow .2s ease;
 }
 .site-page .member:hover { transform: translateY(-5px); box-shadow: 0 30px 60px rgba(9, 46, 53, .16); }
 
-.site-page .member .avatar-wrap { position: relative; width: 92px; height: 92px; margin-bottom: 18px; }
+.site-page .member .avatar-wrap { grid-column: 1; grid-row: 1 / span 3; position: relative; width: 84px; height: 84px; }
 .site-page .member .avatar-blob {
-  position: absolute; inset: -14px; z-index: 0;
+  position: absolute; inset: -13px; z-index: 0;
   border-radius: 63% 37% 41% 59% / 46% 57% 43% 54%;
   background: var(--mint);
 }
@@ -923,22 +930,26 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
 
 .site-page .member .initials, .site-page .member .member-photo {
   position: relative; z-index: 1;
-  width: 92px; height: 92px; margin: 0;
+  width: 84px; height: 84px; margin: 0;
   border-radius: 50%;
   border: 3px solid white;
   box-shadow: 0 8px 18px rgba(9, 46, 53, .14);
 }
 .site-page .member .member-photo { object-fit: cover; }
-.site-page .member .initials { font-size: 1.3rem; }
+.site-page .member .initials { font-size: 1.2rem; }
+
+.site-page .member strong { grid-column: 2; grid-row: 1; align-self: center; }
 
 .site-page .member .role-tag {
-  display: inline-flex; justify-self: start; margin-top: 2px;
-  padding: 5px 12px; border-radius: 999px;
+  grid-column: 2; grid-row: 2;
+  display: inline-flex; justify-self: start; align-self: start; margin-top: 8px;
+  padding: 5px 12px; border-radius: 10px;
   background: var(--mint); color: var(--forest);
-  font-weight: 800; font-size: .82rem; line-height: 1.3;
+  font-weight: 800; font-size: .82rem; line-height: 1.35;
 }
 
 .site-page .member-links {
+  grid-column: 2; grid-row: 3;
   position: relative; margin-top: 14px; padding-top: 14px; gap: 8px; border-top: 0;
 }
 .site-page .member-links::before {

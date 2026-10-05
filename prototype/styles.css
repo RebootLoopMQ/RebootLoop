@@ -917,7 +917,7 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
   border: 2px solid transparent;
   border-radius: 28px;
   background:
-    linear-gradient(165deg, #ffffff, var(--pale)) padding-box,
+    #ffffff padding-box,
     linear-gradient(135deg, var(--teal), var(--lime) 45%, var(--teal) 90%) border-box;
   background-size: 100% 100%, 240% 240%;
   box-shadow: 0 26px 52px rgba(9, 46, 53, .14);

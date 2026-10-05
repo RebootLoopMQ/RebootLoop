@@ -833,3 +833,112 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
   .site-nav a:not(.nav-cta) { display: none; }
   .home-hero, .audience-grid, .team-grid, .stat-row { grid-template-columns: 1fr; }
 }
+
+/* ---- Organic ambience: drifting blobs + device-outline icons behind the content.
+   Site pages only (body.site-page) — the demo screens never get this layer. ---- */
+.site-page .ambient { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+
+.site-page .ambient .blob {
+  position: absolute;
+  animation: rl-drift var(--drift, 40s) ease-in-out infinite;
+  animation-delay: var(--drift-delay, 0s);
+}
+.site-page .ambient .blob-1 {
+  width: 440px; height: 400px; top: -130px; right: -110px;
+  background: radial-gradient(circle at 34% 30%, rgba(16, 167, 131, .20), rgba(16, 167, 131, 0) 72%);
+  border-radius: 61% 39% 44% 56% / 46% 52% 48% 54%;
+  --drift: 44s;
+}
+.site-page .ambient .blob-2 {
+  width: 280px; height: 260px; top: 40vh; left: -120px;
+  background: radial-gradient(circle at 58% 42%, rgba(183, 216, 75, .22), rgba(183, 216, 75, 0) 72%);
+  border-radius: 54% 46% 38% 62% / 42% 58% 42% 58%;
+  --drift: 52s; --drift-delay: -9s;
+}
+.site-page .ambient .blob-3 {
+  width: 320px; height: 300px; bottom: -110px; right: 8vw;
+  background: radial-gradient(circle at 46% 56%, rgba(11, 107, 87, .14), rgba(11, 107, 87, 0) 74%);
+  border-radius: 48% 52% 62% 38% / 55% 44% 56% 45%;
+  --drift: 48s; --drift-delay: -22s;
+}
+.site-page .ambient .blob-4 {
+  width: 200px; height: 190px; top: 70vh; right: 22vw;
+  background: radial-gradient(circle at 40% 38%, rgba(243, 198, 91, .18), rgba(243, 198, 91, 0) 72%);
+  border-radius: 40% 60% 58% 42% / 58% 40% 60% 42%;
+  --drift: 36s; --drift-delay: -14s;
+}
+@keyframes rl-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(20px, -16px) scale(1.035); }
+  66%      { transform: translate(-14px, 12px) scale(.975); }
+}
+
+.site-page .ambient .drift-icon {
+  position: absolute;
+  opacity: .15;
+  animation: rl-bob var(--bob, 9s) ease-in-out infinite;
+  animation-delay: var(--bob-delay, 0s);
+}
+.site-page .ambient .drift-icon svg { display: block; width: 100%; height: 100%; }
+@keyframes rl-bob {
+  0%, 100% { transform: translateY(0) rotate(var(--rot-a, -7deg)); }
+  50%      { transform: translateY(-15px) rotate(var(--rot-b, 7deg)); }
+}
+.site-page .ambient .icon-1 { top: 13vh; left: 7vw;  width: 34px; height: 34px; color: var(--teal);   --bob: 10s;   --rot-a: -9deg; --rot-b: 4deg; }
+.site-page .ambient .icon-2 { top: 21vh; right: 9vw; width: 26px; height: 26px; color: var(--lime);   --bob: 8.5s;  --bob-delay: -2s; --rot-a: 6deg; --rot-b: -6deg; }
+.site-page .ambient .icon-3 { top: 50vh; left: 4vw;  width: 30px; height: 30px; color: var(--forest); --bob: 11.5s; --bob-delay: -5s; }
+.site-page .ambient .icon-4 { top: 63vh; right: 6vw; width: 26px; height: 26px; color: var(--teal);   --bob: 9.5s;  --bob-delay: -7s; }
+.site-page .ambient .icon-5 { top: 83vh; left: 13vw; width: 28px; height: 28px; color: var(--gold);   --bob: 10.5s; --bob-delay: -3s; }
+.site-page .ambient .icon-6 { top: 90vh; right: 17vw; width: 22px; height: 22px; color: var(--lime);  --bob: 8s;    --bob-delay: -6s; }
+
+@media (max-width: 700px) {
+  .site-page .ambient .icon-3, .site-page .ambient .icon-5 { display: none; }
+}
+
+/* ---- "Who made it" team cards: pinned, hand-placed note treatment ---- */
+.site-page .team-grid { gap: 30px 20px; padding-top: 8px; }
+.site-page .member {
+  position: relative;
+  overflow: visible;
+  padding-top: 32px;
+  border-radius: 10px 22px 14px 26px;
+  box-shadow: 0 3px 0 var(--line);
+  transform: rotate(var(--tilt, 0deg));
+}
+.site-page .member:nth-child(3n+1) { --tilt: -1deg; }
+.site-page .member:nth-child(3n+2) { --tilt: .7deg; }
+.site-page .member:nth-child(3n)   { --tilt: -.5deg; }
+
+.site-page .member .pin-dot {
+  position: absolute; top: 16px; left: 24px; width: 10px; height: 10px;
+  border-radius: 50%; background: var(--pale); box-shadow: inset 0 0 0 2px var(--teal);
+}
+.site-page .member .pin-string {
+  position: absolute; top: -14px; left: 17px; width: 2px; height: 34px;
+  background: var(--line); transform: rotate(-20deg); transform-origin: bottom;
+}
+
+.site-page .member .initials {
+  width: 58px; height: 58px;
+  border-radius: 59% 41% 45% 55% / 45% 58% 42% 55%;
+}
+.site-page .member:nth-child(3n+2) .initials { border-radius: 44% 56% 58% 42% / 56% 42% 58% 44%; }
+.site-page .member:nth-child(3n)   .initials { border-radius: 55% 45% 39% 61% / 48% 55% 45% 52%; }
+
+.site-page .member-links {
+  position: relative; margin-top: 12px; padding-top: 14px; gap: 8px; border-top: 0;
+}
+.site-page .member-links::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; border-top: 1.5px dashed var(--line);
+}
+.site-page .member-links a {
+  display: inline-flex; align-items: center; padding: 6px 13px;
+  border: 1.3px solid var(--line); border-radius: 999px; font-size: .86rem;
+}
+.site-page .member-links a:hover { background: var(--mint); border-color: #b8ddd1; }
+
+.site-page .award { transform: rotate(-1.4deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .site-page .ambient .blob, .site-page .ambient .drift-icon { animation: none; }
+}

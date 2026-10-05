@@ -895,29 +895,30 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
   .site-page .ambient .icon-3, .site-page .ambient .icon-5 { display: none; }
 }
 
-/* ---- "Who made it" team cards: v2 — premium dark glow cards.
+/* ---- "Who made it" team cards: v3 — one big card per person.
    Dark navy, same material as the site's own "special" sections (talk-band,
    audience.primary), with a living gradient border, a radiant halo behind
-   each portrait, and a lime glow badge. Laid out as two columns (portrait |
-   details) so the card fills its full width. ---- */
-.site-page .team-grid { gap: 30px 24px; padding-top: 10px; }
+   each portrait, and a lime glow badge. Stacked single-column, wide, and
+   generously padded so each card has room to breathe and a bio line gives
+   it real substance instead of just a name and two links. ---- */
+.site-page .team-grid { grid-template-columns: 1fr; gap: 28px; max-width: 880px; margin: 0 auto; padding-top: 10px; }
 
 .site-page .member {
   display: grid;
-  grid-template-columns: 96px minmax(0, 1fr);
-  column-gap: 22px;
+  grid-template-columns: 136px minmax(0, 1fr);
+  column-gap: 34px;
   row-gap: 0;
   align-items: start;
   position: relative;
   isolation: isolate;
-  padding: 32px 28px 26px;
+  padding: 44px 48px;
   border: 2px solid transparent;
-  border-radius: var(--radius);
+  border-radius: 28px;
   background:
     linear-gradient(165deg, var(--navy-2), var(--navy)) padding-box,
     linear-gradient(135deg, var(--teal), var(--lime) 45%, var(--teal) 90%) border-box;
   background-size: 100% 100%, 240% 240%;
-  box-shadow: 0 26px 54px rgba(9, 46, 53, .4);
+  box-shadow: 0 30px 64px rgba(9, 46, 53, .42);
   transition: transform .45s cubic-bezier(.22,1,.36,1), box-shadow .35s ease, opacity .45s ease;
   animation: rl-member-border-drift 7s ease-in-out infinite;
 }
@@ -929,12 +930,12 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
 /* radiant ambient glow bleeding out from behind the card */
 .site-page .member::before {
   content: "";
-  position: absolute; inset: -30px; z-index: -1;
+  position: absolute; inset: -40px; z-index: -1;
   border-radius: inherit;
   background:
-    radial-gradient(55% 55% at 22% 18%, rgba(183, 216, 75, .5), transparent 70%),
-    radial-gradient(50% 50% at 85% 90%, rgba(16, 167, 131, .4), transparent 70%);
-  filter: blur(26px);
+    radial-gradient(50% 60% at 16% 24%, rgba(183, 216, 75, .5), transparent 70%),
+    radial-gradient(45% 55% at 88% 86%, rgba(16, 167, 131, .4), transparent 70%);
+  filter: blur(34px);
   opacity: .5;
   transition: opacity .4s ease, filter .4s ease;
 }
@@ -943,24 +944,24 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
    inline html.js-anim toggle + the IntersectionObserver script) — no-JS visitors just see them.
    :where() keeps the gating out of the specificity count so the :hover rule below (declared
    after, same 3-class weight) still wins once a card has been revealed. */
-:where(html.js-anim) .site-page .team-grid .member { opacity: 0; transform: translateY(30px) scale(.94); }
+:where(html.js-anim) .site-page .team-grid .member { opacity: 0; transform: translateY(30px) scale(.96); }
 :where(html.js-anim) .site-page .team-grid .member:where(.is-visible) { opacity: 1; transform: translateY(0) scale(1); }
 
 .site-page .member:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 40px 80px rgba(9, 46, 53, .5);
+  transform: translateY(-8px) scale(1.012);
+  box-shadow: 0 44px 88px rgba(9, 46, 53, .5);
 }
-.site-page .member:hover::before { opacity: 1; filter: blur(32px); }
-.site-page .member:hover .avatar-blob { transform: scale(1.22); opacity: 1; }
-.site-page .member:hover .initials, .site-page .member:hover .member-photo { box-shadow: 0 0 0 7px rgba(183, 216, 75, .28), 0 14px 30px rgba(0, 0, 0, .5); }
+.site-page .member:hover::before { opacity: 1; filter: blur(40px); }
+.site-page .member:hover .avatar-blob { transform: scale(1.2); opacity: 1; }
+.site-page .member:hover .initials, .site-page .member:hover .member-photo { box-shadow: 0 0 0 8px rgba(183, 216, 75, .28), 0 16px 34px rgba(0, 0, 0, .5); }
 
 /* the portrait's radiant halo — a soft glowing aura, not a flat tint */
-.site-page .member .avatar-wrap { grid-column: 1; grid-row: 1 / span 3; position: relative; width: 96px; height: 96px; }
+.site-page .member .avatar-wrap { grid-column: 1; grid-row: 1 / span 4; position: relative; width: 136px; height: 136px; }
 .site-page .member .avatar-blob {
-  position: absolute; inset: -22px; z-index: 0;
+  position: absolute; inset: -30px; z-index: 0;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(183, 216, 75, .65) 0%, rgba(16, 167, 131, .35) 55%, transparent 75%);
-  filter: blur(9px);
+  filter: blur(12px);
   opacity: .85;
   animation: rl-halo-breathe 3.2s ease-in-out infinite;
   transition: transform .4s cubic-bezier(.22,1,.36,1), opacity .4s ease;
@@ -978,42 +979,60 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
 
 .site-page .member .initials, .site-page .member .member-photo {
   position: relative; z-index: 1;
-  width: 96px; height: 96px; margin: 0;
+  width: 136px; height: 136px; margin: 0;
   border-radius: 50%;
   border: 3px solid transparent;
   background: linear-gradient(var(--navy), var(--navy)) padding-box,
               linear-gradient(140deg, var(--lime), var(--teal)) border-box;
-  box-shadow: 0 0 0 5px rgba(183, 216, 75, .18), 0 12px 26px rgba(0, 0, 0, .45);
+  box-shadow: 0 0 0 6px rgba(183, 216, 75, .18), 0 16px 32px rgba(0, 0, 0, .45);
   color: var(--lime);
   transition: box-shadow .4s ease;
 }
 .site-page .member .member-photo { object-fit: cover; }
-.site-page .member .initials { font-size: 1.3rem; display: grid; place-items: center; }
+.site-page .member .initials { font-size: 1.9rem; display: grid; place-items: center; }
 
-.site-page .member strong { grid-column: 2; grid-row: 1; align-self: center; color: white; font-size: 1.14rem; letter-spacing: -.01em; }
+.site-page .member strong { grid-column: 2; grid-row: 1; align-self: center; color: white; font-size: 1.5rem; letter-spacing: -.015em; }
 
 .site-page .member .role-tag {
   grid-column: 2; grid-row: 2;
-  display: inline-flex; justify-self: start; align-self: start; margin-top: 9px;
-  padding: 6px 13px; border-radius: 10px;
+  display: inline-flex; justify-self: start; align-self: start; margin-top: 11px;
+  padding: 7px 15px; border-radius: 10px;
   background: var(--lime); color: var(--navy);
-  font-weight: 850; font-size: .82rem; line-height: 1.35;
+  font-weight: 850; font-size: .86rem; line-height: 1.35;
   box-shadow: 0 0 18px rgba(183, 216, 75, .45);
 }
 
-.site-page .member-links {
+.site-page .member .member-bio {
   grid-column: 2; grid-row: 3;
-  position: relative; margin-top: 16px; padding-top: 15px; gap: 8px; border-top: 0;
+  margin: 16px 0 0; max-width: 46ch;
+  color: #c6dbd5; font-size: .98rem; line-height: 1.6;
+}
+
+.site-page .member-links {
+  grid-column: 2; grid-row: 4;
+  position: relative; margin-top: 20px; padding-top: 18px; gap: 10px; border-top: 0;
 }
 .site-page .member-links::before {
   content: ""; position: absolute; top: 0; left: 0; right: 0; border-top: 1.5px dashed rgba(255, 255, 255, .22);
 }
 .site-page .member-links a {
-  display: inline-flex; align-items: center; padding: 6px 13px;
-  border: 1.3px solid rgba(255, 255, 255, .28); border-radius: 999px; font-size: .86rem;
+  display: inline-flex; align-items: center; padding: 7px 15px;
+  border: 1.3px solid rgba(255, 255, 255, .28); border-radius: 999px; font-size: .88rem;
   background: rgba(255, 255, 255, .05); color: #c6dbd5; font-weight: 750;
 }
 .site-page .member-links a:hover { background: var(--lime); border-color: var(--lime); color: var(--navy); }
+
+@media (max-width: 620px) {
+  .site-page .member { grid-template-columns: 1fr; padding: 32px 26px; justify-items: start; }
+  .site-page .member .avatar-wrap { grid-column: 1; grid-row: 1; margin-bottom: 18px; }
+  .site-page .member strong, .site-page .member .role-tag, .site-page .member .member-bio, .site-page .member-links {
+    grid-column: 1;
+  }
+  .site-page .member strong { grid-row: 2; }
+  .site-page .member .role-tag { grid-row: 3; }
+  .site-page .member .member-bio { grid-row: 4; }
+  .site-page .member-links { grid-row: 5; }
+}
 
 .site-page .award {
   transform: rotate(-1.4deg);

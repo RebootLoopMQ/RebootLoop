@@ -895,22 +895,50 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
   .site-page .ambient .icon-3, .site-page .ambient .icon-5 { display: none; }
 }
 
-/* ---- "Who made it" team cards: on-brand, with an organic halo behind each portrait.
-   Laid out as two columns (portrait | details) so the card fills its full width
-   instead of everything stacking down the left edge. ---- */
-.site-page .team-grid { gap: 24px 20px; padding-top: 8px; }
+/* ---- "Who made it" team cards: v2 — premium dark glow cards.
+   Dark navy, same material as the site's own "special" sections (talk-band,
+   audience.primary), with a living gradient border, a radiant halo behind
+   each portrait, and a lime glow badge. Laid out as two columns (portrait |
+   details) so the card fills its full width. ---- */
+.site-page .team-grid { gap: 30px 24px; padding-top: 10px; }
+
 .site-page .member {
   display: grid;
-  grid-template-columns: 84px minmax(0, 1fr);
-  column-gap: 20px;
+  grid-template-columns: 96px minmax(0, 1fr);
+  column-gap: 22px;
   row-gap: 0;
   align-items: start;
   position: relative;
-  padding: 26px 26px 24px;
+  isolation: isolate;
+  padding: 32px 28px 26px;
+  border: 2px solid transparent;
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  transition: transform .45s cubic-bezier(.22,1,.36,1), box-shadow .3s ease, opacity .45s ease;
+  background:
+    linear-gradient(165deg, var(--navy-2), var(--navy)) padding-box,
+    linear-gradient(135deg, var(--teal), var(--lime) 45%, var(--teal) 90%) border-box;
+  background-size: 100% 100%, 240% 240%;
+  box-shadow: 0 26px 54px rgba(9, 46, 53, .4);
+  transition: transform .45s cubic-bezier(.22,1,.36,1), box-shadow .35s ease, opacity .45s ease;
+  animation: rl-member-border-drift 7s ease-in-out infinite;
 }
+@keyframes rl-member-border-drift {
+  0%, 100% { background-position: 0 0, 0% 30%; }
+  50%      { background-position: 0 0, 100% 70%; }
+}
+
+/* radiant ambient glow bleeding out from behind the card */
+.site-page .member::before {
+  content: "";
+  position: absolute; inset: -30px; z-index: -1;
+  border-radius: inherit;
+  background:
+    radial-gradient(55% 55% at 22% 18%, rgba(183, 216, 75, .5), transparent 70%),
+    radial-gradient(50% 50% at 85% 90%, rgba(16, 167, 131, .4), transparent 70%);
+  filter: blur(26px);
+  opacity: .5;
+  transition: opacity .4s ease, filter .4s ease;
+}
+
 /* Entrance: only hidden pre-reveal when JS is running the scroll-in observer (see index.html's
    inline html.js-anim toggle + the IntersectionObserver script) — no-JS visitors just see them.
    :where() keeps the gating out of the specificity count so the :hover rule below (declared
@@ -919,59 +947,73 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
 :where(html.js-anim) .site-page .team-grid .member:where(.is-visible) { opacity: 1; transform: translateY(0) scale(1); }
 
 .site-page .member:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 32px 64px rgba(9, 46, 53, .18), 0 0 0 3px rgba(16, 167, 131, .32);
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 40px 80px rgba(9, 46, 53, .5);
 }
-.site-page .member:hover .avatar-blob { transform: scale(1.14) rotate(4deg); }
+.site-page .member:hover::before { opacity: 1; filter: blur(32px); }
+.site-page .member:hover .avatar-blob { transform: scale(1.22); opacity: 1; }
+.site-page .member:hover .initials, .site-page .member:hover .member-photo { box-shadow: 0 0 0 7px rgba(183, 216, 75, .28), 0 14px 30px rgba(0, 0, 0, .5); }
 
-.site-page .member .avatar-wrap { grid-column: 1; grid-row: 1 / span 3; position: relative; width: 84px; height: 84px; }
+/* the portrait's radiant halo — a soft glowing aura, not a flat tint */
+.site-page .member .avatar-wrap { grid-column: 1; grid-row: 1 / span 3; position: relative; width: 96px; height: 96px; }
 .site-page .member .avatar-blob {
-  position: absolute; inset: -13px; z-index: 0;
-  border-radius: 63% 37% 41% 59% / 46% 57% 43% 54%;
-  background: var(--mint);
-  transition: transform .35s cubic-bezier(.22,1,.36,1);
+  position: absolute; inset: -22px; z-index: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(183, 216, 75, .65) 0%, rgba(16, 167, 131, .35) 55%, transparent 75%);
+  filter: blur(9px);
+  opacity: .85;
+  animation: rl-halo-breathe 3.2s ease-in-out infinite;
+  transition: transform .4s cubic-bezier(.22,1,.36,1), opacity .4s ease;
+}
+@keyframes rl-halo-breathe {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.08); }
 }
 .site-page .member:nth-child(3n+2) .avatar-blob {
-  background: color-mix(in srgb, var(--gold) 26%, var(--pale));
-  border-radius: 40% 60% 61% 39% / 57% 42% 58% 43%;
+  background: radial-gradient(circle, rgba(243, 198, 91, .65) 0%, rgba(183, 216, 75, .3) 55%, transparent 75%);
 }
 .site-page .member:nth-child(3n) .avatar-blob {
-  background: color-mix(in srgb, var(--blue) 18%, var(--pale));
-  border-radius: 55% 45% 38% 62% / 42% 56% 44% 58%;
+  background: radial-gradient(circle, rgba(47, 120, 183, .6) 0%, rgba(16, 167, 131, .32) 55%, transparent 75%);
 }
 
 .site-page .member .initials, .site-page .member .member-photo {
   position: relative; z-index: 1;
-  width: 84px; height: 84px; margin: 0;
+  width: 96px; height: 96px; margin: 0;
   border-radius: 50%;
-  border: 3px solid white;
-  box-shadow: 0 8px 18px rgba(9, 46, 53, .14);
+  border: 3px solid transparent;
+  background: linear-gradient(var(--navy), var(--navy)) padding-box,
+              linear-gradient(140deg, var(--lime), var(--teal)) border-box;
+  box-shadow: 0 0 0 5px rgba(183, 216, 75, .18), 0 12px 26px rgba(0, 0, 0, .45);
+  color: var(--lime);
+  transition: box-shadow .4s ease;
 }
 .site-page .member .member-photo { object-fit: cover; }
-.site-page .member .initials { font-size: 1.2rem; }
+.site-page .member .initials { font-size: 1.3rem; display: grid; place-items: center; }
 
-.site-page .member strong { grid-column: 2; grid-row: 1; align-self: center; }
+.site-page .member strong { grid-column: 2; grid-row: 1; align-self: center; color: white; font-size: 1.14rem; letter-spacing: -.01em; }
 
 .site-page .member .role-tag {
   grid-column: 2; grid-row: 2;
-  display: inline-flex; justify-self: start; align-self: start; margin-top: 8px;
-  padding: 5px 12px; border-radius: 10px;
-  background: var(--mint); color: var(--forest);
-  font-weight: 800; font-size: .82rem; line-height: 1.35;
+  display: inline-flex; justify-self: start; align-self: start; margin-top: 9px;
+  padding: 6px 13px; border-radius: 10px;
+  background: var(--lime); color: var(--navy);
+  font-weight: 850; font-size: .82rem; line-height: 1.35;
+  box-shadow: 0 0 18px rgba(183, 216, 75, .45);
 }
 
 .site-page .member-links {
   grid-column: 2; grid-row: 3;
-  position: relative; margin-top: 14px; padding-top: 14px; gap: 8px; border-top: 0;
+  position: relative; margin-top: 16px; padding-top: 15px; gap: 8px; border-top: 0;
 }
 .site-page .member-links::before {
-  content: ""; position: absolute; top: 0; left: 0; right: 0; border-top: 1.5px dashed var(--line);
+  content: ""; position: absolute; top: 0; left: 0; right: 0; border-top: 1.5px dashed rgba(255, 255, 255, .22);
 }
 .site-page .member-links a {
   display: inline-flex; align-items: center; padding: 6px 13px;
-  border: 1.3px solid var(--line); border-radius: 999px; font-size: .86rem;
+  border: 1.3px solid rgba(255, 255, 255, .28); border-radius: 999px; font-size: .86rem;
+  background: rgba(255, 255, 255, .05); color: #c6dbd5; font-weight: 750;
 }
-.site-page .member-links a:hover { background: var(--mint); border-color: #b8ddd1; }
+.site-page .member-links a:hover { background: var(--lime); border-color: var(--lime); color: var(--navy); }
 
 .site-page .award {
   transform: rotate(-1.4deg);

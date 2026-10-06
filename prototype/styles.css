@@ -921,26 +921,16 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
      silently dropped and every card rendered with no fill at all (fully transparent — which is
      why it always looked identical to the page behind it). Wrapping each solid fill in a flat
      linear-gradient(colour, colour) makes it a valid <bg-image> in that position. */
+  /* One consistent surface tone across every card — a different hue per card (green/gold/blue)
+     read as a kids'-app rainbow rather than premium, no matter how muted. Distinction between
+     cards now comes from the halo/border glow only, not the card body colour. */
   background:
-    linear-gradient(#d4efe9, #d4efe9) padding-box,
+    linear-gradient(#d9ece6, #d9ece6) padding-box,
     linear-gradient(135deg, var(--teal), var(--lime) 45%, var(--teal) 90%) border-box;
   background-size: 100% 100%, 240% 240%;
   box-shadow: 0 26px 52px rgba(9, 46, 53, .14);
   transition: transform .45s cubic-bezier(.22,1,.36,1), box-shadow .35s ease, opacity .45s ease;
   animation: rl-member-border-drift 7s ease-in-out infinite;
-}
-/* each card's fill is tinted to match its own portrait halo, so the three read as distinct */
-.site-page .member:nth-child(3n+2) {
-  background:
-    linear-gradient(#fdf4de, #fdf4de) padding-box,
-    linear-gradient(135deg, var(--teal), var(--lime) 45%, var(--teal) 90%) border-box;
-  background-size: 100% 100%, 240% 240%;
-}
-.site-page .member:nth-child(3n) {
-  background:
-    linear-gradient(#dee9f3, #dee9f3) padding-box,
-    linear-gradient(135deg, var(--teal), var(--lime) 45%, var(--teal) 90%) border-box;
-  background-size: 100% 100%, 240% 240%;
 }
 @keyframes rl-member-border-drift {
   0%, 100% { background-position: 0 0, 0% 30%; }

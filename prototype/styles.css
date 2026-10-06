@@ -917,7 +917,7 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
   border: 2px solid transparent;
   border-radius: 28px;
   background:
-    color-mix(in srgb, var(--teal) 26%, white) padding-box,
+    color-mix(in srgb, var(--teal) 34%, white) padding-box,
     linear-gradient(135deg, var(--teal), var(--lime) 45%, var(--teal) 90%) border-box;
   background-size: 100% 100%, 240% 240%;
   box-shadow: 0 26px 52px rgba(9, 46, 53, .14);
@@ -927,13 +927,13 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
 /* each card's fill is tinted to match its own portrait halo, so the three read as distinct */
 .site-page .member:nth-child(3n+2) {
   background:
-    color-mix(in srgb, var(--gold) 28%, white) padding-box,
+    color-mix(in srgb, var(--gold) 36%, white) padding-box,
     linear-gradient(135deg, var(--teal), var(--lime) 45%, var(--teal) 90%) border-box;
   background-size: 100% 100%, 240% 240%;
 }
 .site-page .member:nth-child(3n) {
   background:
-    color-mix(in srgb, var(--blue) 22%, white) padding-box,
+    color-mix(in srgb, var(--blue) 30%, white) padding-box,
     linear-gradient(135deg, var(--teal), var(--lime) 45%, var(--teal) 90%) border-box;
   background-size: 100% 100%, 240% 240%;
 }
@@ -959,8 +959,10 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
    inline html.js-anim toggle + the IntersectionObserver script) — no-JS visitors just see them.
    :where() keeps the gating out of the specificity count so the :hover rule below (declared
    after, same 3-class weight) still wins once a card has been revealed. */
-:where(html.js-anim) .site-page .team-grid .member { opacity: 0; transform: translateY(30px) scale(.96); }
-:where(html.js-anim) .site-page .team-grid .member:where(.is-visible) { opacity: 1; transform: translateY(0) scale(1); }
+/* Transform-only (no opacity fade) so the card's fill colour is always at full strength —
+   a fade made the tint look washed-out/blended with the page while mid-animation. */
+:where(html.js-anim) .site-page .team-grid .member { transform: translateY(30px) scale(.96); }
+:where(html.js-anim) .site-page .team-grid .member:where(.is-visible) { transform: translateY(0) scale(1); }
 
 .site-page .member:hover {
   transform: translateY(-8px) scale(1.012);

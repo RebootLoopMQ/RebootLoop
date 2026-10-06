@@ -917,12 +917,25 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
   border: 2px solid transparent;
   border-radius: 28px;
   background:
-    #ffffff padding-box,
+    color-mix(in srgb, var(--teal) 26%, white) padding-box,
     linear-gradient(135deg, var(--teal), var(--lime) 45%, var(--teal) 90%) border-box;
   background-size: 100% 100%, 240% 240%;
   box-shadow: 0 26px 52px rgba(9, 46, 53, .14);
   transition: transform .45s cubic-bezier(.22,1,.36,1), box-shadow .35s ease, opacity .45s ease;
   animation: rl-member-border-drift 7s ease-in-out infinite;
+}
+/* each card's fill is tinted to match its own portrait halo, so the three read as distinct */
+.site-page .member:nth-child(3n+2) {
+  background:
+    color-mix(in srgb, var(--gold) 28%, white) padding-box,
+    linear-gradient(135deg, var(--teal), var(--lime) 45%, var(--teal) 90%) border-box;
+  background-size: 100% 100%, 240% 240%;
+}
+.site-page .member:nth-child(3n) {
+  background:
+    color-mix(in srgb, var(--blue) 22%, white) padding-box,
+    linear-gradient(135deg, var(--teal), var(--lime) 45%, var(--teal) 90%) border-box;
+  background-size: 100% 100%, 240% 240%;
 }
 @keyframes rl-member-border-drift {
   0%, 100% { background-position: 0 0, 0% 30%; }

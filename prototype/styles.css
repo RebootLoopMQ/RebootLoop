@@ -916,8 +916,13 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
   padding: 38px 34px 34px;
   border: 2px solid transparent;
   border-radius: 28px;
+  /* A bare <color> is only valid as the LAST layer of a multi-layer `background` shorthand —
+     using one in the first (padding-box) layer made the whole declaration invalid, so it was
+     silently dropped and every card rendered with no fill at all (fully transparent — which is
+     why it always looked identical to the page behind it). Wrapping each solid fill in a flat
+     linear-gradient(colour, colour) makes it a valid <bg-image> in that position. */
   background:
-    color-mix(in srgb, var(--teal) 34%, white) padding-box,
+    linear-gradient(#88d3c1, #88d3c1) padding-box,
     linear-gradient(135deg, var(--teal), var(--lime) 45%, var(--teal) 90%) border-box;
   background-size: 100% 100%, 240% 240%;
   box-shadow: 0 26px 52px rgba(9, 46, 53, .14);
@@ -927,13 +932,13 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
 /* each card's fill is tinted to match its own portrait halo, so the three read as distinct */
 .site-page .member:nth-child(3n+2) {
   background:
-    color-mix(in srgb, var(--gold) 36%, white) padding-box,
+    linear-gradient(#f9e3ad, #f9e3ad) padding-box,
     linear-gradient(135deg, var(--teal), var(--lime) 45%, var(--teal) 90%) border-box;
   background-size: 100% 100%, 240% 240%;
 }
 .site-page .member:nth-child(3n) {
   background:
-    color-mix(in srgb, var(--blue) 30%, white) padding-box,
+    linear-gradient(#97bcdb, #97bcdb) padding-box,
     linear-gradient(135deg, var(--teal), var(--lime) 45%, var(--teal) 90%) border-box;
   background-size: 100% 100%, 240% 240%;
 }

@@ -922,7 +922,7 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
      why it always looked identical to the page behind it). Wrapping each solid fill in a flat
      linear-gradient(colour, colour) makes it a valid <bg-image> in that position. */
   background:
-    linear-gradient(#88d3c1, #88d3c1) padding-box,
+    linear-gradient(#d4efe9, #d4efe9) padding-box,
     linear-gradient(135deg, var(--teal), var(--lime) 45%, var(--teal) 90%) border-box;
   background-size: 100% 100%, 240% 240%;
   box-shadow: 0 26px 52px rgba(9, 46, 53, .14);
@@ -932,13 +932,13 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
 /* each card's fill is tinted to match its own portrait halo, so the three read as distinct */
 .site-page .member:nth-child(3n+2) {
   background:
-    linear-gradient(#f9e3ad, #f9e3ad) padding-box,
+    linear-gradient(#fdf4de, #fdf4de) padding-box,
     linear-gradient(135deg, var(--teal), var(--lime) 45%, var(--teal) 90%) border-box;
   background-size: 100% 100%, 240% 240%;
 }
 .site-page .member:nth-child(3n) {
   background:
-    linear-gradient(#97bcdb, #97bcdb) padding-box,
+    linear-gradient(#dee9f3, #dee9f3) padding-box,
     linear-gradient(135deg, var(--teal), var(--lime) 45%, var(--teal) 90%) border-box;
   background-size: 100% 100%, 240% 240%;
 }

@@ -82,7 +82,7 @@
         </fieldset>
         <p class="field-note">Please don't include your name, phone number, serial numbers or other personal details.</p>
         <div class="button-row">
-          <a class="primary-button" id="fbEmail" href="#" hidden>Email it to us</a>
+          <button class="primary-button" type="button" id="fbEmail" hidden>Email it to us</button>
           <a class="secondary-button" id="fbGitHub" href="https://github.com/RebootLoopMQ/RebootLoop/issues/new" target="_blank" rel="noopener noreferrer">Post it on GitHub ↗</a>
           <button class="quiet-button" type="button" id="fbCopy">Copy feedback</button>
         </div>
@@ -170,7 +170,9 @@
       });
     }
 
-    // Feedback: nothing is sent from this page. The answers become a message the person can email, post on GitHub or copy.
+    // Feedback: "Email it to us" sends straight to Formspree, which forwards it to our inbox —
+    // no mail app needed. Posting to GitHub or copying stay as manual alternatives.
+    const FEEDBACK_ENDPOINT = "https://formspree.io/f/xzeddqpd";
     const form = document.getElementById("feedbackForm");
     const fbStatus = document.getElementById("fbStatus");
     const tried = new URLSearchParams(location.search).get("tried");
@@ -195,7 +197,6 @@
       const text = feedbackText();
       const title = `Feedback: ${form.elements.tried.value.trim() || "RebootLoop demo"}`;
       document.getElementById("fbGitHub").href = `https://github.com/RebootLoopMQ/RebootLoop/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(text)}`;
-      if (email) document.getElementById("fbEmail").href = `mailto:${email}?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(text)}`;
     }
 
     if (email) {
@@ -213,6 +214,33 @@
       event.preventDefault();
       fbStatus.textContent = "Answer at least one question first.";
     });
+    const fbEmailButton = document.getElementById("fbEmail");
+    fbEmailButton.addEventListener("click", async () => {
+      const title = `Feedback: ${form.elements.tried.value.trim() || "RebootLoop demo"}`;
+      fbEmailButton.disabled = true;
+      fbStatus.textContent = "Sending…";
+      try {
+        const data = new FormData(form);
+        data.set("_subject", title);
+        const res = await fetch(FEEDBACK_ENDPOINT, {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: data
+        });
+        if (res.ok) {
+          fbStatus.textContent = "Sent — thanks for the feedback!";
+          form.reset();
+          updateShareLinks();
+        } else {
+          fbStatus.textContent = "Couldn't send that. Try \"Post it on GitHub\" or \"Copy feedback\" instead.";
+        }
+      } catch {
+        fbStatus.textContent = "Couldn't send that. Try \"Post it on GitHub\" or \"Copy feedback\" instead.";
+      } finally {
+        fbEmailButton.disabled = false;
+      }
+    });
+
     document.getElementById("fbCopy").addEventListener("click", async () => {
       if (!hasAnswers()) { fbStatus.textContent = "Answer at least one question first."; return; }
       const text = feedbackText();

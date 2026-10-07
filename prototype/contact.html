@@ -206,13 +206,13 @@
     form.addEventListener("change", updateShareLinks);
     updateShareLinks();
 
-    for (const id of ["fbEmail", "fbGitHub"]) {
-      document.getElementById(id).addEventListener("click", event => {
-        if (hasAnswers()) { fbStatus.textContent = ""; return; }
-        event.preventDefault();
-        fbStatus.textContent = "Answer at least one question first.";
-      });
-    }
+    // Posting to GitHub needs at least one answer (an empty public issue isn't useful);
+    // emailing us doesn't — send it straight away, whatever's filled in.
+    document.getElementById("fbGitHub").addEventListener("click", event => {
+      if (hasAnswers()) { fbStatus.textContent = ""; return; }
+      event.preventDefault();
+      fbStatus.textContent = "Answer at least one question first.";
+    });
     document.getElementById("fbCopy").addEventListener("click", async () => {
       if (!hasAnswers()) { fbStatus.textContent = "Answer at least one question first."; return; }
       const text = feedbackText();

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/logo.jpg" alt="RebootLoop logo" width="200">
+  <img src="./prototype/assets/brand/rebootloop-lockup-horizontal-colour.svg" alt="RebootLoop logo" width="360">
 </p>
 
 # RebootLoop ↻

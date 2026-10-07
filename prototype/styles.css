@@ -1,22 +1,27 @@
-/* RebootLoop shared styles: used by the demo and every site page. */
+/* RebootLoop shared styles: used by the demo and every site page.
+   Brand overhaul 2026-10: values now come from the RebootLoop design
+   system (teal/mint/paper/clay tokens) — names are kept as-is so every
+   existing var() usage below still applies, just with the new palette. */
 :root {
   color-scheme: light;
-  --navy: #092e35;
-  --navy-2: #123e45;
-  --ink: #102a31;
-  --muted: #526a70;
-  --forest: #0b6b57;
-  --teal: #10a783;
-  --mint: #e8f6f1;
-  --pale: #f4f9f7;
-  --lime: #b7d84b;
-  --gold: #f3c65b;
-  --coral: #e86b5d;
-  --blue: #2f78b7;
-  --line: #ccddd8;
-  --white: #ffffff;
+  --navy: #092e35;      /* surface-inverse / action (light) */
+  --navy-2: #0e4048;     /* teal-800: mid teal, raised-on-dark */
+  --ink: #092e35;        /* ink (light) */
+  --muted: #3d5e63;      /* ink-muted (light) */
+  --forest: #0b6b59;     /* accent-ink (light): links, primary-button fill */
+  --teal: #14997f;       /* accent (light) */
+  --mint: #e0ece7;       /* accent-soft (light): tinted fills */
+  --pale: #fbf8f1;       /* paper-50: warm page background, never pure white */
+  --lime: #8cebd4;       /* mint-300: bright pop accent (CTA pill, icons) */
+  --gold: #f2c867;       /* amber-300 */
+  --coral: #b3261e;      /* danger-fill (light): stop/safety-callout tone */
+  --blue: #0e4048;       /* focus-ring (light) */
+  --line: #d6cdb8;       /* line (light): paper-300 */
+  --white: #fffdf8;      /* surface-raised (light): warm card fill, not pure #fff */
   --shadow: 0 22px 55px rgba(9, 46, 53, .10);
   --radius: 24px;
+  --font-sans: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Fraunces", "Iowan Old Style", Georgia, serif;
   /* Fluid sizes: each grows smoothly from a 620px-tall window to a 940px-tall one (and with width where noted). */
   --header-h: clamp(48px, calc(48px + (100vh - 620px) * .05), 64px);
   --gap: clamp(10px, calc(10px + (100vh - 620px) * .05), 26px);
@@ -39,7 +44,7 @@ body {
     radial-gradient(circle at 93% 0%, rgba(16, 167, 131, .12), transparent 28rem),
     var(--pale);
   color: var(--ink);
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.5;
 }
@@ -87,7 +92,7 @@ a:focus-visible, button:focus-visible, input:focus-visible + label, select:focus
   place-items: center;
 }
 
-.brand-mark svg { width: 76%; height: 76%; }
+.brand-mark svg, .brand-mark img { width: 76%; height: 76%; }
 .brand-name { font-size: clamp(1.2rem, calc(1.2rem + (100vh - 620px) * .01), 1.4rem); font-weight: 850; letter-spacing: -.04em; line-height: 1; }
 .brand-sub { margin-top: 5px; color: #bfd9d0; font-size: .82rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
 
@@ -191,6 +196,7 @@ a:focus-visible, button:focus-visible, input:focus-visible + label, select:focus
   margin: 0 0 14px;
 }
 h1, h2, h3, p { margin-top: 0; }
+h1, h2, h3, .aside-title { font-family: var(--font-serif); font-weight: 600; }
 h1, h2 { text-wrap: balance; }
 h1 { font-size: var(--fs-h1); line-height: .98; letter-spacing: -.06em; margin-bottom: calc(var(--gap) + 4px); max-width: 820px; }
 h2 { font-size: clamp(2rem, 4vw, 3.15rem); line-height: 1.05; letter-spacing: -.045em; margin-bottom: 14px; }
@@ -738,7 +744,7 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
 
 /* Hero type: a heavy sans headline with one italic serif accent, and a quieter pull-quote line under it. */
 .hero-copy h1 { margin: 0; font-size: clamp(2.2rem, 3.9vw, 3.5rem); line-height: 1; letter-spacing: -.055em; }
-.hero-copy h1 em { position: relative; z-index: 0; padding: 0 .06em; color: var(--forest); font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif; font-style: italic; font-weight: 600; letter-spacing: -.02em; white-space: nowrap; }
+.hero-copy h1 em { position: relative; z-index: 0; padding: 0 .06em; color: var(--forest); font-style: italic; font-weight: 600; letter-spacing: -.02em; white-space: nowrap; }
 .hero-copy h1 em::after { content: ""; position: absolute; z-index: -1; left: 0; right: 0; bottom: .08em; height: .32em; border-radius: 4px; background: var(--lime); opacity: .55; }
 .hero-figure { margin: 0; }
 .hero-figure img { display: block; width: 100%; max-width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--radius); box-shadow: var(--shadow); }

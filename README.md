@@ -1,5 +1,6 @@
 <p align="center">
-  <img src="./prototype/assets/brand/rebootloop-lockup-horizontal-colour.svg" alt="RebootLoop logo" width="360">
+  <img src="./prototype/assets/brand/rebootloop-lockup-horizontal-colour.svg#gh-light-mode-only" alt="RebootLoop logo" width="360">
+  <img src="./prototype/assets/brand/rebootloop-lockup-horizontal-reversed.svg#gh-dark-mode-only" alt="RebootLoop logo" width="360">
 </p>
 
 # RebootLoop ↻

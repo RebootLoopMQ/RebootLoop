@@ -562,6 +562,8 @@ fieldset.is-open .choices { display: flex; }
 .section-card { background: white; border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(24px,4vw,40px); box-shadow: 0 10px 28px rgba(9,46,53,.04); scroll-margin-top: 18px; }
 .section-intro { max-width: 800px; color: var(--muted); font-size: 1.06rem; }
 .fact-grid, .path-grid, .plan-grid { display: grid; gap: 15px; grid-template-columns: repeat(3,minmax(0,1fr)); margin-top: 20px; }
+/* why.html's fact-grid holds 4 tiles — 2x2 reads better than a 3-plus-1 wrap. */
+.fact-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
 .fact, .path, .plan-step { border: 1px solid var(--line); border-radius: 17px; padding: 20px; background: #fbfdfc; }
 .fact strong { display: block; font-size: clamp(1.65rem,3vw,2.5rem); letter-spacing: -.05em; line-height: 1.1; color: var(--forest); }
 .fact span { display: block; color: var(--muted); margin-top: 8px; }

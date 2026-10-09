@@ -748,6 +748,7 @@ a.primary-button, a.secondary-button, a.quiet-button { text-decoration: none; }
 .hero-copy h1 em::after { content: ""; position: absolute; z-index: -1; left: 0; right: 0; bottom: .08em; height: .32em; border-radius: 4px; background: var(--lime); opacity: .55; }
 .hero-figure { margin: 0; }
 .hero-figure img { display: block; width: 100%; max-width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--radius); box-shadow: var(--shadow); }
+.hero-figure video { display: block; width: 100%; max-width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: var(--radius); box-shadow: var(--shadow); background: var(--navy); }
 .hero-figure figcaption { margin-top: 12px; color: var(--muted); font-size: .9rem; }
 
 .band { display: grid; gap: 24px; }

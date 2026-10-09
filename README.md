@@ -11,7 +11,7 @@
 
 ![The RebootLoop team presenting at Pitch for the Planet 2026](./assets/pitch-for-the-planet-2026-team.jpg)
 
-**[View the showcase poster (PDF)](./docs/poster-showcase.pdf)** · [Original competition poster (PDF)](./docs/poster.pdf)
+**[View the showcase poster (PDF)](./docs/poster-showcase.pdf)** · [Original competition poster (PDF)](./docs/poster.pdf) · [Watch the pitch video (mp4)](./prototype/video/rebootloop-pitch.mp4)
 
 ---
 
@@ -79,7 +79,7 @@ The carbon example and limits are in the [`evidence and claim ledger`](./docs/ev
 
 ## Showcase and pilot status
 
-The team presented at the **(Tech)^US BIT Industry Showcase on 8 October 2026** (19 teams, 4 winners) — see the [showcase feedback](./docs/showcase-feedback.md).
+The team presented at the **(Tech)^US BIT Industry Showcase on 8 October 2026** (19 teams, 4 winners) — see the [showcase feedback](./docs/showcase-feedback.md) and [watch the pitch video](./prototype/video/rebootloop-pitch.mp4), also embedded on the [industry page](https://rebootloopmq.github.io/RebootLoop/industry.html) of the live site.
 
 ![The RebootLoop team at the (Tech)^US BIT Industry Showcase 2026](./assets/techus-2026-team.jpg)
 

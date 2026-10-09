@@ -79,7 +79,11 @@ The carbon example and limits are in the [`evidence and claim ledger`](./docs/ev
 
 ## Showcase and pilot status
 
-The team presented at the **(Tech)^US BIT Industry Showcase on 8 October 2026** (19 teams, 4 winners) — see the [showcase feedback](./docs/showcase-feedback.md). MobileMuster has been contacted for feedback; there is no confirmed partnership. A campus device-handling pilot needs separate university permission, privacy review and agreed partners. The immediate work is real usability testing and a truthful presentation of what people can do in the public app. See the [showcase test and evidence plan](./docs/showcase-test-plan.md) and [proposed pilot plan](./docs/pilot-plan.md).
+The team presented at the **(Tech)^US BIT Industry Showcase on 8 October 2026** (19 teams, 4 winners) — see the [showcase feedback](./docs/showcase-feedback.md).
+
+![The RebootLoop team at the (Tech)^US BIT Industry Showcase 2026](./assets/techus-2026-team.jpg)
+
+MobileMuster has been contacted for feedback; there is no confirmed partnership. A campus device-handling pilot needs separate university permission, privacy review and agreed partners. The immediate work is real usability testing and a truthful presentation of what people can do in the public app. See the [showcase test and evidence plan](./docs/showcase-test-plan.md) and [proposed pilot plan](./docs/pilot-plan.md).
 
 Potential institution-funded operations and reporting are **business-model hypotheses**. There are no paying customers, price tests, pickup service or verified outcomes yet.
 

@@ -26,7 +26,7 @@ us cover more ground in the same slot.
 instead of relying on subtitles + autoplay, to fit more content in a
 short slot.
 
-### Frier (last name only — first name not captured)
+### Andrew Friar — Chief Technology Officer, Macquarie University
 
 Suggested reaching out to MobileMuster directly rather than waiting
 for them to respond to the earlier contact attempt:
